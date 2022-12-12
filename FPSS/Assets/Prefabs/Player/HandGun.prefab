@@ -270,7 +270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4724408009727844267}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: -0.9999999, z: 0}
+  m_LocalPosition: {x: -0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 4724408009727476623}
   - component: {fileID: 4724408009718492259}
   - component: {fileID: 5515516530680063537}
+  - component: {fileID: 9066227957561245101}
   m_Layer: 7
   m_Name: HandGun
   m_TagString: Untagged
@@ -430,7 +431,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4724408009727844271}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.086, y: -0.334, z: 0.685}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -450,7 +451,7 @@ Animator:
   m_GameObject: {fileID: 4724408009727844271}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 56ec0b9a5b8762642811ea26a5242e04, type: 3}
-  m_Controller: {fileID: 9100000, guid: 97bc38ef8a57e594bb27ae69468acb09, type: 2}
+  m_Controller: {fileID: 9100000, guid: 60d70a9d448df8948bbb4b3a59c4f87b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -475,11 +476,32 @@ MonoBehaviour:
   <Animator>k__BackingField: {fileID: 4724408009718492259}
   <ShootType>k__BackingField: 1
   fireTime: 0.3
+  inspectTimeBegin: 5
   audioSource: {fileID: 0}
   fireSound: {fileID: 8300000, guid: c1bd91cf7c20534478c9b9c5d69d1732, type: 3}
   ReloadSound: {fileID: 8300000, guid: c565065df3907944b8b58f0d27066ba8, type: 3}
-  aimPos: {fileID: 0}
-  currentPos: {fileID: 0}
+  takeOutSound: {fileID: 0}
+  isOwnedByPlayer: 0
+--- !u!114 &9066227957561245101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4724408009727844271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6eaffddf6a4b1f4c91a0a8ec861aeeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0
+  aimRecoilX: 0
+  aimRecoilY: 0
+  aimRecoilZ: 0
+  snapiness: 0
+  returnSpeed: 0
 --- !u!1 &4724408009727844273
 GameObject:
   m_ObjectHideFlags: 0

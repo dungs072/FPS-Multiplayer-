@@ -9,6 +9,8 @@ TagManager:
   - Target
   - Metal
   - ExplosiveBarrel
+  - FX
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -16,15 +18,15 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - Weapon
+  - TPP
+  - TPPs
+  - FPSs
+  - Projectile
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Boom
+  - Ragdoll
   - 
   - 
   - 

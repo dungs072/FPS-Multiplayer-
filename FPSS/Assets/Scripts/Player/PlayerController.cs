@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 public class PlayerController : NetworkBehaviour
 {
+    public event Action OnHitTarget;
     [SerializeField] private ReferenceManager referManager;
-
     [SyncVar(hook = nameof(OnChangeWalkingState))]
     private bool isWalking;
-   
+
     [SyncVar(hook = nameof(OnChangeRunningState))]
     private bool isRunning;
 
@@ -17,39 +18,47 @@ public class PlayerController : NetworkBehaviour
     [SyncVar(hook = nameof(OnChangeAimState))]
     private bool isAiming;
 
-    private bool canInspect = true;
+    private bool canInspect = false;
 
-    public bool IsWalking 
-    { 
-        get 
-        { 
-            return isWalking; 
-        } 
-        set 
+    public bool IsWalking
+    {
+        get
         {
-            if(value!= isWalking&&value)
-            {             
+            return isWalking;
+        }
+        set
+        {
+            if (value != isWalking && value)
+            {
                 DoWalk(value);
             }
             else if (value != isWalking && !value)
             {
-                CmdCanWalk(value);
+                if (isOwned)
+                {
+                    CmdCanWalk(value);
+                }
+               
             }
             isWalking = value;
-        } 
+        }
     }
     public bool IsRunning
     {
         get { return isRunning; }
         set
         {
-            if(value!=isRunning&&value)
+            if (value != isRunning && value)
             {
                 DoRun(value);
             }
-            else if(value!=isRunning&&!value)
+            else if (value != isRunning && !value)
             {
-                CmdCanRun(value);
+               if(isOwned)
+               {
+                    CmdCanRun(value);
+               }
+                
             }
             isRunning = value;
         }
@@ -59,13 +68,17 @@ public class PlayerController : NetworkBehaviour
         get { return isIdle; }
         set
         {
-            if(value!=isIdle&&value)
+            if (value != isIdle && value)
             {
                 DoIdle(value);
             }
             else if (value != isIdle && !value)
             {
-                CmdCanIdle(value);
+                if(isOwned)
+                {
+                    CmdCanIdle(value);
+                }
+               
             }
             isIdle = value;
         }
@@ -78,9 +91,9 @@ public class PlayerController : NetworkBehaviour
         }
         set
         {
-            if(isAiming!=value)
+            if (isAiming != value)
             {
-                if(value)
+                if (value)
                 {
                     DoAimIn(value);
                 }
@@ -88,65 +101,159 @@ public class PlayerController : NetworkBehaviour
                 {
                     DoAimOut(value);
                 }
+                UIManager.Instance.ToggleDynamicCrossHair(value);
             }
             isAiming = value;
             CmdAim(value);
         }
     }
 
+    public bool IsAttacking{get; set;}
+    public override void OnStartAuthority()
+    {
+        MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
+        myNetworkManager.AddPlayers(this);
+        OnHitTarget+= UIManager.Instance.ToggleHitCrossHair;
+    }
+    private void Start() {
+        referManager.HealthManager.OnDie+=OnDie;
+    }
+    private void OnDestroy() {
+        referManager.HealthManager.OnDie-=OnDie;
+        if(!isOwned){return;}
+        OnHitTarget-=UIManager.Instance.ToggleHitCrossHair;
+    }
+    private void OnDie()
+    {
+        referManager.FPSController.enabled = false;
+        referManager.TPPController.enabled = false;
+        this.enabled = false;
+    }
     private void Update()
     {
         if (!isOwned) { return; }
-        canInspect = true;
-        bool isReloading = referManager.WeaponManager.CurrentWeapon.IsReloading;
-        if(!isReloading)
+        HandleFPSControl();
+        HandleTPPMovement();
+    }
+    
+    private void HandleFPSControl()
+    {
+        WeaponBase currentWeapon = referManager.WeaponManager.CurrentWeapon;
+        if (currentWeapon.IsTakingOut) {return;}
+        
+        bool isReloading = currentWeapon.IsReloading;
+        bool isShooting = !currentWeapon.CanShoot;
+        bool isThrowing = currentWeapon.IsThrowing;
+        HandleAttack();
+        if (currentWeapon.CanDelayInShoot)
         {
-            HandleMovement();
-            HandleAttack();
-            HandleAim();
+            if (!isReloading && !isShooting&&!isThrowing)
+            {
+                HandleFPSMovement();
+                HandleAim();
+            }
+            else
+            {
+                ResetMovementState();
+            }
         }
         else
         {
-            ResetMovementState();
+            if (!isReloading&&!isThrowing)
+            {
+                HandleFPSMovement();
+                HandleAim();
+            }
+            else
+            {
+                ResetMovementState();
+            }
         }
+       
         HandleReload();
+        HandleThrowGrenade();
     }
-    private void ResetMovementState()
+    public void ResetMovementState()
     {
         IsIdle = false;
         IsWalking = false;
         IsRunning = false;
     }
-
-    private void HandleMovement()
+    private void HandleThrowGrenade()
     {
-        
-        IsIdle = !IsRunning && !IsWalking&&!IsAiming;
-        IsWalking = referManager.Controller.IsWalking&&!IsAiming;
-        IsRunning = referManager.Controller.IsRunning;
-        canInspect =  !isRunning;
-
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            referManager.WeaponManager.CurrentWeapon.CheckReadyThrowGrenade();
+        }
+        if(Input.GetKeyUp(KeyCode.G))
+        {
+            referManager.WeaponManager.CurrentWeapon.CheckThrowGrenade();
+        }
+    }
+    private void HandleFPSMovement()
+    {
+        IsWalking = referManager.FPSController.IsWalking && !IsAiming;
+        IsRunning = referManager.FPSController.IsRunning;
+        IsIdle = !IsRunning && !IsWalking && !IsAiming;
+       
+    }
+    private void HandleTPPMovement()
+    {
+        referManager.TPPController.RightValue = referManager.FPSController.RightValue;
+        referManager.TPPController.ForwardValue = referManager.FPSController.ForwardValue;
+        if (referManager.FPSController.IsWalking)
+        {
+            referManager.TPPController.LocomotionValue = 0.5f;
+        }
+        else if (referManager.FPSController.IsRunning)
+        {
+            referManager.TPPController.LocomotionValue = 1f;
+        }
+        else
+        {
+            referManager.TPPController.LocomotionValue = 0f;
+        }
     }
     private void HandleAttack()
     {
+        if (IsRunning) { return; }
         WeaponBase weapon = referManager.WeaponManager.CurrentWeapon;
+        bool isAttacking = false;
         if (Input.GetMouseButtonDown(0))
         {
-            if(weapon.ShootType==ShootType.Single)
+            if (weapon.ShootType == ShootType.Single)
             {
                 weapon.CheckShoot(IsAiming);
-                CmdAttack();
+                isAttacking = true;
             }
         }
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
-            if(weapon.ShootType==ShootType.Continuous)
+            if (weapon.ShootType == ShootType.Continuous)
             {
                 weapon.CheckShoot(IsAiming);
-                CmdAttack();
+                isAttacking = true;
             }
         }
-       
+        if(Input.GetMouseButtonUp(0))
+        {
+            if(weapon.ShootType == ShootType.Continuous||!weapon.CanDelayInShoot)
+            {
+                ResetMovementState();
+            }
+        }
+        IsAttacking = !weapon.CanShoot;
+        canInspect = !isAttacking && !IsRunning && !IsAiming && !IsWalking;
+        //HandleInspect(weapon);
+    }
+    public bool CurrentWeaponIsSingleFire()
+    {
+        return referManager.WeaponManager.CurrentWeapon.ShootType == ShootType.Single;
+    }
+    private void HandleInspect(WeaponBase weapon)
+    {
+        referManager.TPPController.CheckInspect();
+        weapon.CheckInspect(Time.deltaTime, canInspect);
     }
     private void HandleAim()
     {
@@ -155,12 +262,12 @@ public class PlayerController : NetworkBehaviour
     }
     private void HandleReload()
     {
-        
-        if(Input.GetKeyDown(KeyCode.R))
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
             DoReload();
         }
-        
+
     }
     private void DoWalk(bool state)
     {
@@ -187,8 +294,14 @@ public class PlayerController : NetworkBehaviour
     }
     private void DoReload()
     {
+        referManager.TPPController.CheckReload();
         referManager.WeaponManager.CurrentWeapon.CheckReload();
         CmdReload();
+    }
+    public void TriggerHitCrossHair()
+    {
+        if(!isOwned){return;}
+        OnHitTarget?.Invoke();
     }
     #region Client
     private void OnChangeRunningState(bool oldState, bool newState)
@@ -196,6 +309,7 @@ public class PlayerController : NetworkBehaviour
         if (isOwned) { return; }
         if (!newState) { return; }
         referManager.WeaponManager.CurrentWeapon.RunAnimation();
+
     }
     private void OnChangeWalkingState(bool oldState, bool newState)
     {
@@ -203,7 +317,7 @@ public class PlayerController : NetworkBehaviour
         if (!newState) { return; }
         referManager.WeaponManager.CurrentWeapon.WalkAnimation();
     }
-    private void OnChangeIdleState(bool oldState,bool newState)
+    private void OnChangeIdleState(bool oldState, bool newState)
     {
         if (isOwned) { return; }
         if (!newState) { return; }
@@ -212,7 +326,7 @@ public class PlayerController : NetworkBehaviour
     private void OnChangeAimState(bool oldState, bool newState)
     {
         if (isOwned) { return; }
-        if(newState)
+        if (newState)
         {
             referManager.WeaponManager.CurrentWeapon.CheckAimIn();
         }
@@ -221,13 +335,7 @@ public class PlayerController : NetworkBehaviour
             referManager.WeaponManager.CurrentWeapon.DoAimOut();
         }
     }
-    
-    [ClientRpc]
-    private void RpcFire()
-    {
-        if (isOwned) { return; }
-        referManager.WeaponManager.CurrentWeapon.CheckShoot(isAiming);
-    }
+
     [ClientRpc]
     private void RpcReload()
     {
@@ -252,11 +360,6 @@ public class PlayerController : NetworkBehaviour
     private void CmdCanIdle(bool state)
     {
         isIdle = state;
-    }
-    [Command]
-    private void CmdAttack()
-    {
-        RpcFire();
     }
     [Command]
     private void CmdAim(bool state)

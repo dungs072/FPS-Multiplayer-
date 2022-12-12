@@ -30,6 +30,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
         [SerializeField] private Camera m_Camera;
+        [Header("Recoil")]
+        [SerializeField] private float recoilSpeed = 3f;
         private bool m_Jump;
         private float m_YRotation;
         private Vector2 m_Input;
@@ -44,12 +46,35 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private AudioSource m_AudioSource;
 
         public Camera FirstPersonCamera { get { return m_Camera; } }
+        public MouseLook MouseLook { get { return m_MouseLook; } }
         public bool IsRunning { get { return !m_IsWalking; } } 
         public bool IsWalking { get; private set; }
+        public float ForwardValue { get; private set; }
+        public float RightValue { get; private set; }
+
+        private Vector3 cameraRotation = Vector3.zero;
+        public Vector3 CameraRotation
+        {
+            get { return cameraRotation; }
+            set
+            {
+                if (value!=cameraRotation)
+                {
+                    if (isOwned)
+                    {
+                        value.y = 0f;
+                        value.z = 0f;
+                        CmdCameraRotation(value);
+                    }
+                }
+                cameraRotation = value;
+            }
+        }
 
         // Use this for initialization
         private void Start()
         {
+            m_MouseLook.Init(transform, m_Camera.transform);
             if (!isOwned) { return; }
             m_CharacterController = GetComponent<CharacterController>();
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
@@ -59,7 +84,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_NextStep = m_StepCycle/2f;
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
-			m_MouseLook.Init(transform , m_Camera.transform);
+			
         }
 
 
@@ -213,7 +238,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             // Read input
             float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
             float vertical = CrossPlatformInputManager.GetAxis("Vertical");
-
+            // read value to tpp controller
+            ForwardValue = vertical;
+            RightValue = horizontal;
             bool waswalking = m_IsWalking;
 
 #if !MOBILE_INPUT
@@ -244,7 +271,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
+            m_MouseLook.YRotRecoil = Mathf.Lerp(m_MouseLook.YRotRecoil, 0f, Time.deltaTime*recoilSpeed);
+            m_MouseLook.XRotRecoil = Mathf.Lerp(m_MouseLook.XRotRecoil, 0f, Time.deltaTime*recoilSpeed);
+            
             m_MouseLook.LookRotation (transform, m_Camera.transform);
+            CameraRotation = m_Camera.transform.eulerAngles;
         }
 
 
@@ -264,5 +295,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+        public void SetRotatateSensitivity(float sensitivity)
+        {
+            m_MouseLook.YSensitivity = sensitivity;
+            m_MouseLook.XSensitivity = sensitivity;
+        }
+        [Command]
+        private void CmdCameraRotation(Vector3 rotation)
+        {
+            RpcCameraRotation(rotation);
+        }
+        [ClientRpc]
+        private void RpcCameraRotation(Vector3 rotation)
+        {
+            if (isOwned) { return; }
+            m_Camera.transform.localRotation = Quaternion.Euler(rotation);
+        }
+
+        
     }
 }

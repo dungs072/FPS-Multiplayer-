@@ -5,27 +5,28 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class ReferenceManager : MonoBehaviour
 {
-    [field:SerializeField] public FirstPersonController Controller { get; private set; }
-    [field:SerializeField] public Fighter Fighter { get; private set; }
+    [field:SerializeField] public FirstPersonController FPSController { get; private set; }
+    [field:SerializeField] public ThirdPersonController TPPController { get; private set; }
 
     [field:SerializeField] public WeaponManager WeaponManager { get; private set; }
+    [field:SerializeField] public WeaponTPPManager WeaponTPPManager {get;private set;}
+    [field:SerializeField] public HealthManager HealthManager{get;private set;}
 
-
-    //public float GetNormalizedTime(Animator animator,string animTag)
-    //{
-    //    AnimatorStateInfo currentInfo = animator.GetCurrentAnimatorStateInfo(0);
-    //    AnimatorStateInfo nextInfo = animator.GetNextAnimatorStateInfo(0);
-    //    if (animator.IsInTransition(0) && nextInfo.IsTag(animTag))
-    //    {
-    //        return nextInfo.normalizedTime;
-    //    }
-    //    else if (!animator.IsInTransition(0) && currentInfo.IsTag(animTag))
-    //    {
-    //        return currentInfo.normalizedTime;
-    //    }
-    //    else
-    //    {
-    //        return 0f;
-    //    }
-    //}
+    public float GetNormalizedTime(Animator animator, string animTag)
+    {
+        AnimatorStateInfo currentInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextInfo = animator.GetNextAnimatorStateInfo(0);
+        if (animator.IsInTransition(0) && nextInfo.IsTag(animTag))
+        {
+            return nextInfo.normalizedTime;
+        }
+        else if (!animator.IsInTransition(0) && currentInfo.IsTag(animTag))
+        {
+            return currentInfo.normalizedTime;
+        }
+        else
+        {
+            return 0f;
+        }
+    }
 }
