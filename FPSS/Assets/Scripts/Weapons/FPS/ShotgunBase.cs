@@ -36,6 +36,7 @@ public class ShotgunBase : WeaponBase
             tppController.DoInsertReload();
             maxBullet -= 1;
             currentBulletInMag += 1;
+            ChangeAmountBullet(currentBulletInMag,maxBullet);
             yield return new WaitForSeconds(insertReloadAnimationTime);
            
         }

@@ -31,6 +31,7 @@ public class ThirdPersonController : NetworkBehaviour
     [SerializeField] private WeaponTPPManager weaponTPPManager;
     [SerializeField] private RigManager rigManager;
     [SerializeField] private RagdollManager ragdollManager;
+    [SerializeField] private PlayerSound playerSound;
 
     private WeaponTPP currentWeapon;
 
@@ -292,12 +293,14 @@ public class ThirdPersonController : NetworkBehaviour
     private void RpcReload()
     {
         if (isOwned) { return; }
+        playerSound.PlayReloading();
         Reload();
     }
     [ClientRpc]
     private void RpcDoOpenReload()
     {
         if (isOwned) { return; }
+        playerSound.PlayReloading();
         OpenReload();
     }
     [ClientRpc]

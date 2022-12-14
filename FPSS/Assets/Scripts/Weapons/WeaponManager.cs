@@ -31,10 +31,21 @@ public class WeaponManager : NetworkBehaviour
         ChangeWeapon(currentWeaponIndex);
         StartCoroutine(SetInitialWeapon());
     }
+    // public override void OnStartAuthority()
+    // {
+    //     OnAddWeapon+=AddNewWeapon;
+    //     OnRemoveWeapon+=RemoveWeapon;
+    // }
+    // private void OnDestroy()
+    // {
+    //     OnAddWeapon-=AddNewWeapon;
+    //     OnRemoveWeapon-=RemoveWeapon;
+    // }
     private IEnumerator SetInitialWeapon()
     {
         yield return null;
         OnAddWeapon?.Invoke(weapons[0]);
+        CurrentWeapon.OnChangeBulletLeft += UIManager.Instance.Packs[weapons.Count - 1].ChangeBulletLeftAmountDisplay;
     }
     private void Update()
     {
@@ -116,6 +127,7 @@ public class WeaponManager : NetworkBehaviour
         EquipWeapon(type);
         CmdAddWeapon(type);
 
+
     }
     private void EquipWeapon(WeaponType type)
     {
@@ -125,6 +137,15 @@ public class WeaponManager : NetworkBehaviour
             {
                 weapons.Add(weapon);
                 OnAddWeapon?.Invoke(weapon);
+                if (isOwned)
+                {
+                    PackWeaponUI pack = UIManager.Instance.Packs[weapons.Count - 1];
+                    pack.ChangeWeaponDisplay(weapon.GunIcon);
+                    pack.ChangeBulletDisplay(weapon.BulletIcon);
+                    pack.ChangeBulletLeftAmountDisplay(weapon.BulletMaxInMag, weapon.BulletLeft);
+                    weapon.OnChangeBulletLeft += UIManager.Instance.Packs[weapons.Count - 1].ChangeBulletLeftAmountDisplay;
+                }
+
                 break;
             }
         }
@@ -144,6 +165,7 @@ public class WeaponManager : NetworkBehaviour
             {
                 weapons.Remove(weapon);
                 OnRemoveWeapon?.Invoke(weapon);
+                weapon.OnChangeBulletLeft -= UIManager.Instance.Packs[weapons.Count - 1].ChangeBulletLeftAmountDisplay;
                 break;
             }
         }

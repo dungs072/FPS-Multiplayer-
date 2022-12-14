@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
@@ -18,6 +20,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [Header("Nearly die UI")]
     [SerializeField][Range(0, 1f)] private float minBloodOverlay = 0.7f;
+    [Header("HealthBar")]
+    [SerializeField] private RectTransform foreGroundHealthBar;
+    [Header("Weapon Pack")]
+    [SerializeField] private PackWeaponUI[] packs;
+
+    public PackWeaponUI[] Packs{get{return packs;}}
     private Coroutine hitCrossHairCoroutine;
     private Coroutine startBloodOverlayCoroutine;
     private Coroutine endBloodOverlayCoroutine;
@@ -97,7 +105,7 @@ public class UIManager : MonoBehaviour
         if(nearlyDieCoroutine!=null){StopCoroutine(nearlyDieCoroutine);}
         if(damageCoroutine!=null){StopCoroutine(damageCoroutine);}
         StopStartEndBloodOverlayCoroutines();
-        canvasGroup.alpha = 0f;
+        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(0f,speedStopAlpha));
     }
     public void TriggerBloodOverlay()
     {
@@ -140,4 +148,10 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }
+
+    public void ChangeHealthBar(float amount)
+    {
+        foreGroundHealthBar.localScale = new Vector3(amount,1f,1f);
+    }
 }
+

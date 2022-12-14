@@ -12,6 +12,7 @@ public enum ShootType
 }
 public class WeaponBase : MonoBehaviour
 {
+    public event Action<int,int> OnChangeBulletLeft;
     public event Action<Vector3, Vector3, int, float, int> OnShoot;
     public event Action OnFire;
     protected const float CrossFadeTime = 0.1f;
@@ -28,6 +29,7 @@ public class WeaponBase : MonoBehaviour
     private readonly int ThrowHash = Animator.StringToHash("Throw");
 
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerSound playerSound;
     [SerializeField] private Camera fpsCamera;
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ShootType ShootType { get; private set; }
@@ -71,6 +73,13 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] private BoomManager boomManager;
     [SerializeField] private GameObject boomPack;
     [SerializeField] private List<Boom> booms;
+    [Header("Icons")]
+    [SerializeField] private Sprite gunIcon;
+    [SerializeField] private Sprite bulletIcon;
+
+    public Sprite GunIcon{get{return gunIcon;}}
+    public Sprite BulletIcon{get{return bulletIcon;}}
+    
     public GameObject BoomPack { get { return boomPack; } }
     public List<Boom> Booms { get { return booms; } }
 
@@ -89,6 +98,9 @@ public class WeaponBase : MonoBehaviour
 
     protected int currentBulletInMag = 0;
 
+    public int BulletLeftInMag{get{return currentBulletInMag;}}
+    public int BulletLeft{get{return maxBullet;}}
+    public int BulletMaxInMag{get{return maxBulletInMag;}}
     public bool IsReloading { get { return !canReload; } }
     public bool IsTakingOut { get { return isTakingOut; } }
     public bool CanShoot { get { return canShoot; } }
@@ -103,7 +115,7 @@ public class WeaponBase : MonoBehaviour
         fps.MouseLook.XRotRecoil = -Mathf.Abs(currentRecoilYPos);
         fps.MouseLook.YRotRecoil = currentRecoilXPos;
     }
-    private void Start()
+    private void Awake()
     {
         currentBulletInMag = maxBulletInMag;
         hits = new RaycastHit[bulletPerShoot];
@@ -114,11 +126,13 @@ public class WeaponBase : MonoBehaviour
     }
     private void OnEnable()
     {
+        
         isTakingOut = true;
         canShoot = true;
         canReload = true;
         audioSource.PlayOneShot(takeOutSound);
         Invoke(nameof(TakeOutWeapon), takeOutTime);
+
     }
     private void TakeOutWeapon()
     {
@@ -128,6 +142,10 @@ public class WeaponBase : MonoBehaviour
         {
             CheckReload();
         }
+    }
+    protected void ChangeAmountBullet(int bulletInMag,int bulletLeft)
+    {
+        OnChangeBulletLeft?.Invoke(bulletInMag,bulletLeft);
     }
     public void RunAnimation()
     {
@@ -221,6 +239,7 @@ public class WeaponBase : MonoBehaviour
     public void CheckReload()
     {
         if (!canReload) { return; }
+        playerSound.PlayReloading();
         Reload();
     }
     protected virtual void Reload()
@@ -229,6 +248,7 @@ public class WeaponBase : MonoBehaviour
         audioSource.PlayOneShot(ReloadSound);
         canReload = false;
         CalculateAmmoToReload();
+
     }
     private void CalculateAmmoToReload()
     {
@@ -283,7 +303,7 @@ public class WeaponBase : MonoBehaviour
         {
             audioSource.PlayOneShot(runOutOfAmmoInMagSound);
         }
-
+        OnChangeBulletLeft?.Invoke(currentBulletInMag,maxBullet);
         StartCoroutine(ResetFire());
     }
 
@@ -376,6 +396,7 @@ public class WeaponBase : MonoBehaviour
     public void PlayBolt()
     {
         canReload = true;
+        OnChangeBulletLeft?.Invoke(currentBulletInMag,maxBullet);
     }
     public void FinishThrowGrenade()
     {
@@ -388,5 +409,8 @@ public class WeaponBase : MonoBehaviour
     }
 
     #endregion
-
+    public bool IsFullBulletInMag()
+    {
+        return currentBulletInMag==maxBulletInMag;
+    }
 }
