@@ -34,7 +34,7 @@ public class RocketProjectile : Projectile, IObjectPool
     protected override void DoBoom()
     {
         GameObject boomEffectInstance = Instantiate(boomEffectPrefab, transform.position, Quaternion.identity);
-        boom.Explode(damage);
+        boom.Explode(damage,this.transform);
         gameObject.SetActive(false);
     }
 

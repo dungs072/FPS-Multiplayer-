@@ -16,9 +16,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float speedStartAlpha = 10f;
     [SerializeField] private float speedStopAlpha = 5f;
     [SerializeField] private CanvasGroup canvasGroup;
+    [Header("Nearly die UI")]
+    [SerializeField][Range(0,1f)] private float minBloodOverlay = 0.7f;
     private Coroutine hitCrossHairCoroutine;
     private Coroutine startBloodOverlayCoroutine;
     private Coroutine endBloodOverlayCoroutine;
+    private Coroutine nearlyDieCoroutine;
     private void Awake()
     {
         if (Instance == null)
@@ -62,17 +65,34 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.35f);
         hitCrossHair.SetActive(false);
     }
+    public void TriggerNearlyDieUI()
+    {
+        nearlyDieCoroutine = StartCoroutine(HandleNearlyDieUI());
+    }
+    private IEnumerator HandleNearlyDieUI()
+    {
+        while(true)
+        {
+            StartCoroutine(DoBloodOverlay(minBloodOverlay,1f,timeToEndBloodOverlay));
+            yield return 2f;//bug here
+        }
+    }
+    public void TriggerStopNearlyDieUI()
+    {
+        if(nearlyDieCoroutine==null){return;}
+        StopCoroutine(nearlyDieCoroutine);
+    }
     public void TriggerBloodOverlay()
     {
-        StartCoroutine(DoBloodOverlay());
+        StartCoroutine(DoBloodOverlay(0f,1f,timeToEndBloodOverlay));
     }
-    private IEnumerator DoBloodOverlay()
+    private IEnumerator DoBloodOverlay(float min, float max,float time)
     {
         StopStartEndBloodOverlayCoroutines();
-        startBloodOverlayCoroutine = StartCoroutine(StartBloodOverlay());
-        yield return new WaitForSeconds(timeToEndBloodOverlay);
+        startBloodOverlayCoroutine = StartCoroutine(StartBloodOverlay(max));
+        yield return new WaitForSeconds(time);
         StopStartEndBloodOverlayCoroutines();
-        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay());
+        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(min));
     }
     private void StopStartEndBloodOverlayCoroutines()
     {
@@ -85,19 +105,19 @@ public class UIManager : MonoBehaviour
             StopCoroutine(startBloodOverlayCoroutine);
         }
     }
-    private IEnumerator StartBloodOverlay()
+    private IEnumerator StartBloodOverlay(float maxAmount)
     {
-        while (!Mathf.Approximately(canvasGroup.alpha, 1f))
+        while (!Mathf.Approximately(canvasGroup.alpha, maxAmount))
         {
-            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, speedStartAlpha * Time.deltaTime);
+            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, maxAmount, speedStartAlpha * Time.deltaTime);
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }
-    private IEnumerator EndBloodOverlay()
+    private IEnumerator EndBloodOverlay(float minAmount)
     {
-        while (!Mathf.Approximately(canvasGroup.alpha, 0f))
+        while (!Mathf.Approximately(canvasGroup.alpha, minAmount))
         {
-            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 0f, speedStopAlpha * Time.deltaTime);
+            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, minAmount, speedStopAlpha * Time.deltaTime);
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }

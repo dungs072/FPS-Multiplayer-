@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour,IProjectilePool
     [SerializeField] private TrailRenderer trail;
     [SerializeField] protected float timeToDeactive = 5f;
 
-    private PlayerController owner;
+    protected PlayerController owner;
     protected int damage = 10;
     protected RaycastHit hit;
     protected 
@@ -62,8 +62,7 @@ public class Projectile : MonoBehaviour,IProjectilePool
             owner.TriggerHitCrossHair();
             if(owner==health.Owner){return;}
         }
-        health.TakeDamage(damage);
-       
+        health.TakeDamage(damage,owner?.transform);
     }
 
     protected virtual void HandleCollision()

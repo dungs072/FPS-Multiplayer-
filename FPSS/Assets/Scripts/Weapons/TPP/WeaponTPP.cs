@@ -33,6 +33,7 @@ public class WeaponTPP : MonoBehaviour,ICanDrop
             Projectile projectileInstance = Instantiate(projectile, attackPoint.position, Quaternion.identity);
             projectileInstance.transform.forward=  directionWithSpread;
             projectileInstance.SetRaycastHit(hit);
+            projectileInstance.SetPlayerController(owner);
             projectileInstance.SetDamage(damage);
             projectileInstance.ShootProjectile();
         }

@@ -111,6 +111,8 @@ public class PlayerController : NetworkBehaviour
     public bool IsAttacking{get; set;}
     public override void OnStartAuthority()
     {
+        DISystem.Instance.SetMainCamera(referManager.FPSController.FirstPersonCamera);
+        DISystem.Instance.SetPlayerTransform(transform);
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
         myNetworkManager.AddPlayers(this);
         OnHitTarget+= UIManager.Instance.ToggleHitCrossHair;

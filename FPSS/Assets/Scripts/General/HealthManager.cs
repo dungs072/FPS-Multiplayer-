@@ -6,10 +6,12 @@ using Mirror;
 public class HealthManager : NetworkBehaviour
 {
     public event Action OnDie;
+    public event Action OnNearlyDie;
+    public event Action OnStronger;
     public event Action OnTakeDamage;
     [SerializeField] private List<Health> healths;
     [SerializeField] private int maxHealth = 200;
-
+    [SerializeField] private int lowHealth = 10;
     [SyncVar(hook = nameof(OnChangeCurrentHealth))]
     private int currentHealth;
 
@@ -25,12 +27,16 @@ public class HealthManager : NetworkBehaviour
     public override void OnStartAuthority()
     {
         OnTakeDamage+=UIManager.Instance.TriggerBloodOverlay;
+        OnNearlyDie+=UIManager.Instance.TriggerNearlyDieUI;
+        OnStronger+=UIManager.Instance.TriggerStopNearlyDieUI;
     }
     private void OnDestroy()
     {
         UnsubcribeHealth();
         if(!isOwned){return;}
         OnTakeDamage-=UIManager.Instance.TriggerBloodOverlay;
+        OnNearlyDie-=UIManager.Instance.TriggerNearlyDieUI;
+        OnStronger+=UIManager.Instance.TriggerStopNearlyDieUI;
     }
     private void SubscribeHealth()
     {
@@ -46,10 +52,22 @@ public class HealthManager : NetworkBehaviour
             health.OnTakeDamage -= TakeDamage;
         }
     }
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount,Transform attacker)
     {
+        if(isOwned)
+        {
+            TriggerDamageIndicator(attacker);
+        }
         if (!isServer) { return; }
         ServerTakeDamage(amount);
+    }
+    private void TriggerDamageIndicator(Transform attacker)
+    {
+        if(attacker==null){return;}
+        if(!DISystem.Instance.CheckIfObjectInsight(attacker))
+        {
+            DISystem.Instance.CreateIndicator(attacker);
+        }
     }
     [Server]
     private void ServerTakeDamage(int amount)
@@ -57,6 +75,10 @@ public class HealthManager : NetworkBehaviour
         if (isDie) { return; }
         currentHealth = Mathf.Max(currentHealth - amount, 0);
         print(gameObject.name +": "+ currentHealth);
+        if(currentHealth<lowHealth&&currentHealth>0)
+        {
+            OnNearlyDie?.Invoke();
+        }
         if (currentHealth == 0)
         {
             isDie = true;
