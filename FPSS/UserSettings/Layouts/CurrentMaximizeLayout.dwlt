@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 640
+  controlID: 773
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 1
-  controlID: 641
+  controlID: 774
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 611
+  controlID: 775
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -187,8 +187,8 @@ MonoBehaviour:
     y: 0
     width: 204.66667
     height: 348.66666
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -906,22 +906,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/UI
+    - Assets/Scripts/UI
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefabs/UI
+  - Assets/Scripts/UI
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\GitHub\Git\FPS-Multiplayer-\FPSS
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 2012.3333}
-    m_SelectedIDs: 22760000
-    m_LastClickedID: 30242
-    m_ExpandedIDs: 00000000ce730000d0730000d2730000d4730000d6730000d8730000da730000dc730000de730000e0730000e2730000e4730000e6730000e8730000ea730000ec730000ee730000f0730000f2730000f4730000f6730000f8730000fa730000fc730000fe73000000740000027400000474000006740000087400000a7400000c7400000e74000010740000127400001474000016740000187400001a74000000ca9a3b
+    scrollPos: {x: 0, y: 2178.3333}
+    m_SelectedIDs: 40760000
+    m_LastClickedID: 30272
+    m_ExpandedIDs: 00000000ce730000d0730000d2730000d4730000d6730000d8730000da730000dc730000de730000e0730000e2730000e4730000e6730000e8730000ea730000ec730000ee730000f0730000f2730000f4730000f6730000f8730000fa730000fc730000fe73000000740000027400000474000006740000087400000a7400000c7400000e74000010740000127400001474000016740000187400001a7400001875000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -974,8 +974,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: f4640000
-    m_LastClickedInstanceID: 25844
+    m_SelectedInstanceIDs: f6170000
+    m_LastClickedInstanceID: 6134
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000f4270100545f0000886e00003e5f0000485f0000666d00004260000060230000f2620000b8620000da6f0000127800003e650000426d000046640000146300003a64000060760000747600006476000040640000c0840000cc840000d284000036890000146f0000d015010050790000606e0000b2b30000eeb300003eb4000016b4000098ac000072b20000ea7b0000548e0000907b0000346e000014000100380a0100e6050100ae580400ea5c04003a690400267800009e7200005c63010054630100e2630100586301007a7700009277000084780000c07800004c7900003879000024790000e8780000687f0000e2810000b8810000be810000c8810000c2810000c27d000064820000688300002c83000090830000b8830000
     m_RenameOverlay:
@@ -1124,7 +1124,7 @@ MonoBehaviour:
     m_CachedPref: 155
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 25844
+  m_LastInspectedObjectInstanceID: 6134
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

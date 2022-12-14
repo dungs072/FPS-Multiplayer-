@@ -2266,6 +2266,7 @@ MonoBehaviour:
   speedStartAlpha: 4
   speedStopAlpha: 10
   canvasGroup: {fileID: 223974227}
+  minBloodOverlay: 0.2
 --- !u!114 &1438754072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2526,12 +2527,12 @@ MonoBehaviour:
   crossHair: {fileID: 1640530152}
   aimSize: 25
   idleSize: 50
-  walkSize: 75
-  runJumpSize: 125
+  walkSize: 125
+  runJumpSize: 175
   speed: 10
   shootSpeed: 2
   shootSingleSpeed: 40
-  maxShootSize: 150
+  maxShootSize: 200
 --- !u!1 &1667912547
 GameObject:
   m_ObjectHideFlags: 0

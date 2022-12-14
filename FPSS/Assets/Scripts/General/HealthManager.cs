@@ -29,6 +29,7 @@ public class HealthManager : NetworkBehaviour
         OnTakeDamage+=UIManager.Instance.TriggerBloodOverlay;
         OnNearlyDie+=UIManager.Instance.TriggerNearlyDieUI;
         OnStronger+=UIManager.Instance.TriggerStopNearlyDieUI;
+        OnDie+=UIManager.Instance.TriggerStopNearlyDieUI;
     }
     private void OnDestroy()
     {
@@ -36,7 +37,8 @@ public class HealthManager : NetworkBehaviour
         if(!isOwned){return;}
         OnTakeDamage-=UIManager.Instance.TriggerBloodOverlay;
         OnNearlyDie-=UIManager.Instance.TriggerNearlyDieUI;
-        OnStronger+=UIManager.Instance.TriggerStopNearlyDieUI;
+        OnStronger-=UIManager.Instance.TriggerStopNearlyDieUI;
+        OnDie-=UIManager.Instance.TriggerStopNearlyDieUI;
     }
     private void SubscribeHealth()
     {
@@ -64,10 +66,11 @@ public class HealthManager : NetworkBehaviour
     private void TriggerDamageIndicator(Transform attacker)
     {
         if(attacker==null){return;}
-        if(!DISystem.Instance.CheckIfObjectInsight(attacker))
-        {
-            DISystem.Instance.CreateIndicator(attacker);
-        }
+        DISystem.Instance.CreateIndicator(attacker);
+        // if(!DISystem.Instance.CheckIfObjectInsight(attacker))
+        // {
+            
+        // }
     }
     [Server]
     private void ServerTakeDamage(int amount)
@@ -75,10 +78,6 @@ public class HealthManager : NetworkBehaviour
         if (isDie) { return; }
         currentHealth = Mathf.Max(currentHealth - amount, 0);
         print(gameObject.name +": "+ currentHealth);
-        if(currentHealth<lowHealth&&currentHealth>0)
-        {
-            OnNearlyDie?.Invoke();
-        }
         if (currentHealth == 0)
         {
             isDie = true;
@@ -94,6 +93,10 @@ public class HealthManager : NetworkBehaviour
     {
         if(!isOwned){return;}
         if(oldValue<newValue){return;}
+        if(currentHealth<lowHealth&&currentHealth>0)
+        {
+            OnNearlyDie?.Invoke();
+        }
         OnTakeDamage?.Invoke();
     }
     [Command]

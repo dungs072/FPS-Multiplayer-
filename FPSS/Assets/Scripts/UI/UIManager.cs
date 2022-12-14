@@ -17,11 +17,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float speedStopAlpha = 5f;
     [SerializeField] private CanvasGroup canvasGroup;
     [Header("Nearly die UI")]
-    [SerializeField][Range(0,1f)] private float minBloodOverlay = 0.7f;
+    [SerializeField][Range(0, 1f)] private float minBloodOverlay = 0.7f;
     private Coroutine hitCrossHairCoroutine;
     private Coroutine startBloodOverlayCoroutine;
     private Coroutine endBloodOverlayCoroutine;
     private Coroutine nearlyDieCoroutine;
+    private Coroutine damageCoroutine;
+    private bool isNearlyDie = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -67,32 +70,48 @@ public class UIManager : MonoBehaviour
     }
     public void TriggerNearlyDieUI()
     {
+        TriggerStopNearlyDieUI();
+        isNearlyDie = true;
         nearlyDieCoroutine = StartCoroutine(HandleNearlyDieUI());
     }
     private IEnumerator HandleNearlyDieUI()
     {
-        while(true)
+        while (isNearlyDie)
         {
-            StartCoroutine(DoBloodOverlay(minBloodOverlay,1f,timeToEndBloodOverlay));
-            yield return 2f;//bug here
+            while (canvasGroup.alpha<0.9f)
+            {
+                canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, 15*Time.deltaTime);
+                yield return new WaitForSeconds(timePerChangeAlphaValue);
+            }
+            yield return null;
+            while (canvasGroup.alpha>minBloodOverlay)
+            {
+                canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 0f, 15*Time.deltaTime);
+                yield return new WaitForSeconds(timePerChangeAlphaValue);
+            }
         }
     }
     public void TriggerStopNearlyDieUI()
     {
-        if(nearlyDieCoroutine==null){return;}
-        StopCoroutine(nearlyDieCoroutine);
+        isNearlyDie = false;
+        if(nearlyDieCoroutine!=null){StopCoroutine(nearlyDieCoroutine);}
+        if(damageCoroutine!=null){StopCoroutine(damageCoroutine);}
+        StopStartEndBloodOverlayCoroutines();
+        canvasGroup.alpha = 0f;
     }
     public void TriggerBloodOverlay()
     {
-        StartCoroutine(DoBloodOverlay(0f,1f,timeToEndBloodOverlay));
+        if (isNearlyDie) { return; }
+        if(nearlyDieCoroutine!=null){return;}
+        damageCoroutine =  StartCoroutine(DoBloodOverlay(0f, 1f, timeToEndBloodOverlay));
     }
-    private IEnumerator DoBloodOverlay(float min, float max,float time)
+    private IEnumerator DoBloodOverlay(float min, float max, float time)
     {
         StopStartEndBloodOverlayCoroutines();
-        startBloodOverlayCoroutine = StartCoroutine(StartBloodOverlay(max));
+        startBloodOverlayCoroutine = StartCoroutine(StartBloodOverlay(max, speedStartAlpha));
         yield return new WaitForSeconds(time);
         StopStartEndBloodOverlayCoroutines();
-        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(min));
+        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(min, speedStopAlpha));
     }
     private void StopStartEndBloodOverlayCoroutines()
     {
@@ -105,19 +124,19 @@ public class UIManager : MonoBehaviour
             StopCoroutine(startBloodOverlayCoroutine);
         }
     }
-    private IEnumerator StartBloodOverlay(float maxAmount)
+    private IEnumerator StartBloodOverlay(float maxAmount, float speed)
     {
         while (!Mathf.Approximately(canvasGroup.alpha, maxAmount))
         {
-            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, maxAmount, speedStartAlpha * Time.deltaTime);
+            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, maxAmount, speed * Time.deltaTime);
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }
-    private IEnumerator EndBloodOverlay(float minAmount)
+    private IEnumerator EndBloodOverlay(float minAmount, float speed)
     {
         while (!Mathf.Approximately(canvasGroup.alpha, minAmount))
         {
-            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, minAmount, speedStopAlpha * Time.deltaTime);
+            canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, minAmount, speed * Time.deltaTime);
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }
