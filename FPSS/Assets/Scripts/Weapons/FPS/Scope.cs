@@ -11,6 +11,7 @@ public class Scope : MonoBehaviour
     [SerializeField] ReferenceManager referenceManager;
     [SerializeField] private GameObject[] lens;
     [SerializeField] private GameObject crossHair;
+    [SerializeField] private GameObject displayScope;
 
 
     public void ScopeUp()
@@ -20,6 +21,7 @@ public class Scope : MonoBehaviour
             obj.SetActive(false);
         }
         crossHair.SetActive(true);
+        displayScope.SetActive(true);
         referenceManager.FPSController.SetRotatateSensitivity(sensitivity);
     }
     public void ScopeDown()
@@ -29,6 +31,7 @@ public class Scope : MonoBehaviour
             obj.SetActive(true);
         }
         crossHair.SetActive(false);
+        displayScope.SetActive(false);
         referenceManager.FPSController.SetRotatateSensitivity(2f);
     }
 }

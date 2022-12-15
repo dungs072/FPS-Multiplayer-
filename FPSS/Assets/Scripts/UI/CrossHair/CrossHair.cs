@@ -6,7 +6,7 @@ using UnityEngine;
 public class CrossHair : MonoBehaviour
 {
     [SerializeField] private RectTransform crossHair;
-
+    [SerializeField] private RectTransform shortCrossHair;
     [SerializeField] private float aimSize = 25f;
     [SerializeField] private float idleSize = 50f;
     [SerializeField] private float walkSize = 75f;
@@ -16,11 +16,14 @@ public class CrossHair : MonoBehaviour
     [SerializeField] private float shootSingleSpeed = 20f;
     [SerializeField] private float maxShootSize = 150;
 
+    private RectTransform currentCrossHair;
+
     private float currentSize = 50f;
     private bool canExpandCrossHair = true;
     private PlayerController playerController;
     private void Start()
     {
+        currentCrossHair = crossHair;
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
         myNetworkManager.OnAddPlayers += FindPlayer;
     }
@@ -29,6 +32,21 @@ public class CrossHair : MonoBehaviour
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
         if (myNetworkManager == null) { return; }
         myNetworkManager.OnAddPlayers -= FindPlayer;
+    }
+    public void ChangeCrossHair(WeaponType type)
+    {
+        if(type==WeaponType.ShotGun)
+        {
+            shortCrossHair.gameObject.SetActive(true);
+            crossHair.gameObject.SetActive(false);
+            currentCrossHair = shortCrossHair;
+        }
+        else
+        {
+            shortCrossHair.gameObject.SetActive(false);
+            crossHair.gameObject.SetActive(true);
+            currentCrossHair = crossHair;
+        }
     }
     public void FindPlayer()
     {
@@ -89,7 +107,7 @@ public class CrossHair : MonoBehaviour
         {
             currentSize = Mathf.Lerp(currentSize, idleSize, Time.deltaTime * speed);
         }
-        crossHair.sizeDelta = new Vector2(currentSize, currentSize);
+        currentCrossHair.sizeDelta = new Vector2(currentSize, currentSize);
     }
 }
 

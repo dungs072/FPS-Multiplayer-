@@ -5,6 +5,7 @@ using Mirror;
 using System;
 public class WeaponTPPManager : NetworkBehaviour
 {
+    public event Action<WeaponType> OnRemoveWeapon;
     [SerializeField] private List<WeaponTPP> weapons = new List<WeaponTPP>();
     [SerializeField] private Transform weaponPack;
     [SerializeField] private NetworkPlayerManager networkPlayerManager;
@@ -35,6 +36,7 @@ public class WeaponTPPManager : NetworkBehaviour
     public void ThrowWeapon(WeaponTPP weapon)
     {
         if(!weapons.Contains(weapon)){return;}
+        OnRemoveWeapon?.Invoke(weapon.GetWeaponType());
         weapons.Remove(weapon);
     }
     public WeaponTPP ToggleWeapon(int index,bool state)

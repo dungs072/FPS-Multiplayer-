@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: bcc13d29278621e42b75cc837c430cc6, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1783,6 +1783,11 @@ Transform:
   m_Father: {fileID: 740693162}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1410684202 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3973521159446559939, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
+  m_PrefabInstance: {fileID: 598351110773331899}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1626027007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2695,10 +2700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 598351110690427215, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 598351110248486738, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
+      propertyPath: shortCrossHair
+      value: 
+      objectReference: {fileID: 1410684202}
     - target: {fileID: 1028975307342286179, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2812,22 +2817,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5630074454515061426, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6631903152037314429, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6631903152037314429, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6631903152037314429, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6631903152037314429, guid: e8fcaf50db3768d468e75c710e2994a0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

@@ -16,6 +16,9 @@ public class ThirdPersonController : NetworkBehaviour
     private readonly int InsertHash = Animator.StringToHash("ReloadInsert");
     private readonly int CloseHash = Animator.StringToHash("ReloadClose");
 
+    private readonly int OpenSnipeHash = Animator.StringToHash("ReloadOpen 0");
+    private readonly int InsertSnipeHash = Animator.StringToHash("ReloadInsert 0");
+    private readonly int CloseSnipeHash = Animator.StringToHash("ReloadClose 0");
 
     private readonly int IsHandgunHash = Animator.StringToHash("IsHandgun");
     private readonly int IsARHash = Animator.StringToHash("IsAR");
@@ -43,7 +46,8 @@ public class ThirdPersonController : NetworkBehaviour
     [SyncVar(hook = nameof(OnChangeForwardValue))]
     private float forwardValue = 0f;
 
-    public WeaponTPP CurrentWeapon{get{return currentWeapon;}}
+    private Coroutine takeOutWeaponCoroutine;
+    public WeaponTPP CurrentWeapon { get { return currentWeapon; } }
     public float RightValue
     {
         get { return rightValue; }
@@ -78,7 +82,7 @@ public class ThirdPersonController : NetworkBehaviour
             if (value != locomotionValue)
             {
                 Animator.SetFloat(LocomotionHash, value);
-                if(value>0)
+                if (value > 0)
                 {
                     ragdollManager.ToggleFoot(false);
                 }
@@ -98,6 +102,7 @@ public class ThirdPersonController : NetworkBehaviour
         weaponManager.OnChangeWeapon += ChangeWeapon;
         weaponManager.OnAddWeapon += SubcribeShootEvent;
         weaponManager.OnRemoveWeapon += UnSubscribeShootEvent;
+        weaponTPPManager.OnRemoveWeapon+=TurnOffOldHashWeapon;
         ChangeWeapon(0);
     }
     private void OnDestroy()
@@ -105,6 +110,7 @@ public class ThirdPersonController : NetworkBehaviour
         weaponManager.OnChangeWeapon -= ChangeWeapon;
         weaponManager.OnAddWeapon -= SubcribeShootEvent;
         weaponManager.OnRemoveWeapon -= UnSubscribeShootEvent;
+        weaponTPPManager.OnRemoveWeapon-=TurnOffOldHashWeapon;
     }
     private void SubcribeShootEvent(WeaponBase weapon)
     {
@@ -121,17 +127,18 @@ public class ThirdPersonController : NetworkBehaviour
         weaponHash.Add(WeaponType.ShotGun, IsShotGunHash);
         weaponHash.Add(WeaponType.Sniper, IsSniperHash);
         weaponHash.Add(WeaponType.RocketLaucher, IsRocketHash);
-        weaponHash.Add(WeaponType.SMG,IsSMGHash);
+        weaponHash.Add(WeaponType.SMG, IsSMGHash);
     }
     public void ChangeWeapon(int index)
     {
+        if (takeOutWeaponCoroutine != null) { StopCoroutine(takeOutWeaponCoroutine); }
         if (index == 0)
         {
-            StartCoroutine(TakingOutWeapon(0f));
+            takeOutWeaponCoroutine = StartCoroutine(TakingOutWeapon(0f));
         }
         else
         {
-            StartCoroutine(TakingOutWeapon(1f));
+            takeOutWeaponCoroutine = StartCoroutine(TakingOutWeapon(1f));
         }
         for (int i = 0; i < weaponManager.Weapons.Count; i++)
         {
@@ -149,6 +156,11 @@ public class ThirdPersonController : NetworkBehaviour
         }
 
     }
+    private void TurnOffOldHashWeapon(WeaponType type)
+    {
+        int hash = weaponHash[type];
+         Animator.SetBool(hash, false);
+    }
     private IEnumerator TakingOutWeapon(float value)
     {
         rigManager.SetSecondHandGrabWeight(0f);
@@ -156,14 +168,14 @@ public class ThirdPersonController : NetworkBehaviour
         rigManager.SetSecondHandGrabWeight(value);
 
     }
-    private void DoShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time,int damage)
+    private void DoShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time, int damage)
     {
         //Shoot();
-        CmdShoot(targetPoint, spread, shootForce, time,damage);
+        CmdShoot(targetPoint, spread, shootForce, time, damage);
     }
-    private void Shoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time,int damage)
+    private void Shoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time, int damage)
     {
-        currentWeapon.ShootDirection(targetPoint, spread, shootForce, time,damage);
+        currentWeapon.ShootDirection(targetPoint, spread, shootForce, time, damage);
         Animator.SetTrigger(FireHash);
 
     }
@@ -195,15 +207,37 @@ public class ThirdPersonController : NetworkBehaviour
     private void OpenReload()
     {
         TurnOffHandsWeight();
-        Animator.CrossFadeInFixedTime(OpenHash, CrossFadeFixedTime);
+        if (currentWeapon.GetWeaponType() == WeaponType.Sniper)
+        {
+            Animator.CrossFadeInFixedTime(OpenSnipeHash, CrossFadeFixedTime);
+        }
+        else
+        {
+            Animator.CrossFadeInFixedTime(OpenHash, CrossFadeFixedTime);
+        }
+
     }
     private void InsertReload()
     {
-        Animator.CrossFadeInFixedTime(InsertHash, CrossFadeFixedTime);
+        if (currentWeapon.GetWeaponType() == WeaponType.Sniper)
+        {
+            Animator.CrossFadeInFixedTime(InsertSnipeHash, CrossFadeFixedTime);
+        }
+        else
+        {
+            Animator.CrossFadeInFixedTime(InsertHash, CrossFadeFixedTime);
+        }
     }
     private void CloseReload()
     {
-        Animator.CrossFadeInFixedTime(CloseHash, CrossFadeFixedTime);
+        if (currentWeapon.GetWeaponType() == WeaponType.Sniper)
+        {
+            Animator.CrossFadeInFixedTime(CloseSnipeHash, CrossFadeFixedTime);
+        }
+        else
+        {
+            Animator.CrossFadeInFixedTime(CloseHash, CrossFadeFixedTime);
+        }
     }
     private void TurnOffHandsWeight()
     {
@@ -230,9 +264,9 @@ public class ThirdPersonController : NetworkBehaviour
     }
     #region Server
     [Command]
-    private void CmdShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time,int damage)
+    private void CmdShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time, int damage)
     {
-        RpcShoot(targetPoint, spread, shootForce, time,damage);
+        RpcShoot(targetPoint, spread, shootForce, time, damage);
     }
     [Command]
     private void CmdInspect(bool state)
@@ -275,13 +309,13 @@ public class ThirdPersonController : NetworkBehaviour
         RpcDoCloseReload();
     }
     #endregion
-  
+
     #region Client
     [ClientRpc]
-    private void RpcShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time,int damage)
+    private void RpcShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time, int damage)
     {
         if (isOwned) { return; }
-        Shoot(targetPoint, spread, shootForce, time,damage);
+        Shoot(targetPoint, spread, shootForce, time, damage);
     }
     [ClientRpc]
     private void RpcInspect(bool state)
@@ -320,7 +354,7 @@ public class ThirdPersonController : NetworkBehaviour
     {
         if (isOwned) { return; }
         Animator.SetFloat(LocomotionHash, newValue);
-        if(newValue>0)
+        if (newValue > 0)
         {
             ragdollManager.ToggleFoot(false);
         }

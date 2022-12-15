@@ -17,6 +17,7 @@ public class WeaponManager : NetworkBehaviour
     public event Action<WeaponBase> OnAddWeapon;
     public event Action<WeaponBase> OnRemoveWeapon;
     public event Action<int> OnChangeWeapon;
+    public event Action<WeaponType> OnChangeCrossHair;
     [SerializeField] private List<WeaponBase> totalWeapons;
     [SerializeField] private List<WeaponBase> weapons = new List<WeaponBase>();
 
@@ -30,6 +31,14 @@ public class WeaponManager : NetworkBehaviour
     {
         ChangeWeapon(currentWeaponIndex);
         StartCoroutine(SetInitialWeapon());
+    }
+    public override void OnStartAuthority()
+    {
+        OnChangeCrossHair+=UIManager.Instance.ChangeCrossHair;
+    }
+    private void OnDestroy() {
+        if(!isOwned){return;}
+        OnChangeCrossHair-=UIManager.Instance.ChangeCrossHair;
     }
     private IEnumerator SetInitialWeapon()
     {
@@ -91,6 +100,7 @@ public class WeaponManager : NetworkBehaviour
     {
         DoChangeWeapon();
         if (!isOwned) { return; }
+        OnChangeCrossHair?.Invoke(CurrentWeapon.WeaponType);
         CmdSetCurrentWeaponIndex(index);
     }
 
@@ -134,6 +144,7 @@ public class WeaponManager : NetworkBehaviour
                     pack.ChangeBulletDisplay(weapon.BulletIcon);
                     pack.ChangeBulletLeftAmountDisplay(weapon.BulletMaxInMag, weapon.BulletLeft);
                     weapon.OnChangeBulletLeft += UIManager.Instance.Packs[weapons.Count - 1].ChangeBulletLeftAmountDisplay;
+                    OnChangeCrossHair?.Invoke(weapon.WeaponType);
                 }
 
                 break;

@@ -6,7 +6,6 @@ using System;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-
     [SerializeField] private GameObject crossHairScope;
     [SerializeField] private GameObject dynamicCrossHair;
     [SerializeField] private GameObject centerDot;
@@ -24,6 +23,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform foreGroundHealthBar;
     [Header("Weapon Pack")]
     [SerializeField] private PackWeaponUI[] packs;
+    [Header("Pop up score")]
+    [SerializeField] private PopUpScoreSystem popUpScoreSystem;
 
     public PackWeaponUI[] Packs{get{return packs;}}
     private Coroutine hitCrossHairCoroutine;
@@ -44,6 +45,14 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public void ChangeCrossHair(WeaponType type)
+    {
+        dynamicCrossHair.GetComponent<CrossHair>().ChangeCrossHair(type);
+    }
+    public void PopUpScoreToScreen(Vector2 posOnScreen)
+    {
+        popUpScoreSystem.SpawnPopupScore(posOnScreen);
     }
     public void ToggleCrossHairScope(bool state)
     {

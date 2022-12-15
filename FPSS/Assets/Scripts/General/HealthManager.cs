@@ -17,6 +17,8 @@ public class HealthManager : NetworkBehaviour
     [Header("For healing")]
     [SerializeField] private float timeToHeal = 7f;
     [SerializeField] private int increaseHealthAmount = 10;
+    [Header("Camera")]
+    [SerializeField] private Camera fpsCamera;
     [SyncVar(hook = nameof(OnChangeCurrentHealth))]
     private int currentHealth;
 
@@ -37,7 +39,7 @@ public class HealthManager : NetworkBehaviour
         OnNearlyDie += UIManager.Instance.TriggerNearlyDieUI;
         OnRescuing += UIManager.Instance.TriggerStopNearlyDieUI;
         OnDie += UIManager.Instance.TriggerStopNearlyDieUI;
-        OnChangeHealthBar+=UIManager.Instance.ChangeHealthBar;
+        OnChangeHealthBar += UIManager.Instance.ChangeHealthBar;
     }
     private void OnDestroy()
     {
@@ -47,7 +49,7 @@ public class HealthManager : NetworkBehaviour
         OnNearlyDie -= UIManager.Instance.TriggerNearlyDieUI;
         OnRescuing -= UIManager.Instance.TriggerStopNearlyDieUI;
         OnDie -= UIManager.Instance.TriggerStopNearlyDieUI;
-        OnChangeHealthBar-=UIManager.Instance.ChangeHealthBar;
+        OnChangeHealthBar -= UIManager.Instance.ChangeHealthBar;
     }
     private void SubscribeHealth()
     {
@@ -65,24 +67,49 @@ public class HealthManager : NetworkBehaviour
     }
     public void TakeDamage(int amount, Transform attacker)
     {
+
         if (isOwned)
         {
             TriggerDamageIndicator(attacker);
         }
-        if (!isServer) { return; }
-        ServerTakeDamage(amount);
+        if (attacker.TryGetComponent<NetworkIdentity>(out NetworkIdentity identity))
+        {
+            if (identity.isOwned)
+            {
+                // if (currentHealth - amount < 0&&!isDie)
+                // {
+                //     Vector3 screenPos = fpsCamera.WorldToScreenPoint(transform.position);
+                //     UIManager.Instance.PopUpScoreToScreen(new Vector2(screenPos.x,screenPos.y));
+                // }// have to fix there
+                CmdTakeDamage(amount);
+                
+            }
+
+        }
+        else
+        {
+            if (isServer)
+            {
+                ServerTakeDamage(amount);
+            }
+        }
+
     }
     private void TriggerDamageIndicator(Transform attacker)
     {
         if (attacker == null) { return; }
         DISystem.Instance.CreateIndicator(attacker);
     }
+    [Command(requiresAuthority = false)]
+    private void CmdTakeDamage(int amount)
+    {
+        ServerTakeDamage(amount);
+    }
     [Server]
     private void ServerTakeDamage(int amount)
     {
         if (isDie) { return; }
         currentHealth = Mathf.Max(currentHealth - amount, 0);
-        print(gameObject.name + ": " + currentHealth);
         if (currentHealth == 0)
         {
             isDie = true;
@@ -93,7 +120,7 @@ public class HealthManager : NetworkBehaviour
     [Server]
     private void SelfRescue()
     {
-        if(healCoroutine!=null){StopCoroutine(healCoroutine);}
+        if (healCoroutine != null) { StopCoroutine(healCoroutine); }
         healCoroutine = StartCoroutine(IncreaseHealth());
     }
     private IEnumerator IncreaseHealth()
@@ -115,7 +142,7 @@ public class HealthManager : NetworkBehaviour
     private void OnChangeCurrentHealth(int oldValue, int newValue)
     {
         if (!isOwned) { return; }
-        if(newValue>lowHealth&&oldValue<=lowHealth&&oldValue!=0)
+        if (newValue > lowHealth && oldValue <= lowHealth && oldValue != 0)
         {
             OnNormal?.Invoke();
         }
@@ -131,7 +158,7 @@ public class HealthManager : NetworkBehaviour
             }
             OnTakeDamage?.Invoke();
         }
-        OnChangeHealthBar?.Invoke((float)currentHealth/(float)maxHealth);
+        OnChangeHealthBar?.Invoke((float)currentHealth / (float)maxHealth);
 
     }
     [Command]

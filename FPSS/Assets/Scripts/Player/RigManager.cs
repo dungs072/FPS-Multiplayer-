@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-
-public class RigManager : MonoBehaviour
+using Mirror;
+public class RigManager : NetworkBehaviour
 {
     [SerializeField] private TwoBoneIKConstraint secondHandGrab;
     [SerializeField] private MultiAimConstraint handAim;
     [SerializeField] private MultiAimConstraint bodyAim;
     [SerializeField] private Rig rig;
     [SerializeField] private HealthManager healthManager;
+    [SyncVar]
     private float secondHandGrabWeightTarget = 1f;
+    [SyncVar]
     private float handAimWeightTarget = 1f;
+    [SyncVar]
     private float rigWeightTarget = 1f;
     private void Start() {
         healthManager.OnDie+=TurnOffRigWeight;
@@ -27,19 +30,43 @@ public class RigManager : MonoBehaviour
     }
     private void TurnOffRigWeight()
     {
-        rigWeightTarget = 0;
+        SetRigWeight(0f);
     }
     public void SetSecondHandGrabWeight(float value)
     {
-        secondHandGrabWeightTarget = value;   
+        secondHandGrabWeightTarget = value;
+        if(!isOwned){return;}
+        CmdSetSecondHandGrabWeight(value);   
     }
     public void SetRigWeight(float value)
     {
         rigWeightTarget = value;
+        if(!isOwned){return;}
+        CmdSetRigWeight(value);
     }
     public void SetHandWeight(float value)
     {
         handAimWeightTarget = value;
+        if(!isOwned){return;}
+        CmdSetHandWeight(value);
     }
+
+    #region Server
+    [Command]
+    private void CmdSetRigWeight(float value)
+    {
+        rigWeightTarget = value;
+    }
+    [Command]
+    private void CmdSetSecondHandGrabWeight(float value)
+    {
+        secondHandGrabWeightTarget = value;
+    }
+    [Command]
+    private void CmdSetHandWeight(float value)
+    {
+        handAimWeightTarget = value;
+    }
+    #endregion
 
 }

@@ -126,7 +126,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9119758802813726374}
   - component: {fileID: 8557671786952353186}
-  - component: {fileID: 6089330842376020747}
   m_Layer: 7
   m_Name: ScopeCamera
   m_TagString: Untagged
@@ -192,14 +191,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6089330842376020747
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219355385611989534}
-  m_Enabled: 1
 --- !u!1 &1805676875109019122
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7577938545110859778
 Transform:
   m_ObjectHideFlags: 0
@@ -1924,6 +1915,7 @@ MonoBehaviour:
   - {fileID: 3439118200960054296}
   - {fileID: 155188702876746398}
   crossHair: {fileID: 2401999409694666523}
+  displayScope: {fileID: 9163140731317838201}
 --- !u!1 &6066667455807284716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,7 +2350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9163140731317747033
 Transform:
   m_ObjectHideFlags: 0
