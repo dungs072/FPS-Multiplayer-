@@ -145,6 +145,7 @@ public class UIManager : MonoBehaviour
         while (!Mathf.Approximately(canvasGroup.alpha, minAmount))
         {
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, minAmount, speed * Time.deltaTime);
+            if(canvasGroup.alpha<0.05f){canvasGroup.alpha=minAmount;}
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }

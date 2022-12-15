@@ -111,6 +111,8 @@ public class PlayerController : NetworkBehaviour
     public bool IsAttacking{get; set;}
     public override void OnStartAuthority()
     {
+        referManager.HealthManager.OnNearlyDie+=referManager.FPSController.HandleWound;
+        referManager.HealthManager.OnNormal+=referManager.FPSController.HandleNormal;
         DISystem.Instance.SetMainCamera(referManager.FPSController.FirstPersonCamera);
         DISystem.Instance.SetPlayerTransform(transform);
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
@@ -124,6 +126,8 @@ public class PlayerController : NetworkBehaviour
         referManager.HealthManager.OnDie-=OnDie;
         if(!isOwned){return;}
         OnHitTarget-=UIManager.Instance.ToggleHitCrossHair;
+        referManager.HealthManager.OnNearlyDie-=referManager.FPSController.HandleWound;
+        referManager.HealthManager.OnNormal-=referManager.FPSController.HandleNormal;
     }
     private void OnDie()
     {

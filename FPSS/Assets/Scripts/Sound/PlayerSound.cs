@@ -12,13 +12,13 @@ public class PlayerSound : MonoBehaviour
         if(!healthManager.isOwned){return;}
         healthManager.OnNearlyDie+=PlayHeartBeatSound;
         healthManager.OnDie+=StopHeartBeatSound;
-        healthManager.OnRescue+=StopHeartBeatSound;
+        healthManager.OnRescuing+=StopHeartBeatSound;
     }
     private void OnDestroy() {
         if(!healthManager.isOwned){return;}
         healthManager.OnNearlyDie-=PlayHeartBeatSound;
         healthManager.OnDie-=StopHeartBeatSound;
-        healthManager.OnRescue-=StopHeartBeatSound;
+        healthManager.OnRescuing-=StopHeartBeatSound;
     }
     private void PlayHeartBeatSound()
     {

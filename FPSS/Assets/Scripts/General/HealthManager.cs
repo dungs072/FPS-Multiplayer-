@@ -8,7 +8,8 @@ public class HealthManager : NetworkBehaviour
     public event Action OnDie;
     public event Action OnNearlyDie;
     public event Action OnTakeDamage;
-    public event Action OnRescue;
+    public event Action OnRescuing;
+    public event Action OnNormal;
     public event Action<float> OnChangeHealthBar;
     [SerializeField] private List<Health> healths;
     [SerializeField] private int maxHealth = 200;
@@ -34,7 +35,7 @@ public class HealthManager : NetworkBehaviour
     {
         OnTakeDamage += UIManager.Instance.TriggerBloodOverlay;
         OnNearlyDie += UIManager.Instance.TriggerNearlyDieUI;
-        OnRescue += UIManager.Instance.TriggerStopNearlyDieUI;
+        OnRescuing += UIManager.Instance.TriggerStopNearlyDieUI;
         OnDie += UIManager.Instance.TriggerStopNearlyDieUI;
         OnChangeHealthBar+=UIManager.Instance.ChangeHealthBar;
     }
@@ -44,7 +45,7 @@ public class HealthManager : NetworkBehaviour
         if (!isOwned) { return; }
         OnTakeDamage -= UIManager.Instance.TriggerBloodOverlay;
         OnNearlyDie -= UIManager.Instance.TriggerNearlyDieUI;
-        OnRescue -= UIManager.Instance.TriggerStopNearlyDieUI;
+        OnRescuing -= UIManager.Instance.TriggerStopNearlyDieUI;
         OnDie -= UIManager.Instance.TriggerStopNearlyDieUI;
         OnChangeHealthBar-=UIManager.Instance.ChangeHealthBar;
     }
@@ -114,9 +115,13 @@ public class HealthManager : NetworkBehaviour
     private void OnChangeCurrentHealth(int oldValue, int newValue)
     {
         if (!isOwned) { return; }
+        if(newValue>lowHealth&&oldValue<=lowHealth&&oldValue!=0)
+        {
+            OnNormal?.Invoke();
+        }
         if (oldValue < newValue)
         {
-            OnRescue?.Invoke();
+            OnRescuing?.Invoke();
         }
         else
         {

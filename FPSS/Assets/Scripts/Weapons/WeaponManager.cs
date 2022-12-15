@@ -31,16 +31,6 @@ public class WeaponManager : NetworkBehaviour
         ChangeWeapon(currentWeaponIndex);
         StartCoroutine(SetInitialWeapon());
     }
-    // public override void OnStartAuthority()
-    // {
-    //     OnAddWeapon+=AddNewWeapon;
-    //     OnRemoveWeapon+=RemoveWeapon;
-    // }
-    // private void OnDestroy()
-    // {
-    //     OnAddWeapon-=AddNewWeapon;
-    //     OnRemoveWeapon-=RemoveWeapon;
-    // }
     private IEnumerator SetInitialWeapon()
     {
         yield return null;

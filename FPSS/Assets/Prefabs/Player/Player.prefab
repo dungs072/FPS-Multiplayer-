@@ -33433,6 +33433,7 @@ MonoBehaviour:
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   m_Camera: {fileID: 8114319186919794860}
   recoilSpeed: 3
+  woundSpeedDecrease: 2
 --- !u!54 &8114319186914789868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34131,7 +34132,7 @@ MonoBehaviour:
   - {fileID: 4229275396647351594}
   - {fileID: 5591397438511501345}
   maxHealth: 200
-  lowHealth: 10
+  lowHealth: 30
   timeToHeal: 7
   increaseHealthAmount: 1
 --- !u!114 &2259313565899129454
@@ -34873,6 +34874,10 @@ PrefabInstance:
       propertyPath: referenceManager
       value: 
       objectReference: {fileID: 8114319186923691854}
+    - target: {fileID: 1101085467562720457, guid: cbdf0ade65ec4aa45a316a497fa8a58b, type: 3}
+      propertyPath: timeAppearScopeOverLay
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6066667455807284714, guid: cbdf0ade65ec4aa45a316a497fa8a58b, type: 3}
       propertyPath: m_Name
       value: Sniper1
