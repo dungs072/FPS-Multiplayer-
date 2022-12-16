@@ -17,6 +17,11 @@ public class ShotgunBase : WeaponBase
     [SerializeField] private AudioClip insertSound;
     [SerializeField] private AudioClip closeSound;
     [SerializeField] private AudioClip boltSound;
+
+    public void SetTppController(ThirdPersonController tpp)
+    {
+        this.tppController = tpp;
+    }
     protected override void Reload()
     {
         canReload = false;

@@ -143,6 +143,7 @@ public class HealthManager : NetworkBehaviour
     }
     private void OnHandleDie(bool oldState, bool newState)
     {
+        if(!newState){return;}
         OnDie?.Invoke();
     }
     private void OnChangeCurrentHealth(int oldValue, int newValue)

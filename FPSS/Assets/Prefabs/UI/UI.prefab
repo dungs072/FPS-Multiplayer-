@@ -2374,7 +2374,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'RESPAWN
+  m_text: 'Auto respawn in
 
 '
   m_isRightToLeft: 0
@@ -2403,13 +2403,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2755,6 +2755,7 @@ MonoBehaviour:
   weaponDisplay: {fileID: 3191372018445194267}
   bulletDisplay: {fileID: 4267391542527819675}
   bulletLeftDisplay: {fileID: 6892212547115590217}
+  noneInfor: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &7420834783001602709
 GameObject:
   m_ObjectHideFlags: 0
@@ -3013,6 +3014,7 @@ MonoBehaviour:
   weaponDisplay: {fileID: 3874833117791675064}
   bulletDisplay: {fileID: 7549161643088812865}
   bulletLeftDisplay: {fileID: 8356591456368917594}
+  noneInfor: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &8861195410624984297
 GameObject:
   m_ObjectHideFlags: 0

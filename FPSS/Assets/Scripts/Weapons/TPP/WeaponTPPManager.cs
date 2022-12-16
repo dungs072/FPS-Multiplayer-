@@ -21,6 +21,7 @@ public class WeaponTPPManager : NetworkBehaviour
     }
     private void LoadWeaponFromResources(string name)
     {
+        name = "TPPWeapons/"+name;
         WeaponTPP weapon = Resources.Load<WeaponTPP>(name);
         EquipWeapon(weapon);
     }

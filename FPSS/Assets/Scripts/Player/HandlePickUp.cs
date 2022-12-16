@@ -62,7 +62,7 @@ public class HandlePickUp : NetworkBehaviour
         if(pickUps.Count==0){return;}
         if(pickUps[0]==null){return;}
         if(!pickUps[0].CanPickup){return;}
-        refer.WeaponManager.EquipFpsWeapon(pickUps[0].WeaponType);
+        refer.WeaponManager.EquipFpsWeapon(pickUps[0].Name);
         refer.WeaponTPPManager.LoadTppWeapon(pickUps[0].Name);
         RemovePickUpItem(pickUps[0]);
     }

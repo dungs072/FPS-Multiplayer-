@@ -55,6 +55,11 @@ public class UIManager : MonoBehaviour
     {
         dynamicCrossHair.GetComponent<CrossHair>().ChangeCrossHair(type);
     }
+    public void ClearPackWeapon()
+    {
+        if(packs.Length<1){return;}
+        packs[1].ClearAllInfor();
+    }
     public void TriggerScoreRewardUI(bool isHeashot)
     {
         headShotPanel.SetActive(isHeashot);
@@ -62,6 +67,7 @@ public class UIManager : MonoBehaviour
         if (scoreRewardCoroutine != null) { StopCoroutine(scoreRewardCoroutine); }
         scoreRewardCoroutine = StartCoroutine(ScoreRewardUI());
     }
+
     private IEnumerator ScoreRewardUI()
     {
         yield return new WaitForSeconds(2f);
@@ -71,6 +77,7 @@ public class UIManager : MonoBehaviour
     public void ToggleRespawnUI(bool state)
     {
         respawnUI.SetActive(state);
+        ClearPackWeapon();
     }
     public void UpdateRespawnUI(float time)
     {

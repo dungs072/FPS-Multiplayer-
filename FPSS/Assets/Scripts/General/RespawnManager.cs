@@ -10,7 +10,9 @@ public class RespawnManager : NetworkBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private RagdollManager ragdollManager;
     [SerializeField] private DeathManager deathManager;
+    [SerializeField] private RigManager rigManager;
     [SerializeField] private float timeToRespawn;
+    private Coroutine countDownCoroutine;
     public override void OnStartAuthority()
     {
         healthManager.OnDie+=HandleRespawn;
@@ -20,10 +22,12 @@ public class RespawnManager : NetworkBehaviour
     private void Start() {
         OnRespawn+=playerController.OnRespawn;
         OnRespawn+=ragdollManager.TurnOffRagdoll;
+        OnRespawn+=rigManager.TurnOnRigWeight;
     }
     private void OnDestroy() {
         OnRespawn-=playerController.OnRespawn;
         OnRespawn-=ragdollManager.TurnOffRagdoll;
+        OnRespawn-=rigManager.TurnOnRigWeight;
         if(!isOwned){return;}
         healthManager.OnDie-=HandleRespawn;
         OnRespawn-=healthManager.Respawn;
@@ -32,7 +36,8 @@ public class RespawnManager : NetworkBehaviour
     }
     public void HandleRespawn()
     {
-        StartCoroutine(CountDownTime());
+        if(countDownCoroutine!=null){StopCoroutine(countDownCoroutine);}
+        countDownCoroutine =  StartCoroutine(CountDownTime());
     }
     private IEnumerator CountDownTime()
     {
@@ -46,7 +51,20 @@ public class RespawnManager : NetworkBehaviour
             ui.UpdateRespawnUI(time);
         }
         OnRespawn?.Invoke();
+        if(isOwned){CmdRespawn();}   
         ui.ToggleRespawnUI(false);
+    }
+
+    [Command]
+    private void CmdRespawn()
+    {
+        RpcRespawn();
+    }
+    [ClientRpc]
+    private void RpcRespawn()
+    {
+        if(isOwned){return;}
+        OnRespawn?.Invoke();
     }
 
 }

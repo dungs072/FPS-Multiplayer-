@@ -5,11 +5,11 @@ using System;
 public class Health : MonoBehaviour
 {
     public event Action<int,bool,Transform> OnTakeDamage;
-    [SerializeField] private int multipleDamageAmount;
+    [SerializeField] private float multipleDamageAmount;
     [SerializeField] private bool isHead;
     [field:SerializeField] public PlayerController Owner{get;private set;}
     public void TakeDamage(int amount,Transform attacker)
     {
-        OnTakeDamage?.Invoke(amount*multipleDamageAmount,isHead,attacker);
+        OnTakeDamage?.Invoke((int)(amount*multipleDamageAmount),isHead,attacker);
     }
 }

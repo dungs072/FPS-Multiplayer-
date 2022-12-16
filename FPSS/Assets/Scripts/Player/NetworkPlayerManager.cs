@@ -60,6 +60,11 @@ public class NetworkPlayerManager : NetworkBehaviour
             SetGameLayerRecursive(obj, fpssLayer);
         }
     }
+    public void ChangeLayerFPSWeapon(GameObject weapon)
+    {
+        if(isOwned){return;}
+        SetGameLayerRecursive(weapon,fpssLayer);
+    }
     private void SetGameLayerRecursive(GameObject _go, string nameLayer)
     {
         _go.layer = LayerMask.NameToLayer(nameLayer);

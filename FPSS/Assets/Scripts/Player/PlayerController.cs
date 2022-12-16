@@ -7,6 +7,7 @@ public class PlayerController : NetworkBehaviour
 {
     public event Action OnHitTarget;
     [SerializeField] private ReferenceManager referManager;
+    [field:SerializeField] public PlayerSound PlayerSound{get;private set;}
     [SyncVar(hook = nameof(OnChangeWalkingState))]
     private bool isWalking;
 

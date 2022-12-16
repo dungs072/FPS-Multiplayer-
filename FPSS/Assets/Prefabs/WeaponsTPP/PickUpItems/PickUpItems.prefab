@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -5642092720393989239}
   - component: {fileID: 8129574932148668290}
   - component: {fileID: 99839006249864623}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PickUpItems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,3 +95,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: RocketLauncher
   <WeaponType>k__BackingField: 4
+  <CanPickup>k__BackingField: 1

@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityStandardAssets.Characters.FirstPerson;
 public class Scope : MonoBehaviour
 {
     private const int FOVDefault = 60;
 
     [Range(0, 1f)][SerializeField] private float sensitivity = 0.1f;
-    [SerializeField] PlayerController playerController;
-    [SerializeField] ReferenceManager referenceManager;
     [SerializeField] private GameObject[] lens;
     [SerializeField] private GameObject crossHair;
     [SerializeField] private GameObject displayScope;
+    private FirstPersonController fps;
 
+    public void SetFPSController(FirstPersonController fps)
+    {
+        this.fps = fps;
+    }
 
     public void ScopeUp()
     {
@@ -22,7 +25,7 @@ public class Scope : MonoBehaviour
         }
         crossHair.SetActive(true);
         displayScope.SetActive(true);
-        referenceManager.FPSController.SetRotatateSensitivity(sensitivity);
+        fps.SetRotatateSensitivity(sensitivity);
     }
     public void ScopeDown()
     {
@@ -32,6 +35,6 @@ public class Scope : MonoBehaviour
         }
         crossHair.SetActive(false);
         displayScope.SetActive(false);
-        referenceManager.FPSController.SetRotatateSensitivity(2f);
+        fps.SetRotatateSensitivity(2f);
     }
 }

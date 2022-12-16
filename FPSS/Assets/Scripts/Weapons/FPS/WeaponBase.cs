@@ -29,8 +29,7 @@ public class WeaponBase : MonoBehaviour
     private readonly int ThrowHash = Animator.StringToHash("Throw");
 
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private PlayerSound playerSound;
-    [SerializeField] private Camera fpsCamera;
+
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ShootType ShootType { get; private set; }
     [field: SerializeField] public WeaponType WeaponType { get; private set; }
@@ -108,6 +107,11 @@ public class WeaponBase : MonoBehaviour
     public bool IsThrowing { get { return !canReadyThrow; } }
     public float TakeOutTimeTPP { get { return takeOutTimeTPP; } }
 
+    public void SetPlayerControllerAndFPS(PlayerController playerController,FirstPersonController fps)
+    {
+        this.playerController = playerController;
+        this.fps = fps;
+    }
     private void RecoilMath(float sensitivity)
     {
         currentRecoilXPos = ((UnityEngine.Random.value - .5f) / 2) * recoilAmountX * sensitivity;
@@ -239,7 +243,7 @@ public class WeaponBase : MonoBehaviour
     public void CheckReload()
     {
         if (!canReload) { return; }
-        playerSound.PlayReloading();
+        playerController.PlayerSound.PlayReloading();
         Reload();
     }
     protected virtual void Reload()
@@ -309,7 +313,7 @@ public class WeaponBase : MonoBehaviour
 
     private Vector3 CalculateDirectionWithSpread(Vector3 startPoint,Vector3 spreadV,int index)
     {
-        Ray ray = fpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)+spreadV);
+        Ray ray = fps.FirstPersonCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)+spreadV);
         if (Physics.Raycast(ray, out hits[index],float.MaxValue, layers))
         {
             targetPoint = hits[index].point;

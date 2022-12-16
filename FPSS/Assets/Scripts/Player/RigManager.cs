@@ -32,6 +32,10 @@ public class RigManager : NetworkBehaviour
     {
         SetRigWeight(0f);
     }
+    public void TurnOnRigWeight()
+    {
+        SetRigWeight(1f);
+    }
     public void SetSecondHandGrabWeight(float value)
     {
         secondHandGrabWeightTarget = value;
