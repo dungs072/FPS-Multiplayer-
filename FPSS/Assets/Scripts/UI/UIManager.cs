@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject centerDot;
     [SerializeField] private GameObject FButtonUI;
     [SerializeField] private GameObject hitCrossHair;
-
     [SerializeField] private float timeToEndBloodOverlay = 1f;
     [SerializeField] private float timePerChangeAlphaValue = 0.2f;
     [SerializeField] private float speedStartAlpha = 10f;
@@ -24,14 +24,19 @@ public class UIManager : MonoBehaviour
     [Header("Weapon Pack")]
     [SerializeField] private PackWeaponUI[] packs;
     [Header("Pop up score")]
-    [SerializeField] private PopUpScoreSystem popUpScoreSystem;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private GameObject headShotPanel;
+    [Header("Respawn")]
+    [SerializeField] private GameObject respawnUI;
+    [SerializeField] private TMP_Text countDownRespawnText;
 
-    public PackWeaponUI[] Packs{get{return packs;}}
+    public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
     private Coroutine startBloodOverlayCoroutine;
     private Coroutine endBloodOverlayCoroutine;
     private Coroutine nearlyDieCoroutine;
     private Coroutine damageCoroutine;
+    private Coroutine scoreRewardCoroutine;
     private bool isNearlyDie = false;
 
     private void Awake()
@@ -50,9 +55,26 @@ public class UIManager : MonoBehaviour
     {
         dynamicCrossHair.GetComponent<CrossHair>().ChangeCrossHair(type);
     }
-    public void PopUpScoreToScreen(Vector2 posOnScreen)
+    public void TriggerScoreRewardUI(bool isHeashot)
     {
-        popUpScoreSystem.SpawnPopupScore(posOnScreen);
+        headShotPanel.SetActive(isHeashot);
+        scoreText.gameObject.SetActive(true);
+        if (scoreRewardCoroutine != null) { StopCoroutine(scoreRewardCoroutine); }
+        scoreRewardCoroutine = StartCoroutine(ScoreRewardUI());
+    }
+    private IEnumerator ScoreRewardUI()
+    {
+        yield return new WaitForSeconds(2f);
+        headShotPanel.SetActive(false);
+        scoreText.gameObject.SetActive(false);
+    }
+    public void ToggleRespawnUI(bool state)
+    {
+        respawnUI.SetActive(state);
+    }
+    public void UpdateRespawnUI(float time)
+    {
+        countDownRespawnText.text = time.ToString("0.00");
     }
     public void ToggleCrossHairScope(bool state)
     {
@@ -95,15 +117,15 @@ public class UIManager : MonoBehaviour
     {
         while (isNearlyDie)
         {
-            while (canvasGroup.alpha<0.9f)
+            while (canvasGroup.alpha < 0.9f)
             {
-                canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, 15*Time.deltaTime);
+                canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, 15 * Time.deltaTime);
                 yield return new WaitForSeconds(timePerChangeAlphaValue);
             }
             yield return null;
-            while (canvasGroup.alpha>minBloodOverlay)
+            while (canvasGroup.alpha > minBloodOverlay)
             {
-                canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 0f, 15*Time.deltaTime);
+                canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 0f, 15 * Time.deltaTime);
                 yield return new WaitForSeconds(timePerChangeAlphaValue);
             }
         }
@@ -111,16 +133,16 @@ public class UIManager : MonoBehaviour
     public void TriggerStopNearlyDieUI()
     {
         isNearlyDie = false;
-        if(nearlyDieCoroutine!=null){StopCoroutine(nearlyDieCoroutine);}
-        if(damageCoroutine!=null){StopCoroutine(damageCoroutine);}
+        if (nearlyDieCoroutine != null) { StopCoroutine(nearlyDieCoroutine); }
+        if (damageCoroutine != null) { StopCoroutine(damageCoroutine); }
         StopStartEndBloodOverlayCoroutines();
-        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(0f,speedStopAlpha));
+        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(0f, speedStopAlpha));
     }
     public void TriggerBloodOverlay()
     {
         if (isNearlyDie) { return; }
-        if(nearlyDieCoroutine!=null){return;}
-        damageCoroutine =  StartCoroutine(DoBloodOverlay(0f, 1f, timeToEndBloodOverlay));
+        if (nearlyDieCoroutine != null) { return; }
+        damageCoroutine = StartCoroutine(DoBloodOverlay(0f, 1f, timeToEndBloodOverlay));
     }
     private IEnumerator DoBloodOverlay(float min, float max, float time)
     {
@@ -154,14 +176,14 @@ public class UIManager : MonoBehaviour
         while (!Mathf.Approximately(canvasGroup.alpha, minAmount))
         {
             canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, minAmount, speed * Time.deltaTime);
-            if(canvasGroup.alpha<0.05f){canvasGroup.alpha=minAmount;}
+            if (canvasGroup.alpha < 0.05f) { canvasGroup.alpha = minAmount; }
             yield return new WaitForSeconds(timePerChangeAlphaValue);
         }
     }
 
     public void ChangeHealthBar(float amount)
     {
-        foreGroundHealthBar.localScale = new Vector3(amount,1f,1f);
+        foreGroundHealthBar.localScale = new Vector3(amount, 1f, 1f);
     }
 }
 

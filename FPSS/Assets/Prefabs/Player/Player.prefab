@@ -4509,6 +4509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &6731861622065435285
 CapsuleCollider:
@@ -4698,6 +4699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &7877170314797084371
 CapsuleCollider:
@@ -4987,6 +4989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 10
+  isHead: 1
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!135 &5052886025036335638
 SphereCollider:
@@ -5246,6 +5249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!65 &3220198988719246661
 BoxCollider:
@@ -6121,6 +6125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &4471153959367277759
 CapsuleCollider:
@@ -6310,6 +6315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &6880194136223781597
 CapsuleCollider:
@@ -6531,6 +6537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &8869418211023056218
 CapsuleCollider:
@@ -6720,6 +6727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &8128498317415751709
 CapsuleCollider:
@@ -6984,6 +6992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!1 &3103639010986738979
 GameObject:
@@ -7664,6 +7673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &2355000973275214155
 CapsuleCollider:
@@ -7856,6 +7866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multipleDamageAmount: 1
+  isHead: 0
   <Owner>k__BackingField: {fileID: 8114319186923691855}
 --- !u!136 &4806895038278861782
 CapsuleCollider:
@@ -33260,6 +33271,7 @@ GameObject:
   - component: {fileID: 2259313565899129454}
   - component: {fileID: 1929013802941472636}
   - component: {fileID: 3855248533811634969}
+  - component: {fileID: 761486930528167846}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -34136,7 +34148,7 @@ MonoBehaviour:
   - {fileID: 5591397438511501345}
   maxHealth: 200
   lowHealth: 30
-  timeToHeal: 7
+  timeToHeal: 12
   increaseHealthAmount: 1
   fpsCamera: {fileID: 8114319186919794860}
 --- !u!114 &2259313565899129454
@@ -34219,6 +34231,26 @@ MonoBehaviour:
   healthManager: {fileID: 8655904785302520343}
   heartAudioSource: {fileID: 3947786794159962601}
   mainAudioSource: {fileID: 8114319186913538924}
+--- !u!114 &761486930528167846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114319186918025868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b5c7c426c4ff064e99129351da6cd56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
+  healthManager: {fileID: 8655904785302520343}
+  playerController: {fileID: 8114319186923691855}
+  ragdollManager: {fileID: 2259313565899129454}
+  deathManager: {fileID: 1929013802941472636}
+  timeToRespawn: 7
 --- !u!1 &8114319186918025870
 GameObject:
   m_ObjectHideFlags: 0

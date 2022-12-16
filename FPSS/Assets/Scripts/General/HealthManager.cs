@@ -65,7 +65,17 @@ public class HealthManager : NetworkBehaviour
             health.OnTakeDamage -= TakeDamage;
         }
     }
-    public void TakeDamage(int amount, Transform attacker)
+    public void Respawn()
+    {
+        if(!isOwned){return;}
+        isDie = false;
+        CmdIsDie(false);
+        CmdSetCurrentHealth(maxHealth);
+        OnChangeHealthBar.Invoke(1f);
+        OnNormal?.Invoke();
+        if(healCoroutine!=null){StopCoroutine(healCoroutine);}
+    }
+    public void TakeDamage(int amount,bool isHead, Transform attacker)
     {
 
         if (isOwned)
@@ -76,11 +86,10 @@ public class HealthManager : NetworkBehaviour
         {
             if (identity.isOwned)
             {
-                // if (currentHealth - amount < 0&&!isDie)
-                // {
-                //     Vector3 screenPos = fpsCamera.WorldToScreenPoint(transform.position);
-                //     UIManager.Instance.PopUpScoreToScreen(new Vector2(screenPos.x,screenPos.y));
-                // }// have to fix there
+                if (currentHealth - amount < 0&&!isDie)
+                {
+                    UIManager.Instance.TriggerScoreRewardUI(isHead);
+                }
                 CmdTakeDamage(amount);
                 
             }
@@ -113,7 +122,6 @@ public class HealthManager : NetworkBehaviour
         if (currentHealth == 0)
         {
             isDie = true;
-            OnDie?.Invoke();
         }
         SelfRescue();
     }
@@ -130,13 +138,11 @@ public class HealthManager : NetworkBehaviour
         {
             yield return null;
             currentHealth = Mathf.Min(currentHealth + increaseHealthAmount, maxHealth);
-            print(currentHealth);
         }
 
     }
     private void OnHandleDie(bool oldState, bool newState)
     {
-        if (isServer) { return; }
         OnDie?.Invoke();
     }
     private void OnChangeCurrentHealth(int oldValue, int newValue)

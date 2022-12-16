@@ -27,6 +27,12 @@ public class DeathManager : NetworkBehaviour
         UIManager.Instance.ToggleDynamicCrossHair(true);
         StartCoroutine(TurnOffFreeLookCamera());
     }
+    public void TriggerRespawnProcess()
+    {
+        dieCameraObject.SetActive(false);
+        fpsCameraObject.SetActive(true);
+        UIManager.Instance.ToggleDynamicCrossHair(false);
+    }
     private IEnumerator TurnOffFreeLookCamera()
     {
         yield return new WaitForSeconds(timeToTurnOffFreeLookCamera);

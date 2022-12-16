@@ -55,6 +55,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float ForwardValue { get; private set; }
         public float RightValue { get; private set; }
 
+        private float walkSpeed;
+        private float runSpeed;
+
         private Vector3 cameraRotation = Vector3.zero;
         public Vector3 CameraRotation
         {
@@ -87,6 +90,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_NextStep = m_StepCycle / 2f;
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
+            walkSpeed = m_WalkSpeed;
+            runSpeed = m_RunSpeed;
 
         }
 
@@ -312,8 +317,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
         public void HandleNormal()
         {
-            m_WalkSpeed += woundSpeedDecrease;
-            m_JumpSpeed += woundSpeedDecrease;
+            m_WalkSpeed = walkSpeed;
+            m_JumpSpeed = runSpeed;
             canRun = true;
         }
         [Command]

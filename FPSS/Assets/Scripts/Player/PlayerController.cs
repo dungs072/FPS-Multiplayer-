@@ -135,6 +135,12 @@ public class PlayerController : NetworkBehaviour
         referManager.TPPController.enabled = false;
         this.enabled = false;
     }
+    public void OnRespawn()
+    {
+        referManager.FPSController.enabled = true;
+        referManager.TPPController.enabled = true;
+        this.enabled = true;
+    }
     private void Update()
     {
         if (!isOwned) { return; }

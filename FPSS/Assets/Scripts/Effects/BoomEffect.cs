@@ -28,7 +28,7 @@ public class BoomEffect : MonoBehaviour
                     if (colliders[i].TryGetComponent<HealthManager>(out HealthManager healthManager))
                     {
                         int finalDamage = Mathf.Abs(damage - (int)(distance));
-                        healthManager.TakeDamage(finalDamage,attacker);
+                        healthManager.TakeDamage(finalDamage,false,attacker);
                     }
                 }
 

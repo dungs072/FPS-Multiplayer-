@@ -48,6 +48,10 @@ public class RagdollManager : NetworkBehaviour
     {
         ToggleRagdoll(false);
     }
+    public void TurnOffRagdoll()
+    {
+        ToggleRagdoll(true);
+    }
     public void ToggleRagdoll(bool state)
     {
         foreach(var rb in rbs)
