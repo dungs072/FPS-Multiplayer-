@@ -67,7 +67,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.89824563
+      - time: 0.9719101
         functionName: TurnOnHandsWeight
         data: 
         objectReferenceParameter: {fileID: 8114319186918025868, guid: 2451c978b6fe6674fb735e9531547363, type: 3}

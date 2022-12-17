@@ -22,6 +22,7 @@ public class WeaponManager : NetworkBehaviour
     [SerializeField] private List<WeaponBase> weapons = new List<WeaponBase>();
     [SerializeField] private Transform weaponPackTransform;
     [SerializeField] private NetworkPlayerManager networkPlayerManager;
+    [SerializeField] private RigManager rigManager;
     public WeaponBase CurrentWeapon { get { return weapons[currentWeaponIndex]; } }
 
     public List<WeaponBase> Weapons { get { return weapons; } }
@@ -144,6 +145,14 @@ public class WeaponManager : NetworkBehaviour
         if(weapon is ShotgunBase)
         {
             (weapon as ShotgunBase).SetTppController(GetComponent<ThirdPersonController>());
+        }
+        if(weapon.WeaponType==WeaponType.RocketLaucher)
+        {
+            rigManager.ChangeSecondHandGrabSourceTarget(1);
+        }
+        else
+        {
+            rigManager.ChangeSecondHandGrabSourceTarget();
         }
         weapons.Add(weapon);
         OnAddWeapon?.Invoke(weapon);

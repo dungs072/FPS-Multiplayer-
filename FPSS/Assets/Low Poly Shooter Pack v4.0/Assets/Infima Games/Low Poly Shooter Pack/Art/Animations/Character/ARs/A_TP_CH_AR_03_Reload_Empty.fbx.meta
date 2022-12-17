@@ -60,15 +60,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.99340665
-        functionName: TurnOnHandsWeight
+      - time: 0
+        functionName: ToggleBothHands
         data: 
         objectReferenceParameter: {fileID: 8114319186918025868, guid: 2451c978b6fe6674fb735e9531547363, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: ToggleBothHands
+      - time: 0.94382024
+        functionName: TurnOnHandsWeight
         data: 
         objectReferenceParameter: {fileID: 8114319186918025868, guid: 2451c978b6fe6674fb735e9531547363, type: 3}
         floatParameter: 0

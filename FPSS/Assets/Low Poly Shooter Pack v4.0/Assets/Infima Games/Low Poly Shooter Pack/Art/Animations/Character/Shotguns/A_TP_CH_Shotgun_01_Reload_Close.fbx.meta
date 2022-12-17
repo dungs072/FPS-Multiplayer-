@@ -60,7 +60,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9871246
+      - time: 0.98876405
         functionName: ToggleBothHands
         data: 
         objectReferenceParameter: {fileID: 8114319186918025868, guid: 2451c978b6fe6674fb735e9531547363, type: 3}

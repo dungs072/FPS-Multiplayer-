@@ -8,8 +8,15 @@ public class RigManager : NetworkBehaviour
     [SerializeField] private TwoBoneIKConstraint secondHandGrab;
     [SerializeField] private MultiAimConstraint handAim;
     [SerializeField] private MultiAimConstraint bodyAim;
+    [SerializeField] private RigBuilder rigBuilder;
+    [SerializeField] private Animator animator;
     [SerializeField] private Rig rig;
     [SerializeField] private HealthManager healthManager;
+    [Header("Source target")]
+    [SerializeField] private Transform target;
+    [SerializeField] private Transform hint;
+    [SerializeField] private Transform targetRL;
+    [SerializeField] private Transform hintRL;
     [SyncVar]
     private float secondHandGrabWeightTarget = 1f;
     [SyncVar]
@@ -28,13 +35,32 @@ public class RigManager : NetworkBehaviour
         rig.weight = Mathf.Lerp(rig.weight, rigWeightTarget, Time.deltaTime * 20f);
         handAim.weight = Mathf.Lerp(handAim.weight, handAimWeightTarget, Time.deltaTime * 20f);
     }
-    private void TurnOffRigWeight()
+    public void TurnOffRigWeight()
     {
         SetRigWeight(0f);
     }
     public void TurnOnRigWeight()
     {
         SetRigWeight(1f);
+    }
+    public void ChangeSecondHandGrabSourceTarget(int i = 0)
+    {
+        if(i==0)
+        {
+            secondHandGrab.data.target = target;
+            secondHandGrab.data.hint = target;
+        }
+        else
+        {
+            secondHandGrab.data.target = targetRL;
+            secondHandGrab.data.hint = hintRL;
+        }
+        Rebuild();
+    }
+    private void Rebuild()
+    {
+        rigBuilder.Build();
+        //animator.Rebind();
     }
     public void SetSecondHandGrabWeight(float value)
     {

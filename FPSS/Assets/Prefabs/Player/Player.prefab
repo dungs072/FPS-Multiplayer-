@@ -149,95 +149,6 @@ MonoBehaviour:
     m_HintWeight: 1
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
---- !u!1 &996517356193038604
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 333486088099405660}
-  m_Layer: 0
-  m_Name: Left Hand Throw Grenade_hint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &333486088099405660
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996517356193038604}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.03999996, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2522575875703491029}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1334863616483354573
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2522575875703491029}
-  - component: {fileID: 4737899127562071401}
-  m_Layer: 0
-  m_Name: Left Hand Throw Grenade
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2522575875703491029
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1334863616483354573}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2817834898804936025}
-  - {fileID: 333486088099405660}
-  m_Father: {fileID: 8448854666791052364}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4737899127562071401
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1334863616483354573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 1
-  m_Data:
-    m_Root: {fileID: 3103639010987170091}
-    m_Mid: {fileID: 3103639010987169947}
-    m_Tip: {fileID: 3103639010987169979}
-    m_Target: {fileID: 2817834898804936025}
-    m_Hint: {fileID: 333486088099405660}
-    m_TargetPositionWeight: 1
-    m_TargetRotationWeight: 1
-    m_HintWeight: 1
-    m_MaintainTargetPositionOffset: 0
-    m_MaintainTargetRotationOffset: 0
 --- !u!1 &1702078986906748185
 GameObject:
   m_ObjectHideFlags: 3
@@ -443,7 +354,7 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
---- !u!1 &2403182042829801211
+--- !u!1 &2779112869827437605
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -451,45 +362,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8448854666791052364}
-  - component: {fileID: 6613475578527911266}
+  - component: {fileID: 198012398026957631}
   m_Layer: 0
-  m_Name: Rig 2
+  m_Name: Second Hand Grab Weapon_hint RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &8448854666791052364
+  m_IsActive: 1
+--- !u!4 &198012398026957631
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403182042829801211}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 2779112869827437605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.306, z: -0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2522575875703491029}
-  m_Father: {fileID: 3103639010987169989}
-  m_RootOrder: 3
+  m_Children: []
+  m_Father: {fileID: 3103639010987169973}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6613475578527911266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403182042829801211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Weight: 0
-  m_Effectors: []
 --- !u!1 &2833663617812666514
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +500,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3103639010987169989}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3103639010986738817
 GameObject:
@@ -1149,6 +1044,8 @@ Transform:
   - {fileID: 8786278265148326538}
   - {fileID: 5369051897620983946}
   - {fileID: 2529349164742785641}
+  - {fileID: 198012398026957631}
+  - {fileID: 4222247787476561737}
   m_Father: {fileID: 3103639010987169941}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3272,7 +3169,6 @@ Transform:
   - {fileID: 3103639010987169965}
   - {fileID: 3103639010987169991}
   - {fileID: 5221590162765234629}
-  - {fileID: 8448854666791052364}
   - {fileID: 3005966129734925106}
   m_Father: {fileID: 8114319186918192812}
   m_RootOrder: 1
@@ -3311,8 +3207,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_RigLayers:
   - m_Rig: {fileID: 3631219945970898338}
-    m_Active: 1
-  - m_Rig: {fileID: 6613475578527911266}
     m_Active: 1
   m_Effectors: []
 --- !u!114 &7381513859888052789
@@ -4233,6 +4127,37 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 2445456288029843131}
+--- !u!1 &4078721902146206223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4222247787476561737}
+  m_Layer: 0
+  m_Name: Second Hand Grab Weapon_target RL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4222247787476561737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078721902146206223}
+  m_LocalRotation: {x: 0.28326437, y: -0.9545852, z: -0.07470731, w: -0.054288246}
+  m_LocalPosition: {x: 0.2092, y: -0.1276, z: -0.0194}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3103639010987169973}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: -170.015, y: -3.5700073, z: -212.744}
 --- !u!1 &4318983280862683851
 GameObject:
   m_ObjectHideFlags: 0
@@ -5033,7 +4958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!1 &6984919314216423470
 GameObject:
@@ -5835,17 +5760,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  totalWeapons:
-  - {fileID: 3069158919979708246}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   weapons:
   - {fileID: 3069158919979708246}
   weaponPackTransform: {fileID: 8114319188123235558}
   networkPlayerManager: {fileID: 2100415169945206317}
+  rigManager: {fileID: 5281927766163981529}
 --- !u!114 &1413503645972560256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5885,8 +5804,14 @@ MonoBehaviour:
   secondHandGrab: {fileID: 2471215360562140555}
   handAim: {fileID: 1403784339624259726}
   bodyAim: {fileID: 8819421095231472118}
+  rigBuilder: {fileID: 5823223886947377998}
+  animator: {fileID: 3103639010979460941}
   rig: {fileID: 3631219945970898338}
   healthManager: {fileID: 8655904785302520343}
+  target: {fileID: 2529349164742785641}
+  hint: {fileID: 5369051897620983946}
+  targetRL: {fileID: 4222247787476561737}
+  hintRL: {fileID: 198012398026957631}
 --- !u!114 &4844320798039907785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6263,37 +6188,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &8689959942837575592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2817834898804936025}
-  m_Layer: 0
-  m_Name: Left Hand Throw Grenade_target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2817834898804936025
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8689959942837575592}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.03999996, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2522575875703491029}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9003931872920080550
 GameObject:
   m_ObjectHideFlags: 0
@@ -6558,6 +6452,10 @@ PrefabInstance:
     - target: {fileID: 7763920374940661432, guid: 7bcfe9e0aa4930848a16d4b8988c5cf8, type: 3}
       propertyPath: m_Name
       value: HandGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763920374940661432, guid: 7bcfe9e0aa4930848a16d4b8988c5cf8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7763920374940661750, guid: 7bcfe9e0aa4930848a16d4b8988c5cf8, type: 3}
       propertyPath: m_RootOrder
