@@ -20,6 +20,7 @@ public class PlayerController : NetworkBehaviour
     private bool isAiming;
 
     private bool canInspect = false;
+    private bool isCrouch = false;
 
     public bool IsWalking
     {
@@ -185,12 +186,21 @@ public class PlayerController : NetworkBehaviour
        
         HandleReload();
         HandleThrowGrenade();
+        HandleCrouch();
     }
     public void ResetMovementState()
     {
         IsIdle = false;
         IsWalking = false;
         IsRunning = false;
+    }
+    private void HandleCrouch()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            isCrouch = !isCrouch;
+            referManager.TPPController.ToggleCrouch(isCrouch);
+        }
     }
     private void HandleThrowGrenade()
     {

@@ -7,6 +7,8 @@ public class ThirdPersonController : NetworkBehaviour
 {
     private const float CrossFadeFixedTime = 0.1f;
     private readonly int LocomotionHash = Animator.StringToHash("Locomotion");
+    private readonly int CrouchDownHash = Animator.StringToHash("CrouchDown");
+    private readonly int CrouchUpHash = Animator.StringToHash("CrouchUp");
     private readonly int ForwardHash = Animator.StringToHash("Forward");
     private readonly int RightHash = Animator.StringToHash("Right");
     private readonly int FireHash = Animator.StringToHash("Fire");
@@ -155,6 +157,17 @@ public class ThirdPersonController : NetworkBehaviour
             }
         }
 
+    }
+    public void ToggleCrouch(bool isCrouch)
+    {
+        if(isCrouch)
+        {
+            Animator.CrossFadeInFixedTime(CrouchUpHash,CrossFadeFixedTime);
+        }
+        else
+        {
+            Animator.CrossFadeInFixedTime(CrouchDownHash,CrossFadeFixedTime);
+        }
     }
     private void TurnOffOldHashWeapon(WeaponType type)
     {

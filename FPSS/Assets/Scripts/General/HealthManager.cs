@@ -19,6 +19,9 @@ public class HealthManager : NetworkBehaviour
     [SerializeField] private int increaseHealthAmount = 10;
     [Header("Camera")]
     [SerializeField] private Camera fpsCamera;
+    [Header("Revise")]
+    [SerializeField] private float timeToImmune = 5f;
+    private bool canTakeDamage = true;
     [SyncVar(hook = nameof(OnChangeCurrentHealth))]
     private int currentHealth;
 
@@ -75,25 +78,23 @@ public class HealthManager : NetworkBehaviour
         OnNormal?.Invoke();
         if(healCoroutine!=null){StopCoroutine(healCoroutine);}
     }
-    public void TakeDamage(int amount,bool isHead, Transform attacker)
+    public void TakeDamage(int amount,bool isHead,Transform attackingOwner,Transform attacker)
     {
-
+        if(!canTakeDamage){return;}
         if (isOwned)
         {
             TriggerDamageIndicator(attacker);
         }
-        if (attacker.TryGetComponent<NetworkIdentity>(out NetworkIdentity identity))
+        if (attackingOwner.TryGetComponent<NetworkIdentity>(out NetworkIdentity identity))
         {
             if (identity.isOwned)
             {
-                if (currentHealth - amount < 0&&!isDie)
+                if (currentHealth - amount <= 0&&!isDie)
                 {
                     UIManager.Instance.TriggerScoreRewardUI(isHead);
                 }
                 CmdTakeDamage(amount);
-                
             }
-
         }
         else
         {
@@ -102,7 +103,6 @@ public class HealthManager : NetworkBehaviour
                 ServerTakeDamage(amount);
             }
         }
-
     }
     private void TriggerDamageIndicator(Transform attacker)
     {
@@ -143,8 +143,14 @@ public class HealthManager : NetworkBehaviour
     }
     private void OnHandleDie(bool oldState, bool newState)
     {
-        if(!newState){return;}
+        if(!newState){ StartCoroutine(CountDownImmune());return;}
         OnDie?.Invoke();
+    }
+    private IEnumerator CountDownImmune()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(timeToImmune);
+        canTakeDamage = true;
     }
     private void OnChangeCurrentHealth(int oldValue, int newValue)
     {

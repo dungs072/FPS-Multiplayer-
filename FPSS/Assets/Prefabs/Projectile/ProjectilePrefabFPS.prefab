@@ -9736,7 +9736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metalEffect: {fileID: 4106859779222860798, guid: 1f58caaace1a494479d1fd68a0fafa65, type: 3}
-  bloodEffect: {fileID: 300276276924007737, guid: d59fc44cba513ff4086076c03d8bc4dc, type: 3}
+  bloodEffect: {fileID: 3784662292737772354, guid: 2cf644ac11721bd48ab5db218ea20de7, type: 3}
   Type: 0
   trail: {fileID: 1454774290211817600}
   timeToDeactive: 5

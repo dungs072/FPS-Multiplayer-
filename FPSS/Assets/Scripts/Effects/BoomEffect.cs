@@ -14,7 +14,7 @@ public class BoomEffect : MonoBehaviour
     private void Awake() {
         colliders = new Collider[maxColliders];
     }
-    public void Explode(int damage,Transform attacker)
+    public void Explode(int damage,Transform attackingOwner,Transform attacker)
     {
         int hits = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, hitLayers);
         for (int i = 0; i < hits; i++)
@@ -28,7 +28,7 @@ public class BoomEffect : MonoBehaviour
                     if (colliders[i].TryGetComponent<HealthManager>(out HealthManager healthManager))
                     {
                         int finalDamage = Mathf.Abs(damage - (int)(distance));
-                        healthManager.TakeDamage(finalDamage,false,attacker);
+                        healthManager.TakeDamage(finalDamage,false,attackingOwner,attacker);
                     }
                 }
 

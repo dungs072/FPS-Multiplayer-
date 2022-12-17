@@ -23,7 +23,7 @@ public class BoomProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(timeExplode);
         Instantiate(boomEffectPrefab,transform.position,Quaternion.identity);
-        boom.Explode(damage,this.transform);
+        boom.Explode(damage,this.transform,this.transform);
         Destroy(gameObject);
     }
 }

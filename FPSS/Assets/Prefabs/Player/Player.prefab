@@ -5916,6 +5916,7 @@ MonoBehaviour:
   timeToHeal: 12
   increaseHealthAmount: 1
   fpsCamera: {fileID: 8114319186919794860}
+  timeToImmune: 5
 --- !u!114 &2259313565899129454
 MonoBehaviour:
   m_ObjectHideFlags: 0
