@@ -158,15 +158,15 @@ public class ThirdPersonController : NetworkBehaviour
         }
 
     }
-    public void ToggleCrouch(bool isCrouch)
+    private void ToggleCrouch(bool isCrouch)
     {
         if(isCrouch)
         {
-            Animator.CrossFadeInFixedTime(CrouchUpHash,CrossFadeFixedTime);
+            Animator.CrossFadeInFixedTime(CrouchDownHash,CrossFadeFixedTime);
         }
         else
         {
-            Animator.CrossFadeInFixedTime(CrouchDownHash,CrossFadeFixedTime);
+            Animator.CrossFadeInFixedTime(CrouchUpHash,CrossFadeFixedTime);
         }
     }
     private void TurnOffOldHashWeapon(WeaponType type)
@@ -321,9 +321,19 @@ public class ThirdPersonController : NetworkBehaviour
     {
         RpcDoCloseReload();
     }
+    [Command]
+    public void CmdToggleCrouch(bool isCrouch)
+    {
+        RpcToggleCrouch(isCrouch);
+    }
     #endregion
 
     #region Client
+    [ClientRpc]
+    private void RpcToggleCrouch(bool isCrouch)
+    {
+        ToggleCrouch(isCrouch);
+    }
     [ClientRpc]
     private void RpcShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time, int damage)
     {

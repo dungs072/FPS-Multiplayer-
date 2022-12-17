@@ -199,7 +199,7 @@ public class PlayerController : NetworkBehaviour
         if(Input.GetKeyDown(KeyCode.C))
         {
             isCrouch = !isCrouch;
-            referManager.TPPController.ToggleCrouch(isCrouch);
+            referManager.TPPController.CmdToggleCrouch(isCrouch);
         }
     }
     private void HandleThrowGrenade()
