@@ -200,6 +200,7 @@ public class PlayerController : NetworkBehaviour
         {
             isCrouch = !isCrouch;
             referManager.TPPController.CmdToggleCrouch(isCrouch);
+            referManager.FPSController.CmdHandleCrouch(isCrouch);
         }
     }
     private void HandleThrowGrenade()

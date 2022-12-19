@@ -4606,7 +4606,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5094443358436401749}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.49}
+  m_LocalPosition: {x: 0, y: 0, z: 0.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5208,6 +5208,11 @@ MonoBehaviour:
   m_Camera: {fileID: 8114319186919794860}
   recoilSpeed: 3
   woundSpeedDecrease: 2
+  heightColliderCrouch: 1
+  heightColliderStand: 1.8
+  heightCameraStand: 0
+  heightCameraCrouch: -0.6
+  fpsTransform: {fileID: 6478822040149123101}
 --- !u!54 &8114319186914789868
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -34,6 +34,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private float recoilSpeed = 3f;
         [Header("Wound")]
         [SerializeField] private float woundSpeedDecrease = 2f;
+        [Header("Crouch")]
+        [SerializeField] private float heightColliderCrouch = 1f;
+        [SerializeField] private float heightColliderStand = 2f;
+        [SerializeField] private float heightCameraStand = 0.625f;
+        [SerializeField] private float heightCameraCrouch = 0.3f;
+        [SerializeField] private Transform fpsTransform;
         private bool canRun = true;
         private bool m_Jump;
         private float m_YRotation;
@@ -48,9 +54,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        private float currentHeightCamera;
+
         public Camera FirstPersonCamera { get { return m_Camera; } }
         public MouseLook MouseLook { get { return m_MouseLook; } }
-        public bool IsRunning { get { return !m_IsWalking&&canRun; } }
+        public bool IsRunning { get { return !m_IsWalking && canRun; } }
         public bool IsWalking { get; private set; }
         public float ForwardValue { get; private set; }
         public float RightValue { get; private set; }
@@ -81,8 +89,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Start()
         {
             m_MouseLook.Init(transform, m_Camera.transform);
-            if (!isOwned) { return; }
             m_CharacterController = GetComponent<CharacterController>();
+            if (!isOwned) { return; }
             m_OriginalCameraPosition = m_Camera.transform.localPosition;
             m_FovKick.Setup(m_Camera);
             m_HeadBob.Setup(m_Camera, m_StepInterval);
@@ -92,6 +100,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource = GetComponent<AudioSource>();
             walkSpeed = m_WalkSpeed;
             runSpeed = m_RunSpeed;
+            currentHeightCamera = heightCameraStand;
 
         }
 
@@ -119,6 +128,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
+            UpdateHeight();
         }
 
 
@@ -256,9 +266,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
 #endif
             // set the desired speed to be walking or running
-            
+
             speed = m_IsWalking ? m_WalkSpeed : m_RunSpeed;
-            if(!canRun){speed = m_WalkSpeed;}
+            if (!canRun) { speed = m_WalkSpeed; }
             m_Input = new Vector2(horizontal, vertical);
 
             // normalize input if it exceeds 1 in combined length:
@@ -321,6 +331,46 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_JumpSpeed = runSpeed;
             canRun = true;
         }
+        private void UpdateHeight()
+        {
+            float y = fpsTransform.localPosition.y;
+
+            if (!Mathf.Approximately(y, currentHeightCamera))
+            {
+                print(currentHeightCamera);
+                y = Mathf.Lerp(y, currentHeightCamera, Time.deltaTime * 4f);
+                fpsTransform.localPosition = new Vector3(0f, y, fpsTransform.localPosition.z);
+                if (Mathf.Abs(y - currentHeightCamera) < 0.01f)
+                {
+                    fpsTransform.localPosition = new Vector3(0f, currentHeightCamera, fpsTransform.localPosition.z);
+                }
+            }
+        }
+        [ClientRpc]
+        private void RpcHandleCrouch(bool isCrouch)
+        {
+            float height;
+            if (isCrouch)
+            {
+                currentHeightCamera = heightCameraCrouch;
+                height = heightColliderCrouch;
+                m_CharacterController.center = new Vector3(m_CharacterController.center.x, -height / 2f, m_CharacterController.center.z);
+            }
+            else
+            {
+                currentHeightCamera = heightCameraStand;
+                height = heightColliderStand;
+                m_CharacterController.center = new Vector3(m_CharacterController.center.x, -0.05f, m_CharacterController.center.z);
+            }
+
+            m_CharacterController.height = height;
+        }
+        [Command]
+        public void CmdHandleCrouch(bool isCrouch)
+        {
+           RpcHandleCrouch(isCrouch);
+        }
+
         [Command]
         private void CmdCameraRotation(Vector3 rotation)
         {
