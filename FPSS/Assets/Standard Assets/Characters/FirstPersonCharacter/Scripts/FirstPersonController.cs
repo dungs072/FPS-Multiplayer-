@@ -63,6 +63,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float ForwardValue { get; private set; }
         public float RightValue { get; private set; }
 
+        public bool IsCrouch{get;private set;}
+
+        public event Action OnTurnLeft;
+        public event Action OnTurnRight;
+
         private float walkSpeed;
         private float runSpeed;
 
@@ -263,7 +268,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 #if !MOBILE_INPUT
             // On standalone builds, walk/run speed is modified by a key press.
             // keep track of whether or not the character is walking or running
-            m_IsWalking = !Input.GetKey(KeyCode.LeftShift);
+            m_IsWalking = !Input.GetKey(KeyCode.LeftShift)||IsCrouch;
 #endif
             // set the desired speed to be walking or running
 
@@ -293,8 +298,20 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_MouseLook.YRotRecoil = Mathf.Lerp(m_MouseLook.YRotRecoil, 0f, Time.deltaTime * recoilSpeed);
             m_MouseLook.XRotRecoil = Mathf.Lerp(m_MouseLook.XRotRecoil, 0f, Time.deltaTime * recoilSpeed);
 
-            m_MouseLook.LookRotation(transform, m_Camera.transform);
+            m_MouseLook.LookRotation(transform, m_Camera.transform);  
             CameraRotation = m_Camera.transform.eulerAngles;
+            // if(m_MouseLook.MovementDirection!=Vector3.zero)
+            // {
+            //     if(m_MouseLook.MovementDirection.z<0)
+            //     {
+            //         OnTurnLeft?.Invoke();
+            //     }
+            //     else
+            //     {
+            //         OnTurnRight?.Invoke();
+            //     }
+            // }
+           
         }
 
 
@@ -337,7 +354,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (!Mathf.Approximately(y, currentHeightCamera))
             {
-                print(currentHeightCamera);
                 y = Mathf.Lerp(y, currentHeightCamera, Time.deltaTime * 4f);
                 fpsTransform.localPosition = new Vector3(0f, y, fpsTransform.localPosition.z);
                 if (Mathf.Abs(y - currentHeightCamera) < 0.01f)
@@ -365,8 +381,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             m_CharacterController.height = height;
         }
+        public void HandleCrouch(bool isCrouch)
+        {
+            IsCrouch = isCrouch;
+            CmdHandleCrouch(isCrouch);
+        }
         [Command]
-        public void CmdHandleCrouch(bool isCrouch)
+        private void CmdHandleCrouch(bool isCrouch)
         {
            RpcHandleCrouch(isCrouch);
         }

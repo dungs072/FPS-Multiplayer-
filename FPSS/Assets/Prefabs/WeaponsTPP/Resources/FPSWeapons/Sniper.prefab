@@ -11566,8 +11566,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 0.4
-  playerController: {fileID: 0}
-  referenceManager: {fileID: 0}
   lens:
   - {fileID: 4302801388822778811}
   - {fileID: 1597647110722053437}

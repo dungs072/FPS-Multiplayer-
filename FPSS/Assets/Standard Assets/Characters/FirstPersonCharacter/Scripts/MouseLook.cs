@@ -24,6 +24,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float YRotRecoil { get; set; } = 0f;
         public float XRotRecoil { get; set; } = 0f;
 
+        public Vector3 MovementDirection{get;private set;}
+
         public void Init(Transform character, Transform camera)
         {
             m_CharacterTargetRot = character.localRotation;
@@ -35,7 +37,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             float yRot = CrossPlatformInputManager.GetAxis("Mouse X") * XSensitivity-YRotRecoil;
             float xRot = CrossPlatformInputManager.GetAxis("Mouse Y") * YSensitivity-XRotRecoil;
-
+            MovementDirection = new Vector3(xRot,0f,yRot);
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
 

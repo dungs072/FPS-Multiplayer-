@@ -8,6 +8,9 @@ public class ThirdPersonController : NetworkBehaviour
     private const float CrossFadeFixedTime = 0.1f;
     private readonly int LocomotionHash = Animator.StringToHash("Locomotion");
     private readonly int CrouchDownHash = Animator.StringToHash("CrouchDown");
+    private readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+    private readonly int LeftTurnHash = Animator.StringToHash("Left Turn");
+    private readonly int RightTurnHash = Animator.StringToHash("Right Turn");
     private readonly int CrouchUpHash = Animator.StringToHash("CrouchUp");
     private readonly int ForwardHash = Animator.StringToHash("Forward");
     private readonly int RightHash = Animator.StringToHash("Right");
@@ -37,6 +40,7 @@ public class ThirdPersonController : NetworkBehaviour
     [SerializeField] private RigManager rigManager;
     [SerializeField] private RagdollManager ragdollManager;
     [SerializeField] private PlayerSound playerSound;
+    // [SerializeField] private ReferenceManager referenceManager;
 
     private WeaponTPP currentWeapon;
 
@@ -47,6 +51,9 @@ public class ThirdPersonController : NetworkBehaviour
     private float rightValue = 0f;
     [SyncVar(hook = nameof(OnChangeForwardValue))]
     private float forwardValue = 0f;
+
+    [SyncVar(hook = nameof(OnChangeIsMoving))]
+    private bool isMoving = false;
 
     private Coroutine takeOutWeaponCoroutine;
     public WeaponTPP CurrentWeapon { get { return currentWeapon; } }
@@ -104,7 +111,9 @@ public class ThirdPersonController : NetworkBehaviour
         weaponManager.OnChangeWeapon += ChangeWeapon;
         weaponManager.OnAddWeapon += SubcribeShootEvent;
         weaponManager.OnRemoveWeapon += UnSubscribeShootEvent;
-        weaponTPPManager.OnRemoveWeapon+=TurnOffOldHashWeapon;
+        weaponTPPManager.OnRemoveWeapon += TurnOffOldHashWeapon;
+        // referenceManager.FPSController.OnTurnLeft += LeftTurnAnimation;
+        // referenceManager.FPSController.OnTurnRight += RightTurnAnimation;
         ChangeWeapon(0);
     }
     private void OnDestroy()
@@ -112,7 +121,9 @@ public class ThirdPersonController : NetworkBehaviour
         weaponManager.OnChangeWeapon -= ChangeWeapon;
         weaponManager.OnAddWeapon -= SubcribeShootEvent;
         weaponManager.OnRemoveWeapon -= UnSubscribeShootEvent;
-        weaponTPPManager.OnRemoveWeapon-=TurnOffOldHashWeapon;
+        weaponTPPManager.OnRemoveWeapon -= TurnOffOldHashWeapon;
+        // referenceManager.FPSController.OnTurnLeft -= LeftTurnAnimation;
+        // referenceManager.FPSController.OnTurnRight -= RightTurnAnimation;
     }
     private void SubcribeShootEvent(WeaponBase weapon)
     {
@@ -130,6 +141,18 @@ public class ThirdPersonController : NetworkBehaviour
         weaponHash.Add(WeaponType.Sniper, IsSniperHash);
         weaponHash.Add(WeaponType.RocketLaucher, IsRocketHash);
         weaponHash.Add(WeaponType.SMG, IsSMGHash);
+    }
+    private void LeftTurnAnimation()
+    {
+        Animator.CrossFadeInFixedTime(LeftTurnHash, CrossFadeFixedTime);
+    }
+    private void RightTurnAnimation()
+    {
+        Animator.CrossFadeInFixedTime(RightTurnHash, CrossFadeFixedTime);
+    }
+    private void SetIsMovingAnimation(bool isMoving)
+    {
+        Animator.SetBool(IsMovingHash,isMoving);
     }
     public void ChangeWeapon(int index)
     {
@@ -160,19 +183,19 @@ public class ThirdPersonController : NetworkBehaviour
     }
     private void ToggleCrouch(bool isCrouch)
     {
-        if(isCrouch)
+        if (isCrouch)
         {
-            Animator.CrossFadeInFixedTime(CrouchDownHash,CrossFadeFixedTime);
+            Animator.CrossFadeInFixedTime(CrouchDownHash, CrossFadeFixedTime);
         }
         else
         {
-            Animator.CrossFadeInFixedTime(CrouchUpHash,CrossFadeFixedTime);
+            Animator.CrossFadeInFixedTime(CrouchUpHash, CrossFadeFixedTime);
         }
     }
     private void TurnOffOldHashWeapon(WeaponType type)
     {
         int hash = weaponHash[type];
-         Animator.SetBool(hash, false);
+        Animator.SetBool(hash, false);
     }
     private IEnumerator TakingOutWeapon(float value)
     {
@@ -326,9 +349,15 @@ public class ThirdPersonController : NetworkBehaviour
     {
         RpcToggleCrouch(isCrouch);
     }
+    [Command]
+    public void CmdSetIsMovingAnimation(bool isMoving)
+    {
+        this.isMoving = isMoving;
+    }
     #endregion
 
     #region Client
+    
     [ClientRpc]
     private void RpcToggleCrouch(bool isCrouch)
     {
@@ -371,6 +400,10 @@ public class ThirdPersonController : NetworkBehaviour
     {
         if (isOwned) { return; }
         CloseReload();
+    }
+    private void OnChangeIsMoving(bool oldState, bool newState)
+    {
+        SetIsMovingAnimation(newState);
     }
 
     private void OnChangeLocomotionValue(float oldValue, float newValue)

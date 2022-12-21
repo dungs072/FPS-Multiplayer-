@@ -73,11 +73,13 @@ public class PlayerController : NetworkBehaviour
             if (value != isIdle && value)
             {
                 DoIdle(value);
+                referManager.TPPController.CmdSetIsMovingAnimation(!value);
             }
             else if (value != isIdle && !value)
             {
                 if(isOwned)
                 {
+                    referManager.TPPController.CmdSetIsMovingAnimation(!value);
                     CmdCanIdle(value);
                 }
                
@@ -200,7 +202,7 @@ public class PlayerController : NetworkBehaviour
         {
             isCrouch = !isCrouch;
             referManager.TPPController.CmdToggleCrouch(isCrouch);
-            referManager.FPSController.CmdHandleCrouch(isCrouch);
+            referManager.FPSController.HandleCrouch(isCrouch);
         }
     }
     private void HandleThrowGrenade()
@@ -306,6 +308,7 @@ public class PlayerController : NetworkBehaviour
     private void DoIdle(bool state)
     {
         referManager.WeaponManager.CurrentWeapon.IdleAnimation();
+        
         CmdCanIdle(state);
     }
     private void DoAimIn(bool state)

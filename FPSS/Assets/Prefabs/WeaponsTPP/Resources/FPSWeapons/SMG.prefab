@@ -10402,7 +10402,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3088723475984057910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.09, z: 0}
+  m_LocalPosition: {x: 0, y: -0.09, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10448,7 +10448,7 @@ MonoBehaviour:
   <ShootType>k__BackingField: 1
   <WeaponType>k__BackingField: 2
   <IsDefaultWeapon>k__BackingField: 0
-  fireTime: 0.12
+  fireTime: 0.11
   inspectTimeBegin: 5
   maxBulletInMag: 35
   maxBullet: 150
