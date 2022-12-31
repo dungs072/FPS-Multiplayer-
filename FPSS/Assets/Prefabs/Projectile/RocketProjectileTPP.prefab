@@ -57,7 +57,7 @@ MonoBehaviour:
   rb: {fileID: 1566526210197627596}
   boomEffectPrefab: {fileID: 2343025563777298451, guid: 8df342d0f96d5ad4cbdb126baa43d597, type: 3}
   boom: {fileID: 4777263400367406631}
-  shootForce: 35
+  shootForce: 50
 --- !u!114 &4777263400367406631
 MonoBehaviour:
   m_ObjectHideFlags: 0
