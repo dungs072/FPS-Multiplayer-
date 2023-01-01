@@ -39,7 +39,6 @@ public class LeanManager : NetworkBehaviour
     private void Update()
     {
         if(previousTargetAngle==targetAngle){return;}
-        print(previousTargetAngle);
         previousTargetAngle = Mathf.Lerp(previousTargetAngle,targetAngle,speedRotate*Time.deltaTime);
         AddAngleToFPSSpine(previousTargetAngle);
         AddAngleToTPPSpine(previousTargetAngle);

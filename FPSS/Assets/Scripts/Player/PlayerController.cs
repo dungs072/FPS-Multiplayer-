@@ -137,12 +137,21 @@ public class PlayerController : NetworkBehaviour
     {
         referManager.FPSController.enabled = false;
         referManager.TPPController.enabled = false;
+        if(isOwned)
+        {
+            referManager.NetworkPlayerManager.ToggleMeshRenderer(true);
+        }
         this.enabled = false;
+
     }
     public void OnRespawn()
     {
         referManager.FPSController.enabled = true;
         referManager.TPPController.enabled = true;
+        if(isOwned)
+        {
+            referManager.NetworkPlayerManager.ToggleMeshRenderer(false);
+        }
         this.enabled = true;
     }
     private void Update()

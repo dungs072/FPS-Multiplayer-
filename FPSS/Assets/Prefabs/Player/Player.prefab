@@ -3438,7 +3438,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3103639010986738983}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -5906,6 +5906,7 @@ MonoBehaviour:
   <WeaponTPPManager>k__BackingField: {fileID: 4844320798039907785}
   <HealthManager>k__BackingField: {fileID: 8655904785302520343}
   <LeanManager>k__BackingField: {fileID: 5191239863841887666}
+  <NetworkPlayerManager>k__BackingField: {fileID: 2100415169945206317}
 --- !u!114 &8114319186923691855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5944,7 +5945,7 @@ MonoBehaviour:
   - {fileID: 8114319188123235561}
   audioListener: {fileID: 8114319186913178764}
   TPPLayerObjects:
-  - {fileID: 3103639010986738981}
+  - {fileID: 3103639010986738829}
   TPPSLayerObjects:
   - {fileID: 3103639010986738981}
   FPSSLayerObjects:
@@ -5961,6 +5962,7 @@ MonoBehaviour:
   - {fileID: 3103639010986739001}
   - {fileID: 3103639010986738821}
   - {fileID: 3103639010986738977}
+  tppMesh: {fileID: 3103639010975173005}
 --- !u!114 &5095099722562261286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6246,6 +6248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65881e263a45a4c4cb6936a715f0845d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   leanAngle: 30
   speedRotate: 5
   fpsSpine: {fileID: 6478822040149123101}

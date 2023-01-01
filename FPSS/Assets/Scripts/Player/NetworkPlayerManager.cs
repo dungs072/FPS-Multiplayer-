@@ -12,6 +12,7 @@ public class NetworkPlayerManager : NetworkBehaviour
     [SerializeField] GameObject[] TPPSLayerObjects;
     [SerializeField] GameObject[] FPSSLayerObjects;
     [SerializeField] GameObject[] ragdollLayerObjects;
+    [SerializeField] SkinnedMeshRenderer tppMesh;
     private const string tppLayer = "TPP";
     private const string tppsLayer = "TPPs";
     private const string fpssLayer = "FPSs";
@@ -41,6 +42,7 @@ public class NetworkPlayerManager : NetworkBehaviour
     }
     private void HandleOtherPlayers()
     {
+        tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         foreach (var obj in nonLocalObjects)
         {
             obj.gameObject.SetActive(false);
@@ -81,5 +83,17 @@ public class NetworkPlayerManager : NetworkBehaviour
     public void ChangeObjectToTppsLayer(GameObject gObject)
     {
         SetGameLayerRecursive(gObject,tppsLayer);
+    }
+    public void ToggleMeshRenderer(bool state)
+    {
+        if(state)
+        {
+            tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+        else
+        {
+            tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+        
     }
 }
