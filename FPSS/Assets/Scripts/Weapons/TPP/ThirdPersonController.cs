@@ -9,6 +9,7 @@ public class ThirdPersonController : NetworkBehaviour
     private readonly int LocomotionHash = Animator.StringToHash("Locomotion");
     private readonly int CrouchDownHash = Animator.StringToHash("CrouchDown");
     private readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+    private readonly int IsRunningHash = Animator.StringToHash("IsRunning");
     private readonly int LeftTurnHash = Animator.StringToHash("Left Turn");
     private readonly int RightTurnHash = Animator.StringToHash("Right Turn");
     private readonly int CrouchUpHash = Animator.StringToHash("CrouchUp");
@@ -99,6 +100,7 @@ public class ThirdPersonController : NetworkBehaviour
                 {
                     ragdollManager.ToggleFoot(true);
                 }
+                SetIsRunningAnimation(value==1f);
                 CmdSetLocomotionValue(value);
             }
             locomotionValue = value;
@@ -153,6 +155,12 @@ public class ThirdPersonController : NetworkBehaviour
     private void SetIsMovingAnimation(bool isMoving)
     {
         Animator.SetBool(IsMovingHash,isMoving);
+    }
+    private void SetIsRunningAnimation(bool isRunning)
+    {
+
+        rigManager.SetRigWeightOnlyLocalPlayer(isRunning?0f:1f);
+        Animator.SetBool(IsRunningHash,isRunning);
     }
     public void ChangeWeapon(int index)
     {
@@ -410,6 +418,7 @@ public class ThirdPersonController : NetworkBehaviour
     {
         if (isOwned) { return; }
         Animator.SetFloat(LocomotionHash, newValue);
+        SetIsRunningAnimation(newValue==1f);
         if (newValue > 0)
         {
             ragdollManager.ToggleFoot(false);

@@ -23,7 +23,7 @@ public class HandleDrop : NetworkBehaviour
     }
     private void Update() {
         if(!isOwned){return;}
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.B))
         {
             ThrowItem();
         }

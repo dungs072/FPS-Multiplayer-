@@ -74,12 +74,17 @@ public class RigManager : NetworkBehaviour
         if(!isOwned){return;}
         CmdSetRigWeight(value);
     }
+    public void SetRigWeightOnlyLocalPlayer(float value)
+    {
+        rigWeightTarget = value;
+    }
     public void SetHandWeight(float value)
     {
         handAimWeightTarget = value;
         if(!isOwned){return;}
         CmdSetHandWeight(value);
     }
+    
 
     #region Server
     [Command]

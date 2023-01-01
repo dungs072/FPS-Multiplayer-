@@ -10,13 +10,15 @@ public class Scope : MonoBehaviour
     [SerializeField] private GameObject[] lens;
     [SerializeField] private GameObject crossHair;
     [SerializeField] private GameObject displayScope;
+    [SerializeField] private GameObject scope;
     private FirstPersonController fps;
 
     public void SetFPSController(FirstPersonController fps)
     {
         this.fps = fps;
+        if(fps.isOwned){return;}
+        scope.SetActive(false);
     }
-
     public void ScopeUp()
     {
         foreach (var obj in lens)

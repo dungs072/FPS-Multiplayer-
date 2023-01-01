@@ -11454,7 +11454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4629011229754285673
 Transform:
   m_ObjectHideFlags: 0
@@ -11571,6 +11571,7 @@ MonoBehaviour:
   - {fileID: 1597647110722053437}
   crossHair: {fileID: 3844158062882932920}
   displayScope: {fileID: 7721051209687615194}
+  scope: {fileID: 937770536469629521}
 --- !u!82 &4193310944418826865
 AudioSource:
   m_ObjectHideFlags: 0

@@ -189,6 +189,7 @@ public class PlayerController : NetworkBehaviour
         HandleReload();
         HandleThrowGrenade();
         HandleCrouch();
+        HandleLean();
     }
     public void ResetMovementState()
     {
@@ -196,6 +197,18 @@ public class PlayerController : NetworkBehaviour
         IsWalking = false;
         IsRunning = false;
     }
+    private void HandleLean()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            referManager.LeanManager.LeanLeft();
+        }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            referManager.LeanManager.LeanRight();
+        }
+    }
+
     private void HandleCrouch()
     {
         if(Input.GetKeyDown(KeyCode.C))
