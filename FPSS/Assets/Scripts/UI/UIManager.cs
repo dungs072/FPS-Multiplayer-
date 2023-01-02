@@ -143,12 +143,13 @@ public class UIManager : MonoBehaviour
         if (nearlyDieCoroutine != null) { StopCoroutine(nearlyDieCoroutine); }
         if (damageCoroutine != null) { StopCoroutine(damageCoroutine); }
         StopStartEndBloodOverlayCoroutines();
-        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(0f, speedStopAlpha));
+        endBloodOverlayCoroutine = StartCoroutine(EndBloodOverlay(0f, speedStopAlpha));//bug there
     }
     public void TriggerBloodOverlay()
     {
         if (isNearlyDie) { return; }
-        if (nearlyDieCoroutine != null) { return; }
+        //if (nearlyDieCoroutine != null) { return; }
+        if(damageCoroutine!=null){StopCoroutine(damageCoroutine);}
         damageCoroutine = StartCoroutine(DoBloodOverlay(0f, 1f, timeToEndBloodOverlay));
     }
     private IEnumerator DoBloodOverlay(float min, float max, float time)

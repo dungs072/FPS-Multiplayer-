@@ -13,6 +13,8 @@ public class NetworkPlayerManager : NetworkBehaviour
     [SerializeField] GameObject[] FPSSLayerObjects;
     [SerializeField] GameObject[] ragdollLayerObjects;
     [SerializeField] SkinnedMeshRenderer tppMesh;
+    [Header("Map")]
+    [SerializeField] GameObject mapCamera;
     private const string tppLayer = "TPP";
     private const string tppsLayer = "TPPs";
     private const string fpssLayer = "FPSs";
@@ -42,6 +44,7 @@ public class NetworkPlayerManager : NetworkBehaviour
     }
     private void HandleOtherPlayers()
     {
+        mapCamera.SetActive(false);
         tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         foreach (var obj in nonLocalObjects)
         {
@@ -93,6 +96,41 @@ public class NetworkPlayerManager : NetworkBehaviour
         else
         {
             tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+        
+    }
+    public void ChangeMeshRendererShadow(GameObject meshObject,bool isShadowOnly)
+    {
+        if(meshObject.TryGetComponent<MeshRenderer>(out MeshRenderer m))
+        {
+            if(!isShadowOnly)
+            {
+                m.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            else
+            {
+                m.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
+        }
+        foreach(Transform child in meshObject.transform)
+        {
+            if(child.TryGetComponent<MeshRenderer>(out MeshRenderer mesh))
+            {
+                if(!isShadowOnly)
+                {
+                    mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                }
+                else
+                {
+                    mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                }
+            }
+           
+            Transform _HasChildren = child.GetComponentInChildren<Transform>();
+            if(_HasChildren!=null)
+            {
+                ChangeMeshRendererShadow(child.gameObject,isShadowOnly);
+            }
         }
         
     }

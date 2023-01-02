@@ -69,7 +69,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public event Action OnTurnRight;
 
         private float walkSpeed;
-        private float runSpeed;
+        private float jumpSpeed;
 
         private Vector3 cameraRotation = Vector3.zero;
         public Vector3 CameraRotation
@@ -104,7 +104,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
             walkSpeed = m_WalkSpeed;
-            runSpeed = m_RunSpeed;
+            jumpSpeed = m_JumpSpeed;
             currentHeightCamera = heightCameraStand;
 
         }
@@ -345,7 +345,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public void HandleNormal()
         {
             m_WalkSpeed = walkSpeed;
-            m_JumpSpeed = runSpeed;
+            m_JumpSpeed = jumpSpeed;
             canRun = true;
         }
         private void UpdateHeight()

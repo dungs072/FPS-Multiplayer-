@@ -31,7 +31,10 @@ public class WeaponTPPManager : NetworkBehaviour
         weaponInstance.SetOwner(GetComponent<PlayerController>());
         weapons.Add(weaponInstance);
         handleDrop.AddItemCanDrop(weaponInstance);
-        if(isOwned){return;}
+        if(isOwned)
+        {
+            networkPlayerManager.ChangeMeshRendererShadow(weaponInstance.gameObject,true);
+        }
         networkPlayerManager.ChangeObjectToTppsLayer(weaponInstance.gameObject);
     }
     public void ThrowWeapon(WeaponTPP weapon)
@@ -39,6 +42,10 @@ public class WeaponTPPManager : NetworkBehaviour
         if(!weapons.Contains(weapon)){return;}
         OnRemoveWeapon?.Invoke(weapon.GetWeaponType());
         weapons.Remove(weapon);
+        if(isOwned)
+        {
+            networkPlayerManager.ChangeMeshRendererShadow(weapon.gameObject,false);
+        }
     }
     public WeaponTPP ToggleWeapon(int index,bool state)
     {
