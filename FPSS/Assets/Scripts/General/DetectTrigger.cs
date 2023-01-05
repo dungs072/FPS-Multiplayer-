@@ -8,6 +8,7 @@ public class DetectTrigger : MonoBehaviour
         if(other.TryGetComponent<Projectile>(out Projectile proj))
         {
             proj.gameObject.SetActive(false);
+            
         }
     }
 }

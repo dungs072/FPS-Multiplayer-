@@ -5609,8 +5609,8 @@ MonoBehaviour:
   m_LandSound: {fileID: 8300000, guid: 3b09d59f4499d45428baa7a21e954296, type: 3}
   m_Camera: {fileID: 8114319186919794860}
   recoilSpeed: 3
-  woundSpeedDecrease: 2
-  heightColliderCrouch: 0.95
+  woundSpeedDecrease: 1.5
+  heightColliderCrouch: 0.6
   heightColliderStand: 1.8
   heightCameraStand: 0
   heightCameraCrouch: -0.6

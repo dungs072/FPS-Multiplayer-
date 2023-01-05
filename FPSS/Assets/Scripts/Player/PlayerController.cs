@@ -5,6 +5,7 @@ using Mirror;
 using System;
 public class PlayerController : NetworkBehaviour
 {
+
     public event Action OnHitTarget;
     [SerializeField] private ReferenceManager referManager;
     [field:SerializeField] public PlayerSound PlayerSound{get;private set;}
@@ -223,6 +224,7 @@ public class PlayerController : NetworkBehaviour
         if(Input.GetKeyDown(KeyCode.C))
         {
             isCrouch = !isCrouch;
+            UIManager.Instance.ChangePosture(isCrouch);
             referManager.TPPController.CmdToggleCrouch(isCrouch);
             referManager.FPSController.HandleCrouch(isCrouch);
         }

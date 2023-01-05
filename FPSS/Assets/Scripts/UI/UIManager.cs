@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class UIManager : MonoBehaviour
     [Header("Respawn")]
     [SerializeField] private GameObject respawnUI;
     [SerializeField] private TMP_Text countDownRespawnText;
+    [Header("Posture")]
+    [SerializeField] private Image postureImage;
+    [SerializeField] private Sprite crouchPosture;
+    [SerializeField] private Sprite standPosture;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -49,6 +54,17 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+    public void ChangePosture(bool isCrouch)
+    {
+        if(!isCrouch)
+        {
+            postureImage.sprite = standPosture;
+        }
+        else
+        {
+            postureImage.sprite = crouchPosture;
         }
     }
     public void ChangeCrossHair(WeaponType type)
