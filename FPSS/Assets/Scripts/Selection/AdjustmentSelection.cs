@@ -6,6 +6,7 @@ public class AdjustmentSelection : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform frontViewPosition;
+    
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip clickSound;
@@ -23,6 +24,7 @@ public class AdjustmentSelection : MonoBehaviour
                     targetSelection = target;
                     UISelection.Instance.ToggleBackButton(true);
                     PlayClickSound();
+                    
                 }
             }
         }

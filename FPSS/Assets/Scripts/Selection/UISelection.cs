@@ -6,7 +6,7 @@ public class UISelection : MonoBehaviour
 {
     public static UISelection Instance { get; private set; }
     [SerializeField] private GameObject backButton;
-
+    
     private void Awake()//have to change dontDestroyOnLoad
     {
         if (Instance == null)
@@ -18,6 +18,7 @@ public class UISelection : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
     public void ToggleBackButton(bool state)
     {

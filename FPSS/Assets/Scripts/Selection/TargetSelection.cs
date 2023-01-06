@@ -36,22 +36,30 @@ public class TargetSelection : MonoBehaviour
         isMouseIn = true;
         audioSource.Play();
         
+        
     }
     private void OnMouseExit() {
         isMouseIn = false;
     }
+   
     public void PopUpToMainCamera(Vector3 pos)
     {
         if(isPopUpMainCamera){return;}
         isPopUpMainCamera = true;
         transform.position = pos;
         gun.localEulerAngles = new Vector3(90,0,0);
+        GetComponent<Collider>().enabled = false;
+        gun.GetComponent<Collider>().enabled = true;
     }
     public void PutTargetBack()
     {
         gun.localEulerAngles = Vector3.zero;
         transform.position = putBackPosition;
         isPopUpMainCamera = false;
+        gun.GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = true;
+        
+
     }
 
 }
