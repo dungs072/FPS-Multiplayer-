@@ -24,7 +24,10 @@ public class AdjustmentSelection : MonoBehaviour
                     targetSelection = target;
                     UISelection.Instance.ToggleBackButton(true);
                     PlayClickSound();
-                    
+                    if(target.TryGetComponent<WeaponSelection>(out WeaponSelection weapon))
+                    {
+                        weapon.DisplayScopePackUI();
+                    }
                 }
             }
         }

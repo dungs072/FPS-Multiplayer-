@@ -346,6 +346,7 @@ public class PlayerController : NetworkBehaviour
     private void DoReload()
     {
         if(referManager.WeaponManager.CurrentWeapon.IsFullBulletInMag()){return;}
+        if(referManager.WeaponManager.CurrentWeapon.BulletLeft==0){return;}
         referManager.TPPController.CheckReload();
         referManager.WeaponManager.CurrentWeapon.CheckReload();
         CmdReload();

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3274674550891341617}
   - component: {fileID: 1572582301582652572}
   - component: {fileID: 2059102618839847300}
+  - component: {fileID: 944534325572732305}
   m_Layer: 0
   m_Name: GunSelection
   m_TagString: Untagged
@@ -161,6 +162,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &944534325572732305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6703126075804526190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2486b26bc24a46043abe2707183da278, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scopePackUI:
+  - {fileID: 5736577103645451818, guid: a1147ac4b5a5baf4bab11a425bfd00f1, type: 3}
+  - {fileID: 1690303029261726009, guid: 25cf761970285e146836c9a2a7a4fcf0, type: 3}
+  - {fileID: 4781753521980242838, guid: 0237544f302ce0c449dfe59259877d43, type: 3}
+  - {fileID: 8357387197461337282, guid: 0b93ee98b17d4c749b0340db97ccdc0d, type: 3}
+  scopePack:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7522317950075661955
 GameObject:
   m_ObjectHideFlags: 0

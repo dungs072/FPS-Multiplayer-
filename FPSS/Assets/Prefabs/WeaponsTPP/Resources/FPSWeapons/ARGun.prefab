@@ -10490,6 +10490,7 @@ GameObject:
   - component: {fileID: 2720861901957746011}
   - component: {fileID: 3471247141257849743}
   - component: {fileID: -7766190833323748034}
+  - component: {fileID: 7025594410539824509}
   m_Layer: 7
   m_Name: ARGun
   m_TagString: Untagged
@@ -10683,6 +10684,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7025594410539824509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720861901965016727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af915c36046d004ebaf6e9be53dde12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scopes:
+  - {fileID: 2720861901965016793}
+  - {fileID: 2720861901965016799}
+  - {fileID: 2720861901965016797}
+  - {fileID: 2720861901965016787}
 --- !u!1 &2720861901965016729
 GameObject:
   m_ObjectHideFlags: 0

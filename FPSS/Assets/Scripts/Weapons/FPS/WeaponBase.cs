@@ -243,7 +243,6 @@ public class WeaponBase : MonoBehaviour
     public void CheckReload()
     {
         if (!canReload) { return; }
-        if(BulletLeft==0){return;}
         playerController.PlayerSound.PlayReloading();
         Reload();
     }

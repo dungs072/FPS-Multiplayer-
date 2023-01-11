@@ -100,6 +100,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 944534325572732305, guid: 08cc551c4a90e134f847840eda66f408, type: 3}
+      propertyPath: scopePack.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 944534325572732305, guid: 08cc551c4a90e134f847840eda66f408, type: 3}
+      propertyPath: scopePack.Array.data[0]
+      value: 
+      objectReference: {fileID: -6645908781052075588, guid: a1147ac4b5a5baf4bab11a425bfd00f1, type: 3}
+    - target: {fileID: 944534325572732305, guid: 08cc551c4a90e134f847840eda66f408, type: 3}
+      propertyPath: scopePack.Array.data[1]
+      value: 
+      objectReference: {fileID: 8875960387128374959, guid: 25cf761970285e146836c9a2a7a4fcf0, type: 3}
+    - target: {fileID: 944534325572732305, guid: 08cc551c4a90e134f847840eda66f408, type: 3}
+      propertyPath: scopePack.Array.data[2]
+      value: 
+      objectReference: {fileID: 3315955725675150336, guid: 0237544f302ce0c449dfe59259877d43, type: 3}
+    - target: {fileID: 944534325572732305, guid: 08cc551c4a90e134f847840eda66f408, type: 3}
+      propertyPath: scopePack.Array.data[3]
+      value: 
+      objectReference: {fileID: 2279929958845666132, guid: 0b93ee98b17d4c749b0340db97ccdc0d, type: 3}
     - target: {fileID: 1521820616377457494, guid: 08cc551c4a90e134f847840eda66f408, type: 3}
       propertyPath: m_RootOrder
       value: 2
