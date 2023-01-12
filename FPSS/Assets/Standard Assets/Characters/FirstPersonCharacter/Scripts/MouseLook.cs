@@ -23,6 +23,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public float YRotRecoil { get; set; } = 0f;
         public float XRotRecoil { get; set; } = 0f;
+        public bool canClick = false;
 
         public Vector3 MovementDirection{get;private set;}
 
@@ -69,6 +70,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 Cursor.visible = true;
             }
         }
+        public void SetCursorLock2(bool value)
+        {
+            canClick = value;
+            m_cursorIsLocked = value;
+        }
 
         public void UpdateCursorLock()
         {
@@ -85,6 +91,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             else if(Input.GetMouseButtonUp(0))
             {
+                if(!canClick){return;}
                 m_cursorIsLocked = true;
             }
 

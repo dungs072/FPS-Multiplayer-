@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image postureImage;
     [SerializeField] private Sprite crouchPosture;
     [SerializeField] private Sprite standPosture;
+    [Header("Parent")]
+    [SerializeField] private GameObject parentUI;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -56,6 +58,10 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void ToggleParentUI(bool state)
+    {
+        parentUI.SetActive(state);
+    }
     public void ChangePosture(bool isCrouch)
     {
         if(!isCrouch)
@@ -69,7 +75,7 @@ public class UIManager : MonoBehaviour
     }
     public void ChangeCrossHair(WeaponType type)
     {
-        dynamicCrossHair.GetComponent<CrossHair>().ChangeCrossHair(type);
+        GetComponent<CrossHair>().ChangeCrossHair(type);
     }
     public void ClearPackWeapon()
     {

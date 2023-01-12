@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using System;
 public class PlayerController : NetworkBehaviour
 {
+    public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
 
     public event Action OnHitTarget;
     [SerializeField] private ReferenceManager referManager;
-    [field:SerializeField] public PlayerSound PlayerSound{get;private set;}
+    [SerializeField] private GameObject fpsModel;
+    [SerializeField] private AudioListener audioListener;
+    [field: SerializeField] public PlayerSound PlayerSound { get; private set; }
     [SyncVar(hook = nameof(OnChangeWalkingState))]
     private bool isWalking;
 
@@ -20,9 +21,16 @@ public class PlayerController : NetworkBehaviour
     [SyncVar(hook = nameof(OnChangeAimState))]
     private bool isAiming;
 
+    [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
+    private bool isPartyOwner = false;
+
+
+
     private bool canInspect = false;
     private bool isCrouch = false;
 
+    public bool GetIsPartyOwner() { return isPartyOwner; }
+    public bool IsInLobby { get; set; } = false;
     public bool IsWalking
     {
         get
@@ -41,7 +49,7 @@ public class PlayerController : NetworkBehaviour
                 {
                     CmdCanWalk(value);
                 }
-               
+
             }
             isWalking = value;
         }
@@ -57,11 +65,11 @@ public class PlayerController : NetworkBehaviour
             }
             else if (value != isRunning && !value)
             {
-               if(isOwned)
-               {
+                if (isOwned)
+                {
                     CmdCanRun(value);
-               }
-                
+                }
+
             }
             isRunning = value;
         }
@@ -78,12 +86,12 @@ public class PlayerController : NetworkBehaviour
             }
             else if (value != isIdle && !value)
             {
-                if(isOwned)
+                if (isOwned)
                 {
                     referManager.TPPController.CmdSetIsMovingAnimation(!value);
                     CmdCanIdle(value);
                 }
-               
+
             }
             isIdle = value;
         }
@@ -113,32 +121,34 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    public bool IsAttacking{get; set;}
+    public bool IsAttacking { get; set; }
     public override void OnStartAuthority()
     {
-        referManager.HealthManager.OnNearlyDie+=referManager.FPSController.HandleWound;
-        referManager.HealthManager.OnNormal+=referManager.FPSController.HandleNormal;
+        referManager.HealthManager.OnNearlyDie += referManager.FPSController.HandleWound;
+        referManager.HealthManager.OnNormal += referManager.FPSController.HandleNormal;
         DISystem.Instance.SetMainCamera(referManager.FPSController.FirstPersonCamera);
         DISystem.Instance.SetPlayerTransform(transform);
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
         myNetworkManager.AddPlayers(this);
-        OnHitTarget+= UIManager.Instance.ToggleHitCrossHair;
+        OnHitTarget += UIManager.Instance.ToggleHitCrossHair;
     }
-    private void Start() {
-        referManager.HealthManager.OnDie+=OnDie;
+    private void Start()
+    {
+        referManager.HealthManager.OnDie += OnDie;
     }
-    private void OnDestroy() {
-        referManager.HealthManager.OnDie-=OnDie;
-        if(!isOwned){return;}
-        OnHitTarget-=UIManager.Instance.ToggleHitCrossHair;
-        referManager.HealthManager.OnNearlyDie-=referManager.FPSController.HandleWound;
-        referManager.HealthManager.OnNormal-=referManager.FPSController.HandleNormal;
+    private void OnDestroy()
+    {
+        referManager.HealthManager.OnDie -= OnDie;
+        if (!isOwned) { return; }
+        OnHitTarget -= UIManager.Instance.ToggleHitCrossHair;
+        referManager.HealthManager.OnNearlyDie -= referManager.FPSController.HandleWound;
+        referManager.HealthManager.OnNormal -= referManager.FPSController.HandleNormal;
     }
     private void OnDie()
     {
         referManager.FPSController.enabled = false;
         referManager.TPPController.enabled = false;
-        if(isOwned)
+        if (isOwned)
         {
             referManager.NetworkPlayerManager.ToggleMeshRenderer(true);
         }
@@ -149,7 +159,7 @@ public class PlayerController : NetworkBehaviour
     {
         referManager.FPSController.enabled = true;
         referManager.TPPController.enabled = true;
-        if(isOwned)
+        if (isOwned)
         {
             referManager.NetworkPlayerManager.ToggleMeshRenderer(false);
         }
@@ -158,22 +168,23 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         if (!isOwned) { return; }
+        if (IsInLobby) { return; }
         HandleFPSControl();
         HandleTPPMovement();
     }
-    
+
     private void HandleFPSControl()
     {
         WeaponBase currentWeapon = referManager.WeaponManager.CurrentWeapon;
-        if (currentWeapon.IsTakingOut) {return;}
-        
+        if (currentWeapon.IsTakingOut) { return; }
+
         bool isReloading = currentWeapon.IsReloading;
         bool isShooting = !currentWeapon.CanShoot;
         bool isThrowing = currentWeapon.IsThrowing;
         HandleAttack();
         if (currentWeapon.CanDelayInShoot)
         {
-            if (!isReloading && !isShooting&&!isThrowing)
+            if (!isReloading && !isShooting && !isThrowing)
             {
                 HandleFPSMovement();
                 HandleAim();
@@ -185,7 +196,7 @@ public class PlayerController : NetworkBehaviour
         }
         else
         {
-            if (!isReloading&&!isThrowing)
+            if (!isReloading && !isThrowing)
             {
                 HandleFPSMovement();
                 HandleAim();
@@ -195,7 +206,7 @@ public class PlayerController : NetworkBehaviour
                 ResetMovementState();
             }
         }
-       
+
         HandleReload();
         HandleThrowGrenade();
         HandleCrouch();
@@ -209,11 +220,11 @@ public class PlayerController : NetworkBehaviour
     }
     private void HandleLean()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             referManager.LeanManager.LeanLeft();
         }
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             referManager.LeanManager.LeanRight();
         }
@@ -221,7 +232,7 @@ public class PlayerController : NetworkBehaviour
 
     private void HandleCrouch()
     {
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             isCrouch = !isCrouch;
             UIManager.Instance.ChangePosture(isCrouch);
@@ -231,11 +242,11 @@ public class PlayerController : NetworkBehaviour
     }
     private void HandleThrowGrenade()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             referManager.WeaponManager.CurrentWeapon.CheckReadyThrowGrenade();
         }
-        if(Input.GetKeyUp(KeyCode.G))
+        if (Input.GetKeyUp(KeyCode.G))
         {
             referManager.WeaponManager.CurrentWeapon.CheckThrowGrenade();
         }
@@ -245,7 +256,7 @@ public class PlayerController : NetworkBehaviour
         IsWalking = referManager.FPSController.IsWalking && !IsAiming;
         IsRunning = referManager.FPSController.IsRunning;
         IsIdle = !IsRunning && !IsWalking && !IsAiming;
-       
+
     }
     private void HandleTPPMovement()
     {
@@ -285,9 +296,9 @@ public class PlayerController : NetworkBehaviour
                 isAttacking = true;
             }
         }
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            if(weapon.ShootType == ShootType.Continuous||!weapon.CanDelayInShoot)
+            if (weapon.ShootType == ShootType.Continuous || !weapon.CanDelayInShoot)
             {
                 ResetMovementState();
             }
@@ -332,7 +343,7 @@ public class PlayerController : NetworkBehaviour
     private void DoIdle(bool state)
     {
         referManager.WeaponManager.CurrentWeapon.IdleAnimation();
-        
+
         CmdCanIdle(state);
     }
     private void DoAimIn(bool state)
@@ -345,15 +356,15 @@ public class PlayerController : NetworkBehaviour
     }
     private void DoReload()
     {
-        if(referManager.WeaponManager.CurrentWeapon.IsFullBulletInMag()){return;}
-        if(referManager.WeaponManager.CurrentWeapon.BulletLeft==0){return;}
+        if (referManager.WeaponManager.CurrentWeapon.IsFullBulletInMag()) { return; }
+        if (referManager.WeaponManager.CurrentWeapon.BulletLeft == 0) { return; }
         referManager.TPPController.CheckReload();
         referManager.WeaponManager.CurrentWeapon.CheckReload();
         CmdReload();
     }
     public void TriggerHitCrossHair()
     {
-        if(!isOwned){return;}
+        if (!isOwned) { return; }
         OnHitTarget?.Invoke();
     }
     #region Client
@@ -395,10 +406,47 @@ public class PlayerController : NetworkBehaviour
         if (isOwned) { return; }
         referManager.WeaponManager.CurrentWeapon.CheckReload();
     }
-
+    public override void OnStartClient()//fixed there
+    {
+        if (isOwned)
+        {
+            SetInGameProgress(false);
+        }
+        if (NetworkServer.active) { return; }
+        DontDestroyOnLoad(gameObject);
+        ((MyNetworkManager)NetworkManager.singleton).Players.Add(this);
+    }
+    public void SetInGameProgress(bool state)
+    {
+        referManager.FPSController.SetCursorLock(state);
+        fpsModel.SetActive(state);
+        IsInLobby = !state;
+        UIManager.Instance.ToggleParentUI(state);
+        //audioListener.enabled = state;
+    }
+    public override void OnStopClient()
+    {
+        if (!isClientOnly) { return; }
+        ((MyNetworkManager)NetworkManager.singleton).Players.Remove(this);
+    }
+    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState)
+    {
+        if (!isOwned) { return; }
+        AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
+    }
+    [ClientRpc]
+    private void RpcInGameProgress()
+    {
+        if (!isOwned) { return; }
+        SetInGameProgress(true);
+    }
     #endregion
 
     #region Server
+    public override void OnStartServer()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     [Command]
     private void CmdCanRun(bool state)
     {
@@ -423,6 +471,23 @@ public class PlayerController : NetworkBehaviour
     private void CmdReload()
     {
         RpcReload();
+    }
+    [Command]
+    public void CmdStartGame()
+    {
+        if (!isPartyOwner) { return; }
+        ((MyNetworkManager)NetworkManager.singleton).StartGame();
+    }
+    [Server]
+    public void SetPartyOwner(bool state)
+    {
+        isPartyOwner = state;
+    }
+    [Server]
+    public void SetIsInGameProgress()
+    {
+        RpcInGameProgress();
+        SetInGameProgress(true);
     }
     #endregion
 

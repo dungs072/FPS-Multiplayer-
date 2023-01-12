@@ -83,7 +83,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
                     {
                         value.y = 0f;
                         value.z = 0f;
-                        CmdCameraRotation(value);
+                        if(NetworkClient.ready)
+                        {
+                            CmdCameraRotation(value);
+                        }
+                        
                     }
                 }
                 cameraRotation = value;
@@ -380,6 +384,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_CharacterController.height = height;
+        }
+        public void SetCursorLock(bool state)
+        {
+            m_MouseLook.SetCursorLock2(state);
         }
         public void HandleCrouch(bool isCrouch)
         {

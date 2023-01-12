@@ -5435,6 +5435,7 @@ GameObject:
   - component: {fileID: 3855248533811634969}
   - component: {fileID: 761486930528167846}
   - component: {fileID: 5191239863841887666}
+  - component: {fileID: 5716799455311332142}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5511,6 +5512,7 @@ MonoBehaviour:
     smooth: 0
     smoothTime: 5
     lockCursor: 1
+    canClick: 0
   m_UseFovKick: 1
   m_FovKick:
     Camera: {fileID: 0}
@@ -6115,6 +6117,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   referManager: {fileID: 8114319186923691854}
+  fpsModel: {fileID: 8114319188123235559}
+  audioListener: {fileID: 8114319186913178764}
   <PlayerSound>k__BackingField: {fileID: 3855248533811634969}
 --- !u!114 &2100415169945206317
 MonoBehaviour:
@@ -6448,6 +6452,21 @@ MonoBehaviour:
   speedRotate: 5
   fpsSpine: {fileID: 6478822040149123101}
   spine: {fileID: 3668266680126359090}
+--- !u!114 &5716799455311332142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8114319186918025868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00bec044af0362142849c55d2c9fd343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &8114319186918025870
 GameObject:
   m_ObjectHideFlags: 0

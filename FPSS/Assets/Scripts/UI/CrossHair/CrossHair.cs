@@ -52,7 +52,7 @@ public class CrossHair : MonoBehaviour
     {
         if (playerController != null) { return; }
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
-        foreach (var player in myNetworkManager.Players)
+        foreach (var player in myNetworkManager.PlayersAuthority)
         {
             if (player.isOwned)
             {
@@ -108,6 +108,7 @@ public class CrossHair : MonoBehaviour
             currentSize = Mathf.Lerp(currentSize, idleSize, Time.deltaTime * speed);
         }
         currentCrossHair.sizeDelta = new Vector2(currentSize, currentSize);
+        
     }
 }
 
