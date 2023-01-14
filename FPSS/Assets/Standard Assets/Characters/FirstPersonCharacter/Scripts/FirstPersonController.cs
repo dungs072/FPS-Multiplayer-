@@ -304,18 +304,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             m_MouseLook.LookRotation(transform, m_Camera.transform);  
             CameraRotation = m_Camera.transform.eulerAngles;
-            // if(m_MouseLook.MovementDirection!=Vector3.zero)
-            // {
-            //     if(m_MouseLook.MovementDirection.z<0)
-            //     {
-            //         OnTurnLeft?.Invoke();
-            //     }
-            //     else
-            //     {
-            //         OnTurnRight?.Invoke();
-            //     }
-            // }
-           
         }
 
 

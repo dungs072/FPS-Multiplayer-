@@ -12,7 +12,7 @@ public class NetworkPlayerInfor : NetworkBehaviour
     public string PlayerName{get{return playerName;}}
     public override void OnStartAuthority()
     {
-        CmdSetPlayerName(PlayerInfor.Instance.PlayerName);
+        CmdSetPlayerName(OptionMenu.PlayerName);
     }
     #region Server
     [Command]

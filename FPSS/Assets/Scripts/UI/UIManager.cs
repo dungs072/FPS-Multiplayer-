@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite standPosture;
     [Header("Parent")]
     [SerializeField] private GameObject parentUI;
+    [Header("Pause")]
+    [SerializeField] private GameObject pauseMenu;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -214,6 +216,10 @@ public class UIManager : MonoBehaviour
     public void ChangeHealthBar(float amount)
     {
         foreGroundHealthBar.localScale = new Vector3(amount, 1f, 1f);
+    }
+    public void TogglePauseMenu(bool state)
+    {
+        pauseMenu.SetActive(state);
     }
 }
 

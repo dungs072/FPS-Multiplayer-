@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Mirror;
 public class JoinLobbyMenu : MonoBehaviour
 {
     [SerializeField] private GameObject joinTable;
@@ -21,8 +22,8 @@ public class JoinLobbyMenu : MonoBehaviour
     public void Join()
     {
         string address = addressInput.text;
-        MyNetworkManager.singleton.networkAddress = address;
-        MyNetworkManager.singleton.StartClient();
+        NetworkManager.singleton.networkAddress = address;
+        NetworkManager.singleton.StartClient();
         joinButton.interactable = false;
     }
     private void HandleClientConnected()

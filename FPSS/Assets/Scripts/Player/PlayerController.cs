@@ -28,6 +28,7 @@ public class PlayerController : NetworkBehaviour
 
     private bool canInspect = false;
     private bool isCrouch = false;
+    private bool isPause = false;
 
     public bool GetIsPartyOwner() { return isPartyOwner; }
     public bool IsInLobby { get; set; } = false;
@@ -169,8 +170,20 @@ public class PlayerController : NetworkBehaviour
     {
         if (!isOwned) { return; }
         if (IsInLobby) { return; }
+        HandleUI();
+        if(isPause){return;}
         HandleFPSControl();
         HandleTPPMovement();
+        
+    }
+    private void HandleUI()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPause = !isPause;
+            UIManager.Instance.TogglePauseMenu(isPause);
+            referManager.FPSController.SetCursorLock(!isPause);
+        }
     }
 
     private void HandleFPSControl()

@@ -34,7 +34,7 @@ public class LobbyMenu : MonoBehaviour
         {
             namePlayerTexts[i].text = "Waiting for player...";
         }
-        startGameButton.interactable = players.Count>=2;
+        //startGameButton.interactable = players.Count>=2;
     }
     public void OnUpdateTextLobby(int index, string name)
     {
@@ -57,11 +57,11 @@ public class LobbyMenu : MonoBehaviour
     {
         if(NetworkServer.active && NetworkClient.isConnected)
         {
-            MyNetworkManager.singleton.StopHost();
+            NetworkManager.singleton.StopHost();
         }
         else
         {
-            MyNetworkManager.singleton.StopClient();
+            NetworkManager.singleton.StopClient();
             SceneManager.LoadScene(0);
         }
     }
