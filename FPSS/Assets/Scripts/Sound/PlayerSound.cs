@@ -7,6 +7,7 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private HealthManager healthManager;
     [SerializeField] private AudioSource heartAudioSource;
     [SerializeField] private AudioSource mainAudioSource;
+    [SerializeField] private AudioClip footStep;
     
     private void Start() {
         if(!healthManager.isOwned){return;}
@@ -31,5 +32,9 @@ public class PlayerSound : MonoBehaviour
     public void PlayReloading()
     {
         mainAudioSource.PlayOneShot(reloadingHumanSaySound);
+    }
+    public void PlayFootStep()
+    {
+        mainAudioSource.PlayOneShot(footStep);
     }
 }

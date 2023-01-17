@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class MyNetworkManager : NetworkManager
 {
+    [SerializeField] private TeamManager teamManager;
     public static event Action ClientOnConnected;
     public static event Action ClientOnDisconnected;
     public event Action OnAddPlayers;
@@ -46,29 +47,16 @@ public class MyNetworkManager : NetworkManager
         player.SetPartyOwner(Players.Count == 1);
     }
 
-    // public override void OnServerSceneChanged(string sceneName)
-    // {
-    //     base.OnServerSceneChanged()
-    //     if (SceneManager.GetActiveScene().name.StartsWith("Map02"))
-    //     {
-    //         foreach (var player in Players)
-    //         {
-    //             player.SetIsInGameProgress();
-    //         }
-    //     }
-    // }
-    public override void OnClientSceneChanged()
+    public override void OnServerSceneChanged(string sceneName)
     {
-        base.OnClientSceneChanged();
+        base.OnServerSceneChanged(sceneName);
         if (SceneManager.GetActiveScene().name.StartsWith("Map02"))
         {
-            foreach (var player in Players)
-            {
-                player.SetInGameProgress(true);
-            }
+            TeamManager teamManagerInstance = Instantiate(teamManager);
+            NetworkServer.Spawn(teamManagerInstance.gameObject);
         }
-    }
 
+    }
     public void AddPlayers(PlayerController playerController)
     {
         PlayersAuthority.Add(playerController);
@@ -92,7 +80,4 @@ public class MyNetworkManager : NetworkManager
         Players.Clear();
     }
     #endregion
-
-
-
 }

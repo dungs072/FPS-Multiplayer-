@@ -11,14 +11,22 @@ public enum TeamName
 }
 public class Team : NetworkBehaviour
 {
+    public static event Action<bool> OnSetLobbyPosition;
+    public static event Action<bool> OnToggleLobbyCameras;
     [field: SerializeField] public TeamName TeamName { get; private set; } = TeamName.None;
+    public Vector3 LobbyPosition { get; set; }
 
     public void SetTeamName(TeamName teamName)
     {
         TeamName = teamName;
-        if(!isOwned){return;}
         CmdSetTeamName(teamName);
+        //OnSetTeam?.Invoke(this,lobbyIndex);
     }
+    public void ToggleLobbyCameras(bool state)
+    {
+        OnToggleLobbyCameras?.Invoke(state);
+    }
+
     #region Server
 
     [Command]
@@ -32,8 +40,22 @@ public class Team : NetworkBehaviour
     [ClientRpc]
     private void RpcSetTeamName(TeamName teamName)
     {
-        if (!isClientOnly) { return; }
         TeamName = teamName;
+    }
+    [ClientRpc]
+    public void RpcSetLobbyPosition(Vector3 position)
+    {
+        if(!isOwned){return;}
+        transform.position = position;
+        LobbyPosition = position;
+        if (TeamName == TeamName.Swat)
+        {
+            OnSetLobbyPosition?.Invoke(true);
+        }
+        else if (TeamName == TeamName.Terrorist)
+        {
+            OnSetLobbyPosition?.Invoke(false);
+        }
     }
     #endregion
 }

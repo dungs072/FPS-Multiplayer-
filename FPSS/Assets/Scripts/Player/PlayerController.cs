@@ -432,6 +432,8 @@ public class PlayerController : NetworkBehaviour
     public void SetInGameProgress(bool state)
     {
         referManager.FPSController.SetCursorLock(state);
+        referManager.FPSController.enabled = state;
+        referManager.NetworkPlayerManager.ChangeShadowOnlyMesh(state);
         fpsModel.SetActive(state);
         IsInLobby = !state;
         UIManager.Instance.ToggleParentUI(state);

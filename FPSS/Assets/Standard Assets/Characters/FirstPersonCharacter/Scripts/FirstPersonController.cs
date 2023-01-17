@@ -65,9 +65,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public bool IsCrouch{get;private set;}
 
-        public event Action OnTurnLeft;
-        public event Action OnTurnRight;
-
         private float walkSpeed;
         private float jumpSpeed;
 

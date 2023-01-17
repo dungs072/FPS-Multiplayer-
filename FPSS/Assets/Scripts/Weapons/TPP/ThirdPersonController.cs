@@ -41,6 +41,7 @@ public class ThirdPersonController : NetworkBehaviour
     [SerializeField] private RigManager rigManager;
     [SerializeField] private RagdollManager ragdollManager;
     [SerializeField] private PlayerSound playerSound;
+
     // [SerializeField] private ReferenceManager referenceManager;
 
     private WeaponTPP currentWeapon;
@@ -104,6 +105,7 @@ public class ThirdPersonController : NetworkBehaviour
                 CmdSetLocomotionValue(value);
             }
             locomotionValue = value;
+            
         }
     }
 
@@ -114,8 +116,6 @@ public class ThirdPersonController : NetworkBehaviour
         weaponManager.OnAddWeapon += SubcribeShootEvent;
         weaponManager.OnRemoveWeapon += UnSubscribeShootEvent;
         weaponTPPManager.OnRemoveWeapon += TurnOffOldHashWeapon;
-        // referenceManager.FPSController.OnTurnLeft += LeftTurnAnimation;
-        // referenceManager.FPSController.OnTurnRight += RightTurnAnimation;
         ChangeWeapon(0);
     }
     private void OnDestroy()
@@ -124,8 +124,6 @@ public class ThirdPersonController : NetworkBehaviour
         weaponManager.OnAddWeapon -= SubcribeShootEvent;
         weaponManager.OnRemoveWeapon -= UnSubscribeShootEvent;
         weaponTPPManager.OnRemoveWeapon -= TurnOffOldHashWeapon;
-        // referenceManager.FPSController.OnTurnLeft -= LeftTurnAnimation;
-        // referenceManager.FPSController.OnTurnRight -= RightTurnAnimation;
     }
     private void SubcribeShootEvent(WeaponBase weapon)
     {
@@ -144,21 +142,12 @@ public class ThirdPersonController : NetworkBehaviour
         weaponHash.Add(WeaponType.RocketLaucher, IsRocketHash);
         weaponHash.Add(WeaponType.SMG, IsSMGHash);
     }
-    private void LeftTurnAnimation()
-    {
-        Animator.CrossFadeInFixedTime(LeftTurnHash, CrossFadeFixedTime);
-    }
-    private void RightTurnAnimation()
-    {
-        Animator.CrossFadeInFixedTime(RightTurnHash, CrossFadeFixedTime);
-    }
     private void SetIsMovingAnimation(bool isMoving)
     {
         Animator.SetBool(IsMovingHash,isMoving);
     }
     private void SetIsRunningAnimation(bool isRunning)
     {
-
         rigManager.SetRigWeightOnlyLocalPlayer(isRunning?0f:1f);
         Animator.SetBool(IsRunningHash,isRunning);
     }
@@ -306,6 +295,7 @@ public class ThirdPersonController : NetworkBehaviour
         CloseReload();
         CmdDoCloseReload();
     }
+    
     #region Server
     [Command]
     private void CmdShoot(Vector3 targetPoint, Vector3 spread, int shootForce, float time, int damage)
@@ -439,4 +429,5 @@ public class ThirdPersonController : NetworkBehaviour
         Animator.SetFloat(RightHash, newValue);
     }
     #endregion
+
 }

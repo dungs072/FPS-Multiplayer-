@@ -714,6 +714,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1515866320, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1515866321, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -770,11 +774,21 @@ PrefabInstance:
       propertyPath: transport
       value: 
       objectReference: {fileID: 596920055}
+    - target: {fileID: 1270495509124843622, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
+      propertyPath: teamManager
+      value: 
+      objectReference: {fileID: 4796613275677404362, guid: 31611b87f542bd44eaf7bf52feaf242d, type: 3}
+    - target: {fileID: 1270495509124843622, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1270495509124843628, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: m_Name
       value: NetworkManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1515866320, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
+    - {fileID: 1515866321, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
 --- !u!1001 &7752227877679957873
 PrefabInstance:

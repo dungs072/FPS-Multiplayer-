@@ -45,7 +45,7 @@ public class NetworkPlayerManager : NetworkBehaviour
     private void HandleOtherPlayers()
     {
         mapCamera.SetActive(false);
-        tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        ChangeShadowOnlyMesh(false);
         foreach (var obj in nonLocalObjects)
         {
             obj.gameObject.SetActive(false);
@@ -63,6 +63,17 @@ public class NetworkPlayerManager : NetworkBehaviour
         foreach(var obj in FPSSLayerObjects)
         {
             SetGameLayerRecursive(obj, fpssLayer);
+        }
+    }
+    public void ChangeShadowOnlyMesh(bool state)
+    {
+        if(state)
+        {
+            tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+        else
+        {
+            tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
     }
     public void ChangeLayerFPSWeapon(GameObject weapon)
