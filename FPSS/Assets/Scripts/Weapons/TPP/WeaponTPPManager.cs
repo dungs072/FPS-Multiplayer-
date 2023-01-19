@@ -6,10 +6,11 @@ using System;
 public class WeaponTPPManager : NetworkBehaviour
 {
     public event Action<WeaponType> OnRemoveWeapon;
-    [SerializeField] private List<WeaponTPP> weapons = new List<WeaponTPP>();
+    [SerializeField] public List<WeaponTPP> weapons { get; } = new List<WeaponTPP>();
     [SerializeField] private Transform weaponPack;
     [SerializeField] private NetworkPlayerManager networkPlayerManager;
     [SerializeField] private HandleDrop handleDrop;
+
     private void Awake()
     {
         LoadWeaponFromResources("HandGun");
@@ -21,7 +22,7 @@ public class WeaponTPPManager : NetworkBehaviour
     }
     private void LoadWeaponFromResources(string name)
     {
-        name = "TPPWeapons/"+name;
+        name = "TPPWeapons/" + name;
         WeaponTPP weapon = Resources.Load<WeaponTPP>(name);
         EquipWeapon(weapon);
     }
@@ -31,25 +32,32 @@ public class WeaponTPPManager : NetworkBehaviour
         weaponInstance.SetOwner(GetComponent<PlayerController>());
         weapons.Add(weaponInstance);
         handleDrop.AddItemCanDrop(weaponInstance);
-        if(isOwned)
-        {
-            networkPlayerManager.ChangeMeshRendererShadow(weaponInstance.gameObject,true);
-        }
+        // if(isOwned)
+        // {
+        //     networkPlayerManager.ChangeMeshRendererShadow(weaponInstance.gameObject,true);
+        // }
         networkPlayerManager.ChangeObjectToTppsLayer(weaponInstance.gameObject);
     }
     public void ThrowWeapon(WeaponTPP weapon)
     {
-        if(!weapons.Contains(weapon)){return;}
+        if (!weapons.Contains(weapon)) { return; }
         OnRemoveWeapon?.Invoke(weapon.GetWeaponType());
         weapons.Remove(weapon);
-        if(isOwned)
+        if (isOwned)
         {
-            networkPlayerManager.ChangeMeshRendererShadow(weapon.gameObject,false);
+            networkPlayerManager.ChangeMeshRendererShadow(weapon.gameObject, false);
         }
     }
-    public WeaponTPP ToggleWeapon(int index,bool state)
+    public void DisplayWeapons(bool state)
     {
-        if(index>=weapons.Count){return null;}
+        foreach (var tppGun in weapons)
+        {
+            networkPlayerManager.ChangeMeshRendererShadow(tppGun.gameObject, !state);
+        }
+    }
+    public WeaponTPP ToggleWeapon(int index, bool state)
+    {
+        if (index >= weapons.Count) { return null; }
         weapons[index].gameObject.SetActive(state);
         return weapons[index];
     }
@@ -61,7 +69,7 @@ public class WeaponTPPManager : NetworkBehaviour
     [ClientRpc]
     private void RpcLoadWeaponFromResources(string name)
     {
-        if(isOwned){return;}
+        if (isOwned) { return; }
         LoadWeaponFromResources(name);
     }
 

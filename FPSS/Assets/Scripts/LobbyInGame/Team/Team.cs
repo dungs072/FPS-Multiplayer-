@@ -14,7 +14,19 @@ public class Team : NetworkBehaviour
     public static event Action<bool> OnSetLobbyPosition;
     public static event Action<bool> OnToggleLobbyCameras;
     [field: SerializeField] public TeamName TeamName { get; private set; } = TeamName.None;
+    [SerializeField] private ReferenceManager referManager;
+    [SerializeField] private Transform xRotatetionObject;
+
     public Vector3 LobbyPosition { get; set; }
+
+    private Quaternion defaultRotation;
+    private Quaternion defaultXRotation;
+
+    private void Start()
+    {
+        defaultRotation = transform.rotation;
+        defaultXRotation = xRotatetionObject.rotation;
+    }
 
     public void SetTeamName(TeamName teamName)
     {
@@ -26,7 +38,23 @@ public class Team : NetworkBehaviour
     {
         OnToggleLobbyCameras?.Invoke(state);
     }
-
+    public void ReturnToLobbyPosition()
+    {
+        transform.position = LobbyPosition;
+        transform.rotation = defaultRotation;
+        if (TeamName == TeamName.Swat)
+        {
+            OnSetLobbyPosition?.Invoke(true);
+        }
+        else if (TeamName == TeamName.Terrorist)
+        {
+            OnSetLobbyPosition?.Invoke(false);
+        }
+        GetComponent<PlayerController>().SetInGameProgress(false);
+        referManager.WeaponTPPManager.DisplayWeapons(true);
+        referManager.TPPController.LocomotionValue = 0f;
+        xRotatetionObject.rotation = defaultXRotation;
+    }
     #region Server
 
     [Command]
@@ -45,7 +73,7 @@ public class Team : NetworkBehaviour
     [ClientRpc]
     public void RpcSetLobbyPosition(Vector3 position)
     {
-        if(!isOwned){return;}
+        if (!isOwned) { return; }
         transform.position = position;
         LobbyPosition = position;
         if (TeamName == TeamName.Swat)

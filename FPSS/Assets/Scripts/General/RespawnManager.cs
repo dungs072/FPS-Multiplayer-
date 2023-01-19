@@ -20,12 +20,12 @@ public class RespawnManager : NetworkBehaviour
         OnRespawn+=deathManager.TriggerRespawnProcess;
     }
     private void Start() {
-        OnRespawn+=playerController.OnRespawn;
+        // OnRespawn+=playerController.OnRespawn;
         OnRespawn+=ragdollManager.TurnOffRagdoll;
         OnRespawn+=rigManager.TurnOnRigWeight;
     }
     private void OnDestroy() {
-        OnRespawn-=playerController.OnRespawn;
+        // OnRespawn-=playerController.OnRespawn;
         OnRespawn-=ragdollManager.TurnOffRagdoll;
         OnRespawn-=rigManager.TurnOnRigWeight;
         if(!isOwned){return;}

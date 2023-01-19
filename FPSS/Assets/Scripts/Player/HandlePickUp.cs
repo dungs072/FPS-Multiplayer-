@@ -38,27 +38,33 @@ public class HandlePickUp : NetworkBehaviour
     {
         UIManager.Instance.ToggleFButtonUI(state);
     }
-    private void PickUpItem()
+    public void PickUpItem(string nameWeapon = "", bool isSelect = false)
     {
         if (refer.WeaponManager.Weapons.Count == maxGun)
         {
             if (refer.WeaponManager.CurrentWeapon.IsDefaultWeapon) { return; }
             handleDrop.ThrowItem();
-            StartCoroutine(DoPickUpItemDelay());
+            StartCoroutine(DoPickUpItemDelay(nameWeapon,isSelect));
         }
         else
         {
-            DoPickUpItem();
+            DoPickUpItem(nameWeapon,isSelect);
         }
 
     }
-    private IEnumerator DoPickUpItemDelay()
+    private IEnumerator DoPickUpItemDelay(string nameWeapon = "",bool isSelect = false)
     {
         yield return new WaitForSeconds(0.1f);
-        DoPickUpItem();
+        DoPickUpItem(nameWeapon,isSelect);
     }
-    private void DoPickUpItem()
+    private void DoPickUpItem(string nameWeapon = "",bool isSelect = false)
     {
+        if(isSelect)
+        {
+            refer.WeaponManager.EquipFpsWeapon(nameWeapon);
+            refer.WeaponTPPManager.LoadTppWeapon(nameWeapon);
+            return;
+        }
         if(pickUps.Count==0){return;}
         if(pickUps[0]==null){return;}
         if(!pickUps[0].CanPickup){return;}
@@ -66,6 +72,7 @@ public class HandlePickUp : NetworkBehaviour
         refer.WeaponTPPManager.LoadTppWeapon(pickUps[0].Name);
         RemovePickUpItem(pickUps[0]);
     }
+
     public void AddPickUpItem(PickUp pickUp)
     {
         if (pickUps.Contains(pickUp)) { return; }

@@ -70,17 +70,17 @@ public class HealthManager : NetworkBehaviour
     }
     public void Respawn()
     {
-        if(!isOwned){return;}
+        if (!isOwned) { return; }
         isDie = false;
         CmdIsDie(false);
         CmdSetCurrentHealth(maxHealth);
         OnChangeHealthBar.Invoke(1f);
         OnNormal?.Invoke();
-        if(healCoroutine!=null){StopCoroutine(healCoroutine);}
+        if (healCoroutine != null) { StopCoroutine(healCoroutine); }
     }
-    public void TakeDamage(int amount,bool isHead,Transform attackingOwner,Transform attacker)
+    public void TakeDamage(int amount, bool isHead, Transform attackingOwner, Transform attacker)
     {
-        if(!canTakeDamage){return;}
+        if (!canTakeDamage) { return; }
         if (isOwned)
         {
             TriggerDamageIndicator(attacker);
@@ -89,7 +89,7 @@ public class HealthManager : NetworkBehaviour
         {
             if (identity.isOwned)
             {
-                if (currentHealth - amount <= 0&&!isDie)
+                if (currentHealth - amount <= 0 && !isDie)
                 {
                     UIManager.Instance.TriggerScoreRewardUI(isHead);
                 }
@@ -143,8 +143,20 @@ public class HealthManager : NetworkBehaviour
     }
     private void OnHandleDie(bool oldState, bool newState)
     {
-        if(!newState){ StartCoroutine(CountDownImmune());return;}
-        OnDie?.Invoke();
+
+        if (!newState)
+        {
+            if (isOwned)
+            {
+                GetComponent<Team>().ReturnToLobbyPosition();
+            }
+            //StartCoroutine(CountDownImmune());
+            return;
+        }
+        else
+        {
+            OnDie?.Invoke();
+        }
     }
     private IEnumerator CountDownImmune()
     {

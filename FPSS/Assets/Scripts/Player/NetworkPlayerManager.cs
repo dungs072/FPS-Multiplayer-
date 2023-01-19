@@ -67,14 +67,7 @@ public class NetworkPlayerManager : NetworkBehaviour
     }
     public void ChangeShadowOnlyMesh(bool state)
     {
-        if(state)
-        {
-            tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-        }
-        else
-        {
-            tppMesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-        }
+        ToggleMeshRenderer(!state);
     }
     public void ChangeLayerFPSWeapon(GameObject weapon)
     {

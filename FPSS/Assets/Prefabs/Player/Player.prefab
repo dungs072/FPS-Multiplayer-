@@ -6243,7 +6243,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  weapons: []
   weaponPack: {fileID: 8786278265148326538}
   networkPlayerManager: {fileID: 2100415169945206317}
   handleDrop: {fileID: 7614812852889117052}
@@ -6485,6 +6484,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   <TeamName>k__BackingField: 0
+  referManager: {fileID: 8114319186923691854}
+  xRotatetionObject: {fileID: 8114319186918192814}
 --- !u!1 &8114319186918025870
 GameObject:
   m_ObjectHideFlags: 0

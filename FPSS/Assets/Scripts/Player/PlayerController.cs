@@ -156,7 +156,7 @@ public class PlayerController : NetworkBehaviour
         this.enabled = false;
 
     }
-    public void OnRespawn()
+    public void OnOutLobbyInGame()
     {
         referManager.FPSController.enabled = true;
         referManager.TPPController.enabled = true;
