@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 public interface ICanDrop
 {
-    WeaponType GetWeaponType();
+    ItemType GetWeaponType();
     GameObject GetItem();
 }
 public class HandleDrop : NetworkBehaviour
@@ -12,7 +12,7 @@ public class HandleDrop : NetworkBehaviour
     [SerializeField] private WeaponManager weaponManager;
     [SerializeField] private WeaponTPPManager weaponTPPManager;
     [SerializeField] private HealthManager healthManager;
-    private Dictionary<WeaponType,ICanDrop> items = new Dictionary<WeaponType, ICanDrop>();
+    private Dictionary<ItemType,ICanDrop> items = new Dictionary<ItemType, ICanDrop>();
     private void Start() {
         if(!isOwned){return;}
         healthManager.OnDie+=ThrowItem;
@@ -32,7 +32,7 @@ public class HandleDrop : NetworkBehaviour
     {
         if(weaponManager.CurrentWeapon.IsDefaultWeapon){return;}
 
-        WeaponType type = weaponManager.CurrentWeapon.WeaponType;
+        ItemType type = weaponManager.CurrentWeapon.WeaponType;
         weaponManager.ThrowFPSWeapon(type);
         CmdThrowItem(type);
         
@@ -46,12 +46,12 @@ public class HandleDrop : NetworkBehaviour
         items.Remove(item.GetWeaponType());
     }
     [Command]
-    private void CmdThrowItem(WeaponType type)
+    private void CmdThrowItem(ItemType type)
     {
         RpcThrowItem(type);
     }
     [ClientRpc]
-    private void RpcThrowItem(WeaponType type)
+    private void RpcThrowItem(ItemType type)
     {
         GameObject item = items[type].GetItem();
         items.Remove(type);

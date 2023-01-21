@@ -33,9 +33,9 @@ public class CrossHair : MonoBehaviour
         if (myNetworkManager == null) { return; }
         myNetworkManager.OnAddPlayers -= FindPlayer;
     }
-    public void ChangeCrossHair(WeaponType type)
+    public void ChangeCrossHair(ItemType type)
     {
-        if(type==WeaponType.ShotGun)
+        if(type==ItemType.ShotGun)
         {
             shortCrossHair.gameObject.SetActive(true);
             crossHair.gameObject.SetActive(false);

@@ -5,7 +5,7 @@ using Mirror;
 using System;
 public class WeaponTPPManager : NetworkBehaviour
 {
-    public event Action<WeaponType> OnRemoveWeapon;
+    public event Action<ItemType> OnRemoveWeapon;
     [SerializeField] public List<WeaponTPP> weapons { get; } = new List<WeaponTPP>();
     [SerializeField] private Transform weaponPack;
     [SerializeField] private NetworkPlayerManager networkPlayerManager;

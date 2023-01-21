@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &596920055 stripped
+--- !u!114 &213762589 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1270495509124843619, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
   m_PrefabInstance: {fileID: 2068411223}
@@ -716,11 +716,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1515866320, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1515866321, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1270495509124843616, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: m_RootOrder
@@ -773,7 +773,7 @@ PrefabInstance:
     - target: {fileID: 1270495509124843622, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: transport
       value: 
-      objectReference: {fileID: 596920055}
+      objectReference: {fileID: 213762589}
     - target: {fileID: 1270495509124843622, guid: 412bf4d5feea4d546bc70a7e2a3b41c8, type: 3}
       propertyPath: teamManager
       value: 
@@ -805,6 +805,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 301943449, guid: 8bd3e65aecc436a48b243f894282800c, type: 3}
+      propertyPath: useSteam
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7752227877948607973, guid: 8bd3e65aecc436a48b243f894282800c, type: 3}
       propertyPath: m_Name
       value: MenuUI

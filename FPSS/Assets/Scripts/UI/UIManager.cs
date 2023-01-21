@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
             postureImage.sprite = crouchPosture;
         }
     }
-    public void ChangeCrossHair(WeaponType type)
+    public void ChangeCrossHair(ItemType type)
     {
         GetComponent<CrossHair>().ChangeCrossHair(type);
     }

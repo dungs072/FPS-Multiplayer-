@@ -32,7 +32,7 @@ public class WeaponBase : MonoBehaviour
 
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ShootType ShootType { get; private set; }
-    [field: SerializeField] public WeaponType WeaponType { get; private set; }
+    [field: SerializeField] public ItemType WeaponType { get; private set; }
     [field: SerializeField] public bool IsDefaultWeapon { get; private set; } = false;
     [Header("Attribute")]
     [SerializeField] private float fireTime = 0.1f;
@@ -89,6 +89,7 @@ public class WeaponBase : MonoBehaviour
     private bool canReadyThrow = true;
     private bool canThrow = true;
     private float accumulatedInspectTime = 0f;
+    private int bulletLeft = -1;
 
     private float currentRecoilXPos;
     private float currentRecoilYPos;
@@ -121,12 +122,20 @@ public class WeaponBase : MonoBehaviour
     }
     private void Awake()
     {
-        currentBulletInMag = maxBulletInMag;
         hits = new RaycastHit[bulletPerShoot];
+    }
+    private void Start() {
+        AssignBullet();
+    }
+    private void AssignBullet()
+    {
+        if(bulletLeft>-1){return;}
+        currentBulletInMag = maxBulletInMag;
+        bulletLeft = maxBullet;
     }
     private void EnterBoomIntoPack()
     {
-
+        
     }
     private void OnEnable()
     {
@@ -147,9 +156,9 @@ public class WeaponBase : MonoBehaviour
             CheckReload();
         }
     }
-    protected void ChangeAmountBullet(int bulletInMag,int bulletLeft)
+    protected void ChangeAmountBullet(int bulletInMag,int bulletL)
     {
-        OnChangeBulletLeft?.Invoke(bulletInMag,bulletLeft);
+        OnChangeBulletLeft?.Invoke(bulletInMag,bulletL);
     }
     public void RunAnimation()
     {
@@ -416,5 +425,14 @@ public class WeaponBase : MonoBehaviour
     public bool IsFullBulletInMag()
     {
         return currentBulletInMag==maxBulletInMag;
+    }
+    public void SetFullBulletLeft()
+    {
+        if(IsDefaultWeapon)
+        {
+            AssignBullet();
+        }
+        maxBullet = bulletLeft;
+        OnChangeBulletLeft?.Invoke(currentBulletInMag,bulletLeft);
     }
 }

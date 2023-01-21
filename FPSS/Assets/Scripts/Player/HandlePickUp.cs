@@ -40,34 +40,42 @@ public class HandlePickUp : NetworkBehaviour
     }
     public void PickUpItem(string nameWeapon = "", bool isSelect = false)
     {
-        if (refer.WeaponManager.Weapons.Count == maxGun)
+        if (pickUps.Count>0&&pickUps[0].ItemType == ItemType.Bullet)
         {
-            if (refer.WeaponManager.CurrentWeapon.IsDefaultWeapon) { return; }
-            handleDrop.ThrowItem();
-            StartCoroutine(DoPickUpItemDelay(nameWeapon,isSelect));
+            refer.WeaponManager.SetFullBulletLeft();
         }
         else
         {
-            DoPickUpItem(nameWeapon,isSelect);
+            if (refer.WeaponManager.Weapons.Count == maxGun)
+            {
+                if (refer.WeaponManager.CurrentWeapon.IsDefaultWeapon) { return; }
+                handleDrop.ThrowItem();
+                StartCoroutine(DoPickUpItemDelay(nameWeapon, isSelect));
+            }
+            else
+            {
+                DoPickUpItem(nameWeapon, isSelect);
+            }
         }
 
+
     }
-    private IEnumerator DoPickUpItemDelay(string nameWeapon = "",bool isSelect = false)
+    private IEnumerator DoPickUpItemDelay(string nameWeapon = "", bool isSelect = false)
     {
         yield return new WaitForSeconds(0.1f);
-        DoPickUpItem(nameWeapon,isSelect);
+        DoPickUpItem(nameWeapon, isSelect);
     }
-    private void DoPickUpItem(string nameWeapon = "",bool isSelect = false)
+    private void DoPickUpItem(string nameWeapon = "", bool isSelect = false)
     {
-        if(isSelect)
+        if (isSelect)
         {
             refer.WeaponManager.EquipFpsWeapon(nameWeapon);
             refer.WeaponTPPManager.LoadTppWeapon(nameWeapon);
             return;
         }
-        if(pickUps.Count==0){return;}
-        if(pickUps[0]==null){return;}
-        if(!pickUps[0].CanPickup){return;}
+        if (pickUps.Count == 0) { return; }
+        if (pickUps[0] == null) { return; }
+        if (!pickUps[0].CanPickup) { return; }
         refer.WeaponManager.EquipFpsWeapon(pickUps[0].Name);
         refer.WeaponTPPManager.LoadTppWeapon(pickUps[0].Name);
         refer.WeaponTPPManager.DisplayWeapons(false);

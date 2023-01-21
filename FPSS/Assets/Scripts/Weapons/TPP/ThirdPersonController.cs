@@ -33,7 +33,7 @@ public class ThirdPersonController : NetworkBehaviour
     private readonly int IsRocketHash = Animator.StringToHash("IsRocket");
     private readonly int IsSMGHash = Animator.StringToHash("IsSMG");
 
-    private Dictionary<WeaponType, int> weaponHash = new Dictionary<WeaponType, int>();
+    private Dictionary<ItemType, int> weaponHash = new Dictionary<ItemType, int>();
 
     [SerializeField] private Animator Animator;
     [SerializeField] private WeaponManager weaponManager;
@@ -135,12 +135,12 @@ public class ThirdPersonController : NetworkBehaviour
     }
     private void AddHashWeapon()
     {
-        weaponHash.Add(WeaponType.HandGun, IsHandgunHash);
-        weaponHash.Add(WeaponType.Assault, IsARHash);
-        weaponHash.Add(WeaponType.ShotGun, IsShotGunHash);
-        weaponHash.Add(WeaponType.Sniper, IsSniperHash);
-        weaponHash.Add(WeaponType.RocketLaucher, IsRocketHash);
-        weaponHash.Add(WeaponType.SMG, IsSMGHash);
+        weaponHash.Add(ItemType.HandGun, IsHandgunHash);
+        weaponHash.Add(ItemType.Assault, IsARHash);
+        weaponHash.Add(ItemType.ShotGun, IsShotGunHash);
+        weaponHash.Add(ItemType.Sniper, IsSniperHash);
+        weaponHash.Add(ItemType.RocketLaucher, IsRocketHash);
+        weaponHash.Add(ItemType.SMG, IsSMGHash);
     }
     private void SetIsMovingAnimation(bool isMoving)
     {
@@ -189,7 +189,7 @@ public class ThirdPersonController : NetworkBehaviour
             Animator.CrossFadeInFixedTime(CrouchUpHash, CrossFadeFixedTime);
         }
     }
-    private void TurnOffOldHashWeapon(WeaponType type)
+    private void TurnOffOldHashWeapon(ItemType type)
     {
         int hash = weaponHash[type];
         Animator.SetBool(hash, false);
@@ -240,7 +240,7 @@ public class ThirdPersonController : NetworkBehaviour
     private void OpenReload()
     {
         TurnOffHandsWeight();
-        if (currentWeapon.GetWeaponType() == WeaponType.Sniper)
+        if (currentWeapon.GetWeaponType() == ItemType.Sniper)
         {
             Animator.CrossFadeInFixedTime(OpenSnipeHash, CrossFadeFixedTime);
         }
@@ -252,7 +252,7 @@ public class ThirdPersonController : NetworkBehaviour
     }
     private void InsertReload()
     {
-        if (currentWeapon.GetWeaponType() == WeaponType.Sniper)
+        if (currentWeapon.GetWeaponType() == ItemType.Sniper)
         {
             Animator.CrossFadeInFixedTime(InsertSnipeHash, CrossFadeFixedTime);
         }
@@ -263,7 +263,7 @@ public class ThirdPersonController : NetworkBehaviour
     }
     private void CloseReload()
     {
-        if (currentWeapon.GetWeaponType() == WeaponType.Sniper)
+        if (currentWeapon.GetWeaponType() == ItemType.Sniper)
         {
             Animator.CrossFadeInFixedTime(CloseSnipeHash, CrossFadeFixedTime);
         }

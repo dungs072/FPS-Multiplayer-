@@ -7,7 +7,8 @@ public enum TypeObjectPoolManager
     PROJECTILE_FPS,
     PROJECTILE_TPP,
     ROCKET_FPS,
-    ROCKET_TPP
+    ROCKET_TPP,
+    SHELL_BULLET
 }
 public interface IObjectPool
 {

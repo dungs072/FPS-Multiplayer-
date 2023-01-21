@@ -4,21 +4,22 @@ using UnityEngine;
 using System;
 using Mirror;
 using UnityStandardAssets.Characters.FirstPerson;
-public enum WeaponType
+public enum ItemType
 {
     HandGun,
     Assault,
     SMG,
     ShotGun,
     Sniper,
-    RocketLaucher
+    RocketLaucher,
+    Bullet
 }
 public class WeaponManager : NetworkBehaviour
 {
     public event Action<WeaponBase> OnAddWeapon;
     public event Action<WeaponBase> OnRemoveWeapon;
     public event Action<int> OnChangeWeapon;
-    public event Action<WeaponType> OnChangeCrossHair;
+    public event Action<ItemType> OnChangeCrossHair;
     [SerializeField] private List<WeaponBase> weapons = new List<WeaponBase>();
     [SerializeField] private Transform weaponPackTransform;
     [SerializeField] private NetworkPlayerManager networkPlayerManager;
@@ -146,7 +147,7 @@ public class WeaponManager : NetworkBehaviour
         {
             (weapon as ShotgunBase).SetTppController(GetComponent<ThirdPersonController>());
         }
-        if(weapon.WeaponType==WeaponType.RocketLaucher)
+        if(weapon.WeaponType==ItemType.RocketLaucher)
         {
             rigManager.ChangeSecondHandGrabSourceTarget(1);
         }
@@ -166,7 +167,7 @@ public class WeaponManager : NetworkBehaviour
             OnChangeCrossHair?.Invoke(weapon.WeaponType);
         }
     }
-    public void ThrowFPSWeapon(WeaponType type)
+    public void ThrowFPSWeapon(ItemType type)
     {
         currentWeaponIndex = 0;
         DoChangeWeapon();
@@ -174,7 +175,7 @@ public class WeaponManager : NetworkBehaviour
         ThrowWeapon(type);
         CmdRemoveWeapon(type);
     }
-    private void ThrowWeapon(WeaponType type)
+    private void ThrowWeapon(ItemType type)
     {
         foreach (var weapon in weapons)
         {
@@ -192,6 +193,13 @@ public class WeaponManager : NetworkBehaviour
             UIManager.Instance.ClearPackWeapon();
         }
         OnChangeCrossHair?.Invoke(CurrentWeapon.WeaponType);
+    }
+    public void SetFullBulletLeft()
+    {
+        foreach(var weapon in weapons)
+        {
+            weapon.SetFullBulletLeft();
+        }
     }
     #region Client
     private void OnChangeCurrentWeaponIndex(int oldIndex, int newIndex)
@@ -213,7 +221,7 @@ public class WeaponManager : NetworkBehaviour
         EquipWeapon(name);
     }
     [ClientRpc]
-    private void RpcRemoveWeapon(WeaponType type)
+    private void RpcRemoveWeapon(ItemType type)
     {
         if(isOwned){return;}
         ThrowWeapon(type);
@@ -231,7 +239,7 @@ public class WeaponManager : NetworkBehaviour
         RpcAddWeapon(name);
     }
     [Command]
-    private void CmdRemoveWeapon(WeaponType type)
+    private void CmdRemoveWeapon(ItemType type)
     {
         RpcRemoveWeapon(type);
     }
