@@ -1,14 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class ItemSelection : MonoBehaviour
 {
-    [SerializeField] private TMP_Text titleButton;
+    [SerializeField] private Image iconButton;
     private PlayerController ownedPlayer;
     public string NameItem{get;private set;}
-    public void SetTitleButton(string name,PlayerController player)
+    public void SetTitleButton(string name,Sprite iconWeapon,PlayerController player)
     {
         NameItem = name;
-        titleButton.text = name;
+        this.iconButton.sprite = iconWeapon;
         ownedPlayer = player;
     }
     public void OnChooseItem()

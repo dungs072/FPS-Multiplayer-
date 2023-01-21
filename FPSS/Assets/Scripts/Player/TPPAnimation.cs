@@ -8,11 +8,13 @@ public class TPPAnimation : MonoBehaviour
     [SerializeField] private ReferenceManager refer;
     [Header("Rocket")]
     [SerializeField] private GameObject rocketAtHand;
+    [Header("Sound")]
+    [SerializeField] private PlayerSound playerSound;
     #region Animation
     public void TurnOnHandsWeight(int state)
     {
         rigManager.SetHandWeight(1f);
-        if (state==1) { return; }
+        if (state == 1) { return; }
         rigManager.SetSecondHandGrabWeight(1f);
     }
     public void ToggleBothHands(float value)
@@ -28,32 +30,42 @@ public class TPPAnimation : MonoBehaviour
     {
         rigManager.SetRigWeight(value);
     }
-    
+
     public void ToggleOffReloadRocketAnimation()
     {
         GameObject rocketAtGun = refer.TPPController.CurrentWeapon.GetRocketAtGun();
-        if(rocketAtGun==null){return;}
+        if (rocketAtGun == null) { return; }
         rocketAtGun.SetActive(true);
         rocketAtHand.SetActive(false);
     }
     public void ToggleOnReloadRocketAnimation()
     {
         GameObject rocketAtGun = refer.TPPController.CurrentWeapon.GetRocketAtGun();
-        if(rocketAtGun==null){return;}
+        if (rocketAtGun == null) { return; }
         rocketAtGun.SetActive(false);
         rocketAtHand.SetActive(true);
     }
     public void ToggleOnFireRocket()
     {
         GameObject rocketAtGun = refer.TPPController.CurrentWeapon.GetRocketAtGun();
-        if(rocketAtGun==null){return;}
+        if (rocketAtGun == null) { return; }
         rocketAtGun.SetActive(false);
     }
     public void ToggleOffFireRocket()
     {
         GameObject rocketAtGun = refer.TPPController.CurrentWeapon.GetRocketAtGun();
-        if(rocketAtGun==null){return;}
+        if (rocketAtGun == null) { return; }
         rocketAtGun.SetActive(true);
+    }
+    public void PlayFootStepSound()
+    {
+        if (rigManager.isOwned) { return; }//check for owned player or not
+        playerSound.PlayStandFootStep();
+    }
+    public void PlayCrouchFootStepSound()
+    {
+        if (rigManager.isOwned) { return; }//check for owned player or not
+        playerSound.PlayCrouchFootStep();
     }
     #endregion
 }

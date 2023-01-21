@@ -5,7 +5,7 @@ using Mirror;
 using System;
 public class NetworkPlayerInfor : NetworkBehaviour
 {
-    public static event Action ClientOnInforUpdated; 
+    public static event Action<bool> ClientOnInforUpdated; 
     [SyncVar(hook =nameof(OnUpdatePlayerName))]
     private string playerName;
 
@@ -25,7 +25,7 @@ public class NetworkPlayerInfor : NetworkBehaviour
     #region Client
     private void OnUpdatePlayerName(string oldName, string newName)
     {
-        ClientOnInforUpdated?.Invoke();
+        ClientOnInforUpdated?.Invoke(isClientOnly);
     }
     #endregion
 }

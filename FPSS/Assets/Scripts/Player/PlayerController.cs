@@ -4,7 +4,7 @@ using System;
 public class PlayerController : NetworkBehaviour
 {
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
-
+    public static event Action<bool> OnIsReadyInLobbyUpdated;
     public event Action OnHitTarget;
     [SerializeField] private ReferenceManager referManager;
     [SerializeField] private GameObject fpsModel;
@@ -23,13 +23,14 @@ public class PlayerController : NetworkBehaviour
 
     [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
     private bool isPartyOwner = false;
-
-
-
+    [SyncVar(hook = nameof(AuthorityHandleReadyInLobbyStateUpdated))]
+    private bool isReadyInLoby = true;
     private bool canInspect = false;
     private bool isCrouch = false;
     private bool isPause = false;
+    
 
+    public bool GetReadyInLobby(){return isReadyInLoby;}
     public bool GetIsPartyOwner() { return isPartyOwner; }
     public bool IsInLobby { get; set; } = false;
     public bool IsWalking
@@ -183,6 +184,7 @@ public class PlayerController : NetworkBehaviour
             isPause = !isPause;
             UIManager.Instance.TogglePauseMenu(isPause);
             referManager.FPSController.SetCursorLock(!isPause);
+            referManager.FPSController.enabled = !isPause;
         }
     }
 
@@ -449,6 +451,10 @@ public class PlayerController : NetworkBehaviour
         if (!isOwned) { return; }
         AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
     }
+    private void AuthorityHandleReadyInLobbyStateUpdated(bool oldState, bool newState)
+    {
+        OnIsReadyInLobbyUpdated?.Invoke(newState);
+    }
     [ClientRpc]
     private void RpcInGameProgress()
     {
@@ -497,6 +503,11 @@ public class PlayerController : NetworkBehaviour
     public void SetPartyOwner(bool state)
     {
         isPartyOwner = state;
+    }
+    [Command]
+    public void CmdSetReadyInLobby()
+    {
+        isReadyInLoby = !isReadyInLoby;
     }
     [Server]
     public void SetIsInGameProgress()

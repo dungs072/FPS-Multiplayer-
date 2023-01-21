@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private TeamManager teamManager;
+    [SerializeField] private ScoreManager scoreManager;
     public static event Action ClientOnConnected;
     public static event Action ClientOnDisconnected;
     public event Action OnAddPlayers;
@@ -36,6 +37,10 @@ public class MyNetworkManager : NetworkManager
     public void StartGame()
     {
         //if(Players.Count<2){return;}
+        foreach(var player in Players)
+        {
+            if(!player.GetReadyInLobby()){return;}
+        }
         isGameInProgress = true;
         ServerChangeScene("Map02");
     }
@@ -53,7 +58,9 @@ public class MyNetworkManager : NetworkManager
         if (SceneManager.GetActiveScene().name.StartsWith("Map02"))
         {
             TeamManager teamManagerInstance = Instantiate(teamManager);
+            ScoreManager scoreManagerInstance = Instantiate(scoreManager);
             NetworkServer.Spawn(teamManagerInstance.gameObject);
+            NetworkServer.Spawn(scoreManagerInstance.gameObject);
         }
 
     }

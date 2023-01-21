@@ -7,7 +7,8 @@ public class PlayerSound : MonoBehaviour
     [SerializeField] private HealthManager healthManager;
     [SerializeField] private AudioSource heartAudioSource;
     [SerializeField] private AudioSource mainAudioSource;
-    [SerializeField] private AudioClip footStep;
+    [SerializeField] private AudioClip standFootStep;
+    [SerializeField] private AudioClip crouchFootStep;
     
     private void Start() {
         if(!healthManager.isOwned){return;}
@@ -33,8 +34,12 @@ public class PlayerSound : MonoBehaviour
     {
         mainAudioSource.PlayOneShot(reloadingHumanSaySound);
     }
-    public void PlayFootStep()
+    public void PlayStandFootStep()
     {
-        mainAudioSource.PlayOneShot(footStep);
+        mainAudioSource.PlayOneShot(standFootStep);
+    }
+    public void PlayCrouchFootStep()
+    {
+        mainAudioSource.PlayOneShot(crouchFootStep);
     }
 }

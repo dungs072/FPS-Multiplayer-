@@ -25,16 +25,13 @@ public class WeaponSelectionUI : MonoBehaviour
     }
     private void LoadAllWeapon()
     {
-        GameObject[] weapons = Resources.LoadAll<GameObject>("FPSWeapons/");
+        WeaponBase[] weapons = Resources.LoadAll<WeaponBase>("FPSWeapons/");
         
         for (int i = 0; i < weapons.Length; i++)
         {
-            if(weapons[i].TryGetComponent<WeaponBase>(out WeaponBase weaponBase))
-            {
-                if(weaponBase.IsDefaultWeapon){continue;}
-            }
+            if(weapons[i].IsDefaultWeapon){continue;}
             ItemSelection itemInstance = Instantiate(itemSelectionPrefab, content);
-            itemInstance.SetTitleButton(weapons[i].name,OwnedPlayer);
+            itemInstance.SetTitleButton(weapons[i].gameObject.name,weapons[i].GunIcon,OwnedPlayer);
         }
     }
 }

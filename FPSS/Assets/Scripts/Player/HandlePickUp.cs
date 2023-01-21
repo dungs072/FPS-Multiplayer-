@@ -70,6 +70,7 @@ public class HandlePickUp : NetworkBehaviour
         if(!pickUps[0].CanPickup){return;}
         refer.WeaponManager.EquipFpsWeapon(pickUps[0].Name);
         refer.WeaponTPPManager.LoadTppWeapon(pickUps[0].Name);
+        refer.WeaponTPPManager.DisplayWeapons(false);
         RemovePickUpItem(pickUps[0]);
     }
 

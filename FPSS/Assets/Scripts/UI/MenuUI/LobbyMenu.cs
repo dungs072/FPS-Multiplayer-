@@ -4,42 +4,54 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-using System;
+
 public class LobbyMenu : MonoBehaviour
 {
     [SerializeField] private GameObject lobbyUI;
     [SerializeField] private Button startGameButton;
-    [SerializeField] private TMP_Text[] namePlayerTexts;
+    [SerializeField] private Button readyGameButton;
+    [SerializeField] private PlayerLobby[] namePlayerTexts;
 
     private void Start()
     {
-        MyNetworkManager.ClientOnConnected+=HandleClientConnected;
-        PlayerController.AuthorityOnPartyOwnerStateUpdated +=AuthorityHandlePartyOnwerStateUpdated;
-        NetworkPlayerInfor.ClientOnInforUpdated+=ClientHandleInforUpdated;
+        MyNetworkManager.ClientOnConnected += HandleClientConnected;
+        PlayerController.AuthorityOnPartyOwnerStateUpdated += AuthorityHandlePartyOnwerStateUpdated;
+        PlayerController.OnIsReadyInLobbyUpdated+=OnUpdateReadyStateInLobby;
+        NetworkPlayerInfor.ClientOnInforUpdated += ClientHandleInforUpdated;
     }
-    private void OnDestroy() {
-        MyNetworkManager.ClientOnConnected-=HandleClientConnected;
-        PlayerController.AuthorityOnPartyOwnerStateUpdated -=AuthorityHandlePartyOnwerStateUpdated;
-        NetworkPlayerInfor.ClientOnInforUpdated-=ClientHandleInforUpdated;
+    private void OnDestroy()
+    {
+        MyNetworkManager.ClientOnConnected -= HandleClientConnected;
+        PlayerController.AuthorityOnPartyOwnerStateUpdated -= AuthorityHandlePartyOnwerStateUpdated;
+        PlayerController.OnIsReadyInLobbyUpdated-=OnUpdateReadyStateInLobby;
+        NetworkPlayerInfor.ClientOnInforUpdated -= ClientHandleInforUpdated;
     }
-    private void ClientHandleInforUpdated()
+    private void ClientHandleInforUpdated(bool isClientOnly)
     {
         List<PlayerController> players = ((MyNetworkManager)NetworkManager.singleton).Players;
-        for(int i =0;i<players.Count;i++)
+        for (int i = 0; i < players.Count; i++)
         {
-            namePlayerTexts[i].text = players[i].GetComponent<NetworkPlayerInfor>().PlayerName;
+            namePlayerTexts[i].SetPlayerName(players[i].GetComponent<NetworkPlayerInfor>().PlayerName);
+            namePlayerTexts[i].ToggleReadyIcon(true);
         }
-        for(int i=players.Count;i<namePlayerTexts.Length;i++)
+        for (int i = players.Count; i < namePlayerTexts.Length; i++)
         {
-            namePlayerTexts[i].text = "Waiting for player...";
+            namePlayerTexts[i].SetPlayerName("Waiting for player...");
         }
         //startGameButton.interactable = players.Count>=2;
+        if (isClientOnly)
+        {
+            readyGameButton.gameObject.SetActive(true);
+        }
     }
-    public void OnUpdateTextLobby(int index, string name)
+    private void OnUpdateReadyStateInLobby(bool state)
     {
-        if(index>=namePlayerTexts.Length){return;}
-        namePlayerTexts[index].text = name;
+        List<PlayerController> players = ((MyNetworkManager)NetworkManager.singleton).Players;
+        for (int i = 0; i < players.Count; i++)
+        {
+            
+            namePlayerTexts[i].ToggleReadyIcon(players[i].GetReadyInLobby());
+        }
     }
     private void HandleClientConnected()
     {
@@ -53,9 +65,13 @@ public class LobbyMenu : MonoBehaviour
     {
         NetworkClient.connection.identity.GetComponent<PlayerController>().CmdStartGame();
     }
+    public void ReadyGame()
+    {
+        NetworkClient.connection.identity.GetComponent<PlayerController>().CmdSetReadyInLobby();
+    }
     public void LeaveLobby()
     {
-        if(NetworkServer.active && NetworkClient.isConnected)
+        if (NetworkServer.active && NetworkClient.isConnected)
         {
             NetworkManager.singleton.StopHost();
         }

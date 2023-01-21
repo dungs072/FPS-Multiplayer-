@@ -38,6 +38,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject parentUI;
     [Header("Pause")]
     [SerializeField] private GameObject pauseMenu;
+    [Header("Score")]
+    [SerializeField] private TMP_Text swatScoreText;
+    [SerializeField] private TMP_Text terroristScoreText;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -220,6 +223,15 @@ public class UIManager : MonoBehaviour
     public void TogglePauseMenu(bool state)
     {
         pauseMenu.SetActive(state);
+    }
+
+    public void SetSwatScoreDisplay(int score)
+    {
+        swatScoreText.text = score.ToString();
+    }
+    public void SetTerroristScoreDisplay(int score)
+    {
+        terroristScoreText.text = score.ToString();
     }
 }
 

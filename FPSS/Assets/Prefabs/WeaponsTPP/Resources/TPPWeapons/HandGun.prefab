@@ -359,6 +359,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16897
   rocket: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 4e73f78ce766bc74d80b2d36721c56d3, type: 3}
 --- !u!1001 &5213941871376751021
 PrefabInstance:
   m_ObjectHideFlags: 0

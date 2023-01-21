@@ -54,6 +54,13 @@ public class Team : NetworkBehaviour
         referManager.WeaponTPPManager.DisplayWeapons(true);
         referManager.TPPController.LocomotionValue = 0f;
         xRotatetionObject.rotation = defaultXRotation;
+        ResetCursorMode();
+        
+    }
+    private void ResetCursorMode()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     #region Server
 
@@ -68,6 +75,7 @@ public class Team : NetworkBehaviour
     [ClientRpc]
     private void RpcSetTeamName(TeamName teamName)
     {
+        if(isOwned){return;}
         TeamName = teamName;
     }
     [ClientRpc]

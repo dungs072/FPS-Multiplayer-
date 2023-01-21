@@ -5,6 +5,7 @@ using System;
 using Mirror;
 public class HealthManager : NetworkBehaviour
 {
+    public static event Action<TeamName,int> OnIncreasingScore;
     public event Action OnDie;
     public event Action OnNearlyDie;
     public event Action OnTakeDamage;
@@ -71,6 +72,7 @@ public class HealthManager : NetworkBehaviour
     public void Respawn()
     {
         if (!isOwned) { return; }
+        GetComponent<Team>().ReturnToLobbyPosition();
         isDie = false;
         CmdIsDie(false);
         CmdSetCurrentHealth(maxHealth);
@@ -92,6 +94,7 @@ public class HealthManager : NetworkBehaviour
                 if (currentHealth - amount <= 0 && !isDie)
                 {
                     UIManager.Instance.TriggerScoreRewardUI(isHead);
+                    
                 }
                 CmdTakeDamage(amount);
             }
@@ -143,19 +146,13 @@ public class HealthManager : NetworkBehaviour
     }
     private void OnHandleDie(bool oldState, bool newState)
     {
-
-        if (!newState)
-        {
-            if (isOwned)
-            {
-                GetComponent<Team>().ReturnToLobbyPosition();
-            }
-            //StartCoroutine(CountDownImmune());
-            return;
-        }
-        else
+        if(newState)
         {
             OnDie?.Invoke();
+            if(isServer)
+            {
+                OnIncreasingScore?.Invoke(GetComponent<Team>().TeamName,1);
+            }
         }
     }
     private IEnumerator CountDownImmune()

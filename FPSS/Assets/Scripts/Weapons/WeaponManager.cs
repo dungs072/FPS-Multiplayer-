@@ -171,6 +171,7 @@ public class WeaponManager : NetworkBehaviour
         currentWeaponIndex = 0;
         DoChangeWeapon();
         CmdSetCurrentWeaponIndex(currentWeaponIndex);
+        ThrowWeapon(type);
         CmdRemoveWeapon(type);
     }
     private void ThrowWeapon(WeaponType type)
@@ -186,7 +187,10 @@ public class WeaponManager : NetworkBehaviour
                 break;
             }
         }
-        UIManager.Instance.ClearPackWeapon();
+        if(isOwned)
+        {
+            UIManager.Instance.ClearPackWeapon();
+        }
         OnChangeCrossHair?.Invoke(CurrentWeapon.WeaponType);
     }
     #region Client
@@ -211,6 +215,7 @@ public class WeaponManager : NetworkBehaviour
     [ClientRpc]
     private void RpcRemoveWeapon(WeaponType type)
     {
+        if(isOwned){return;}
         ThrowWeapon(type);
     }
     #endregion

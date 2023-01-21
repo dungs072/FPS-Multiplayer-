@@ -8,35 +8,43 @@ public class RagdollManager : NetworkBehaviour
     [SerializeField] private List<Rigidbody> rbs;
     [SerializeField] private List<Collider> colliders;
     [SerializeField] private HealthManager healthManager;
+    [SerializeField] private RespawnManager respawnManager;
     [SerializeField] private Collider playerCollider;
     [SerializeField] private Collider leftFootCollider;
     [SerializeField] private Collider rightFootCollider;
 
-    private void Start() {
-        if(isOwned)
+    private void Start()
+    {
+        if (isOwned)
         {
             ToggleRagdoll(true);
+
         }
-        if(isServer)
+        if (isServer)
         {
-            healthManager.OnDie+=ServerTurnOnRagdoll;
+            healthManager.OnDie += ServerTurnOnRagdoll;
         }
         else
         {
-            healthManager.OnDie+=ClientTurnOnRagdoll;
+            healthManager.OnDie += ClientTurnOnRagdoll;
         }
-        
+        healthManager.OnDie += OnDie;
+        respawnManager.OnRespawn += OnRescue;
+
     }
-    private void OnDestroy() {
-        if(isServer)
+    private void OnDestroy()
+    {
+        if (isServer)
         {
-            healthManager.OnDie-=ServerTurnOnRagdoll;
+            healthManager.OnDie -= ServerTurnOnRagdoll;
         }
         else
         {
-            healthManager.OnDie-=ClientTurnOnRagdoll;
+            healthManager.OnDie -= ClientTurnOnRagdoll;
         }
-        
+        healthManager.OnDie -= OnDie;
+        respawnManager.OnRespawn -= OnRescue;
+
     }
     private void ClientTurnOnRagdoll()
     {
@@ -54,7 +62,7 @@ public class RagdollManager : NetworkBehaviour
     }
     public void ToggleRagdoll(bool state)
     {
-        foreach(var rb in rbs)
+        foreach (var rb in rbs)
         {
             rb.isKinematic = state;
         }
@@ -63,7 +71,7 @@ public class RagdollManager : NetworkBehaviour
     }
     public void ToggleColliders(bool state)
     {
-        foreach(var collider in colliders)
+        foreach (var collider in colliders)
         {
             collider.enabled = state;
         }
@@ -73,5 +81,13 @@ public class RagdollManager : NetworkBehaviour
         leftFootCollider.enabled = isTurnOnColliderFoot;
         rightFootCollider.enabled = isTurnOnColliderFoot;
     }
-    
+    private void OnDie()
+    {
+        ToggleFoot(true);
+    }
+    private void OnRescue()
+    {
+        ToggleFoot(false);
+    }
+
 }

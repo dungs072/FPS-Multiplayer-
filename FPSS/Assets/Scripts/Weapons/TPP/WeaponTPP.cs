@@ -13,6 +13,8 @@ public class WeaponTPP : MonoBehaviour,ICanDrop
     [SerializeField] private LayerMask layers;
     [Header("For projectile out")]
     [SerializeField] private GameObject rocket;
+    [Header("Sound")]
+    [SerializeField] private AudioClip shootSound;
     private PlayerController owner;
     public void SetOwner(PlayerController player)
     {
@@ -42,6 +44,10 @@ public class WeaponTPP : MonoBehaviour,ICanDrop
             prj.ReturnToNewState(attackPoint.position,directionWithSpread.normalized);
             prj.SetBeforeShoot(owner,damage,hit);
             prj.SetActive();
+        }
+        if(owner!=null)
+        {
+            owner.GetComponent<AudioSource>().PlayOneShot(shootSound);
         }
         if(muzzleFlash==null){return;}
         muzzleFlash.Play();

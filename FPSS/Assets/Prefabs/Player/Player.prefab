@@ -3482,6 +3482,7 @@ MonoBehaviour:
   rigManager: {fileID: 5281927766163981529}
   refer: {fileID: 8114319186923691854}
   rocketAtHand: {fileID: 2773685615701740100}
+  playerSound: {fileID: 3855248533811634969}
 --- !u!1 &3103639010986738983
 GameObject:
   m_ObjectHideFlags: 0
@@ -4350,7 +4351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3576879295256710004}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 40, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6373,6 +6374,7 @@ MonoBehaviour:
   - {fileID: 2355000973275214155}
   - {fileID: 6731861622065435285}
   healthManager: {fileID: 8655904785302520343}
+  respawnManager: {fileID: 761486930528167846}
   playerCollider: {fileID: 8114319186923691852}
   leftFootCollider: {fileID: 7877170314797084371}
   rightFootCollider: {fileID: 6731861622065435285}
@@ -6412,7 +6414,8 @@ MonoBehaviour:
   healthManager: {fileID: 8655904785302520343}
   heartAudioSource: {fileID: 3947786794159962601}
   mainAudioSource: {fileID: 8114319186913538924}
-  footStep: {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
+  standFootStep: {fileID: 8300000, guid: 42e65e088b3f4374e851b8dbd38f3df9, type: 3}
+  crouchFootStep: {fileID: 8300000, guid: e9714160ce34f2b4ab63ff8c27bd68e1, type: 3}
 --- !u!114 &761486930528167846
 MonoBehaviour:
   m_ObjectHideFlags: 0
