@@ -10127,8 +10127,16 @@ PrefabInstance:
       value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 99839006249864623, guid: bbe29997c4cd4c447a6d1c8f548c9ca1, type: 3}
+      propertyPath: <Icon>k__BackingField
+      value: 
+      objectReference: {fileID: 21300000, guid: dccc05b8d01dde54f88f9910329187c2, type: 3}
+    - target: {fileID: 99839006249864623, guid: bbe29997c4cd4c447a6d1c8f548c9ca1, type: 3}
       propertyPath: <Name>k__BackingField
       value: ARGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 99839006249864623, guid: bbe29997c4cd4c447a6d1c8f548c9ca1, type: 3}
+      propertyPath: <ItemType>k__BackingField
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 99839006249864623, guid: bbe29997c4cd4c447a6d1c8f548c9ca1, type: 3}
       propertyPath: <WeaponType>k__BackingField

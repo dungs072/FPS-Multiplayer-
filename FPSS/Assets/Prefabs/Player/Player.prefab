@@ -6103,6 +6103,7 @@ MonoBehaviour:
   <HealthManager>k__BackingField: {fileID: 8655904785302520343}
   <LeanManager>k__BackingField: {fileID: 5191239863841887666}
   <NetworkPlayerManager>k__BackingField: {fileID: 2100415169945206317}
+  <AudioSource>k__BackingField: {fileID: 8114319186913538924}
 --- !u!114 &8114319186923691855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6265,6 +6266,7 @@ MonoBehaviour:
   refer: {fileID: 8114319186923691854}
   handleDrop: {fileID: 7614812852889117052}
   maxGun: 2
+  pickupSound: {fileID: 8300000, guid: 6815c3b0ac0f79247b440b1b0cdd635c, type: 3}
 --- !u!114 &7614812852889117052
 MonoBehaviour:
   m_ObjectHideFlags: 0

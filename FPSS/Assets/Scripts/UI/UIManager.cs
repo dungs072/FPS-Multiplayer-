@@ -41,6 +41,9 @@ public class UIManager : MonoBehaviour
     [Header("Score")]
     [SerializeField] private TMP_Text swatScoreText;
     [SerializeField] private TMP_Text terroristScoreText;
+    [Header("Pickup infor")]
+    [SerializeField] private Image itemDisplay;
+    [SerializeField] private TMP_Text nameItemDisplay;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -232,6 +235,12 @@ public class UIManager : MonoBehaviour
     public void SetTerroristScoreDisplay(int score)
     {
         terroristScoreText.text = score.ToString();
+    }
+
+    public void SetItemPickupInfor(Sprite icon, string name)
+    {
+        itemDisplay.sprite = icon;
+        nameItemDisplay.text = name;
     }
 }
 

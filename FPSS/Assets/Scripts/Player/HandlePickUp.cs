@@ -7,6 +7,7 @@ public class HandlePickUp : NetworkBehaviour
     [SerializeField] private ReferenceManager refer;
     [SerializeField] private HandleDrop handleDrop;
     [SerializeField] private int maxGun = 2;
+    [SerializeField] private AudioClip pickupSound;
     private List<PickUp> pickUps = new List<PickUp>();
 
     private bool canPickUp = false;
@@ -37,9 +38,15 @@ public class HandlePickUp : NetworkBehaviour
     private void HandleUIPickup(bool state)
     {
         UIManager.Instance.ToggleFButtonUI(state);
+        if(state)
+        {
+            UIManager.Instance.SetItemPickupInfor(pickUps[0].Icon,pickUps[0].Name);
+        }
+        
     }
     public void PickUpItem(string nameWeapon = "", bool isSelect = false)
     {
+        refer.AudioSource.PlayOneShot(pickupSound);
         if (pickUps.Count>0&&pickUps[0].ItemType == ItemType.Bullet)
         {
             refer.WeaponManager.SetFullBulletLeft();

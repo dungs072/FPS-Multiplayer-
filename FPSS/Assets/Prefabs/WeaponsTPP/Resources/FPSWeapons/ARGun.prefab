@@ -10586,8 +10586,8 @@ MonoBehaviour:
   boomManager: {fileID: 0}
   boomPack: {fileID: 0}
   booms: []
-  gunIcon: {fileID: 21300044, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
-  bulletIcon: {fileID: 21300004, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
+  gunIcon: {fileID: 21300000, guid: dccc05b8d01dde54f88f9910329187c2, type: 3}
+  bulletIcon: {fileID: 21300010, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
 --- !u!82 &-7766190833323748034
 AudioSource:
   m_ObjectHideFlags: 0

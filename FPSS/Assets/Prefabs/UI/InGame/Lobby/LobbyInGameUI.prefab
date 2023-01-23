@@ -855,4 +855,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 7257510413610780052}
-  itemSelectionPrefab: {fileID: 2532707224046366335, guid: ae18af2efbc1a1d4d960b26729522a1c, type: 3}
+  itemSelectionPrefab: {fileID: 4311040153762341237, guid: 2b482d516376f5942a438de29a5f96db, type: 3}

@@ -13,6 +13,7 @@ public class ReferenceManager : MonoBehaviour
     [field:SerializeField] public HealthManager HealthManager{get;private set;}
     [field:SerializeField] public LeanManager LeanManager{get;private set;}
     [field:SerializeField] public NetworkPlayerManager NetworkPlayerManager {get;private set;}
+    [field:SerializeField] public AudioSource AudioSource{get;private set;}
 
     public float GetNormalizedTime(Animator animator, string animTag)
     {
