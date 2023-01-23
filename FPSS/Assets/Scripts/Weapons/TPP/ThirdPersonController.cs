@@ -164,7 +164,7 @@ public class ThirdPersonController : NetworkBehaviour
         }
         for (int i = 0; i < weaponManager.Weapons.Count; i++)
         {
-            int hash = weaponHash[weaponManager.Weapons[i].WeaponType];
+            int hash = weaponHash[weaponManager.Weapons[i].ItemAttribute.Type];
             if (i == index)
             {
                 Animator.SetBool(hash, true);
@@ -240,7 +240,7 @@ public class ThirdPersonController : NetworkBehaviour
     private void OpenReload()
     {
         TurnOffHandsWeight();
-        if (currentWeapon.GetWeaponType() == ItemType.Sniper)
+        if (currentWeapon.ItemAttribute.Type == ItemType.Sniper)
         {
             Animator.CrossFadeInFixedTime(OpenSnipeHash, CrossFadeFixedTime);
         }
@@ -252,7 +252,7 @@ public class ThirdPersonController : NetworkBehaviour
     }
     private void InsertReload()
     {
-        if (currentWeapon.GetWeaponType() == ItemType.Sniper)
+        if (currentWeapon.ItemAttribute.Type == ItemType.Sniper)
         {
             Animator.CrossFadeInFixedTime(InsertSnipeHash, CrossFadeFixedTime);
         }
@@ -263,7 +263,7 @@ public class ThirdPersonController : NetworkBehaviour
     }
     private void CloseReload()
     {
-        if (currentWeapon.GetWeaponType() == ItemType.Sniper)
+        if (currentWeapon.ItemAttribute.Type == ItemType.Sniper)
         {
             Animator.CrossFadeInFixedTime(CloseSnipeHash, CrossFadeFixedTime);
         }

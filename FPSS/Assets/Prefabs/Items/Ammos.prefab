@@ -130,10 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4b49c9ee47a56479dc5ddf6114fedc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Ammo
-  <Icon>k__BackingField: {fileID: -1822735646, guid: 47f7428053f4e594dabf906828a436ce, type: 3}
-  <ItemType>k__BackingField: 6
+  <ItemAttribute>k__BackingField: {fileID: 11400000, guid: 4b61b0b751f40464387c92c1da9b759a, type: 2}
   <CanPickup>k__BackingField: 1
+  timeToDestroy: 20
+  canDestroy: 0
 --- !u!135 &4451778238477118163
 SphereCollider:
   m_ObjectHideFlags: 0

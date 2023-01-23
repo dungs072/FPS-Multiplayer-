@@ -4,10 +4,18 @@ using UnityEngine;
 using System;
 public class PickUp : MonoBehaviour
 {
-    [field: SerializeField] public string Name { get; private set; }
-    [field:SerializeField] public Sprite Icon{get;private set;}
-    [field:SerializeField] public ItemType ItemType{get;private set;}
+    public static event Action<GameObject> OnDestroyPickup; 
+    [field:SerializeField] public ItemAttribute ItemAttribute{get;private set;}
     [field:SerializeField] public bool CanPickup {get;private set;} = true;
+    [SerializeField] private float timeToDestroy = 20f;
+    [SerializeField] private bool canDestroy = true;
+    private void Start() {
+        if(!canDestroy){return;}
+        Destroy(gameObject,timeToDestroy);   
+    }
+    private void OnDestroy() {
+        OnDestroyPickup?.Invoke(gameObject);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

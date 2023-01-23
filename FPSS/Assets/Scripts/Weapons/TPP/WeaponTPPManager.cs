@@ -13,7 +13,7 @@ public class WeaponTPPManager : NetworkBehaviour
 
     private void Awake()
     {
-        LoadWeaponFromResources("HandGun");
+        LoadWeaponFromResources("Hand gun 1");
     }
     public void LoadTppWeapon(string name)
     {
@@ -41,7 +41,7 @@ public class WeaponTPPManager : NetworkBehaviour
     public void ThrowWeapon(WeaponTPP weapon)
     {
         if (!weapons.Contains(weapon)) { return; }
-        OnRemoveWeapon?.Invoke(weapon.GetWeaponType());
+        OnRemoveWeapon?.Invoke(weapon.ItemAttribute.Type);
         weapons.Remove(weapon);
         if (isOwned)
         {

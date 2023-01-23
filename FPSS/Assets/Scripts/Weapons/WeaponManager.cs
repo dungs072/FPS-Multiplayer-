@@ -104,7 +104,7 @@ public class WeaponManager : NetworkBehaviour
     {
         DoChangeWeapon();
         if (!isOwned) { return; }
-        OnChangeCrossHair?.Invoke(CurrentWeapon.WeaponType);
+        OnChangeCrossHair?.Invoke(CurrentWeapon.ItemAttribute.Type);
         CmdSetCurrentWeaponIndex(index);
     }
 
@@ -147,7 +147,7 @@ public class WeaponManager : NetworkBehaviour
         {
             (weapon as ShotgunBase).SetTppController(GetComponent<ThirdPersonController>());
         }
-        if(weapon.WeaponType==ItemType.RocketLaucher)
+        if(weapon.ItemAttribute.Type==ItemType.RocketLaucher)
         {
             rigManager.ChangeSecondHandGrabSourceTarget(1);
         }
@@ -160,26 +160,26 @@ public class WeaponManager : NetworkBehaviour
         if (isOwned)
         {
             PackWeaponUI pack = UIManager.Instance.Packs[weapons.Count - 1];
-            pack.ChangeWeaponDisplay(weapon.GunIcon);
+            pack.ChangeWeaponDisplay(weapon.ItemAttribute.Icon);
             pack.ChangeBulletDisplay(weapon.BulletIcon);
             pack.ChangeBulletLeftAmountDisplay(weapon.BulletMaxInMag, weapon.BulletLeft);
             weapon.OnChangeBulletLeft += UIManager.Instance.Packs[weapons.Count - 1].ChangeBulletLeftAmountDisplay;
-            OnChangeCrossHair?.Invoke(weapon.WeaponType);
+            OnChangeCrossHair?.Invoke(weapon.ItemAttribute.Type);
         }
     }
-    public void ThrowFPSWeapon(ItemType type)
+    public void ThrowFPSWeapon(string nameWeapon)
     {
         currentWeaponIndex = 0;
         DoChangeWeapon();
         CmdSetCurrentWeaponIndex(currentWeaponIndex);
-        ThrowWeapon(type);
-        CmdRemoveWeapon(type);
+        ThrowWeapon(nameWeapon);
+        CmdRemoveWeapon(nameWeapon);
     }
-    private void ThrowWeapon(ItemType type)
+    private void ThrowWeapon(string nameWeapon)
     {
         foreach (var weapon in weapons)
         {
-            if (weapon.WeaponType == type && !weapon.IsDefaultWeapon)
+            if (weapon.ItemAttribute.Name == nameWeapon && !weapon.IsDefaultWeapon)
             {
                 weapons.Remove(weapon);
                 OnRemoveWeapon?.Invoke(weapon);
@@ -192,7 +192,7 @@ public class WeaponManager : NetworkBehaviour
         {
             UIManager.Instance.ClearPackWeapon();
         }
-        OnChangeCrossHair?.Invoke(CurrentWeapon.WeaponType);
+        OnChangeCrossHair?.Invoke(CurrentWeapon.ItemAttribute.Type);
     }
     public void SetFullBulletLeft()
     {
@@ -221,10 +221,10 @@ public class WeaponManager : NetworkBehaviour
         EquipWeapon(name);
     }
     [ClientRpc]
-    private void RpcRemoveWeapon(ItemType type)
+    private void RpcRemoveWeapon(string nameWeapon)
     {
         if(isOwned){return;}
-        ThrowWeapon(type);
+        ThrowWeapon(nameWeapon);
     }
     #endregion
     #region Server
@@ -239,9 +239,9 @@ public class WeaponManager : NetworkBehaviour
         RpcAddWeapon(name);
     }
     [Command]
-    private void CmdRemoveWeapon(ItemType type)
+    private void CmdRemoveWeapon(string nameWeapon)
     {
-        RpcRemoveWeapon(type);
+        RpcRemoveWeapon(nameWeapon);
     }
     #endregion
 

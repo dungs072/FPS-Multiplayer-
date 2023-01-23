@@ -5,7 +5,7 @@ using System;
 using Mirror;
 public class HealthManager : NetworkBehaviour
 {
-    public static event Action<TeamName,int> OnIncreasingScore;
+    public static event Action<TeamName, int> OnIncreasingScore;
     public event Action OnDie;
     public event Action OnNearlyDie;
     public event Action OnTakeDamage;
@@ -85,8 +85,12 @@ public class HealthManager : NetworkBehaviour
         if (!canTakeDamage) { return; }
         if (isOwned)
         {
-            TriggerDamageIndicator(attacker);
+            if (attacker != null&&!isDie)
+            {
+                TriggerDamageIndicator(attacker);
+            }
         }
+        string nameKiller = GetNameKiller(attackingOwner);
         if (attackingOwner.TryGetComponent<NetworkIdentity>(out NetworkIdentity identity))
         {
             if (identity.isOwned)
@@ -94,18 +98,39 @@ public class HealthManager : NetworkBehaviour
                 if (currentHealth - amount <= 0 && !isDie)
                 {
                     UIManager.Instance.TriggerScoreRewardUI(isHead);
-                    
                 }
-                CmdTakeDamage(amount);
+                currentHealth = Mathf.Max(currentHealth - amount, 0);
+                CmdTakeDamage(amount, nameKiller);
             }
         }
         else
         {
             if (isServer)
             {
-                ServerTakeDamage(amount);
+                ServerTakeDamage(amount, nameKiller);
             }
         }
+    }
+
+    private static string GetNameKiller(Transform attackingOwner)
+    {
+        string nameKiller = "";
+        if (attackingOwner.TryGetComponent<NetworkPlayerInfor>(out NetworkPlayerInfor infor))
+        {
+            nameKiller = infor.PlayerName;
+        }
+        else
+        {
+            nameKiller = "a boom";
+        }
+
+        return nameKiller;
+    }
+
+    private void CreateKillBox(string name)
+    {
+        string namePatient = GetComponent<NetworkPlayerInfor>().PlayerName;
+        UIManager.Instance.CreateDisplayKillBox(name, namePatient);
     }
     private void TriggerDamageIndicator(Transform attacker)
     {
@@ -113,19 +138,22 @@ public class HealthManager : NetworkBehaviour
         DISystem.Instance.CreateIndicator(attacker);
     }
     [Command(requiresAuthority = false)]
-    private void CmdTakeDamage(int amount)
+    private void CmdTakeDamage(int amount, string name)
     {
-        ServerTakeDamage(amount);
+        ServerTakeDamage(amount, name);
+
     }
     [Server]
-    private void ServerTakeDamage(int amount)
+    private void ServerTakeDamage(int amount, string nameKiller)
     {
         if (isDie) { return; }
         currentHealth = Mathf.Max(currentHealth - amount, 0);
         if (currentHealth == 0)
         {
             isDie = true;
+            RpcDisplayKillBox(nameKiller);
         }
+
         SelfRescue();
     }
     [Server]
@@ -144,15 +172,21 @@ public class HealthManager : NetworkBehaviour
         }
 
     }
+    [ClientRpc]
+    private void RpcDisplayKillBox(string nameKiller)
+    {
+        CreateKillBox(nameKiller);
+    }
     private void OnHandleDie(bool oldState, bool newState)
     {
-        if(newState)
+        if (newState)
         {
             OnDie?.Invoke();
-            if(isServer)
+            if (isServer)
             {
-                OnIncreasingScore?.Invoke(GetComponent<Team>().TeamName,1);
+                OnIncreasingScore?.Invoke(GetComponent<Team>().TeamName, 1);
             }
+            
         }
     }
     private IEnumerator CountDownImmune()

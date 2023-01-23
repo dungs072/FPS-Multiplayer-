@@ -23,6 +23,12 @@ public class HandlePickUp : NetworkBehaviour
             canPickUp = value;
         }
     }
+    private void Start() {
+        PickUp.OnDestroyPickup+=RemovePickUpItem;
+    }
+    private void OnDestroy() {
+        PickUp.OnDestroyPickup-=RemovePickUpItem;
+    }
     private void Update()
     {
         if (!isOwned) { return; }
@@ -40,14 +46,14 @@ public class HandlePickUp : NetworkBehaviour
         UIManager.Instance.ToggleFButtonUI(state);
         if(state)
         {
-            UIManager.Instance.SetItemPickupInfor(pickUps[0].Icon,pickUps[0].Name);
+            UIManager.Instance.SetItemPickupInfor(pickUps[0].ItemAttribute.Icon,pickUps[0].ItemAttribute.Name);
         }
         
     }
     public void PickUpItem(string nameWeapon = "", bool isSelect = false)
     {
         refer.AudioSource.PlayOneShot(pickupSound);
-        if (pickUps.Count>0&&pickUps[0].ItemType == ItemType.Bullet)
+        if (pickUps.Count>0&&pickUps[0].ItemAttribute.Type == ItemType.Bullet)
         {
             refer.WeaponManager.SetFullBulletLeft();
         }
@@ -56,7 +62,7 @@ public class HandlePickUp : NetworkBehaviour
             if (refer.WeaponManager.Weapons.Count == maxGun)
             {
                 if (refer.WeaponManager.CurrentWeapon.IsDefaultWeapon) { return; }
-                handleDrop.ThrowItem();
+                handleDrop.ThrowItem(true);
                 StartCoroutine(DoPickUpItemDelay(nameWeapon, isSelect));
             }
             else
@@ -83,10 +89,12 @@ public class HandlePickUp : NetworkBehaviour
         if (pickUps.Count == 0) { return; }
         if (pickUps[0] == null) { return; }
         if (!pickUps[0].CanPickup) { return; }
-        refer.WeaponManager.EquipFpsWeapon(pickUps[0].Name);
-        refer.WeaponTPPManager.LoadTppWeapon(pickUps[0].Name);
+        refer.WeaponManager.EquipFpsWeapon(pickUps[0].ItemAttribute.Name);
+        refer.WeaponTPPManager.LoadTppWeapon(pickUps[0].ItemAttribute.Name);
         refer.WeaponTPPManager.DisplayWeapons(false);
+        PickUp pickUp = pickUps[0];
         RemovePickUpItem(pickUps[0]);
+        NetworkServer.Destroy(pickUp.gameObject);
     }
 
     public void AddPickUpItem(PickUp pickUp)
@@ -98,5 +106,9 @@ public class HandlePickUp : NetworkBehaviour
     {
         if (!pickUps.Contains(pickUp)) { return; }
         pickUps.Remove(pickUp);
+    }
+    private void RemovePickUpItem(GameObject obj)
+    {
+        RemovePickUpItem(obj.GetComponent<PickUp>());
     }
 }

@@ -8,7 +8,7 @@ public class WeaponTPP : MonoBehaviour,ICanDrop
     [SerializeField] private ParticleSystem muzzleFlash;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private PickUp pickup;
-    [SerializeField] private ItemType weaponType;
+    [field:SerializeField] public ItemAttribute ItemAttribute{get;private set;}
     [SerializeField] private TypeObjectPoolManager typeObjectPoolManager;
     [SerializeField] private LayerMask layers;
     [Header("For projectile out")]
@@ -56,13 +56,13 @@ public class WeaponTPP : MonoBehaviour,ICanDrop
     public GameObject GetRocketAtGun(){return rocket;}
     public PickUp GetPickupItem(){return pickup;}
 
-    public ItemType GetWeaponType()
-    {
-        return weaponType;
-    }
-
     public GameObject GetItem()
     {
         return gameObject;
+    }
+
+    public string GetNameItem()
+    {
+        return ItemAttribute.Name;
     }
 }

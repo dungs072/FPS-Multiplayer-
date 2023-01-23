@@ -32,7 +32,7 @@ public class WeaponBase : MonoBehaviour
 
     [field: SerializeField] public Animator Animator { get; private set; }
     [field: SerializeField] public ShootType ShootType { get; private set; }
-    [field: SerializeField] public ItemType WeaponType { get; private set; }
+    [field:SerializeField] public ItemAttribute ItemAttribute{get;private set;}
     [field: SerializeField] public bool IsDefaultWeapon { get; private set; } = false;
     [Header("Attribute")]
     [SerializeField] private float fireTime = 0.1f;
@@ -73,10 +73,7 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] private GameObject boomPack;
     [SerializeField] private List<Boom> booms;
     [Header("Icons")]
-    [SerializeField] private Sprite gunIcon;
     [SerializeField] private Sprite bulletIcon;
-
-    public Sprite GunIcon{get{return gunIcon;}}
     public Sprite BulletIcon{get{return bulletIcon;}}
     
     public GameObject BoomPack { get { return boomPack; } }

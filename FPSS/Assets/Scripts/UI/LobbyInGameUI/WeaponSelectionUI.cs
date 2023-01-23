@@ -31,7 +31,7 @@ public class WeaponSelectionUI : MonoBehaviour
         {
             if(weapons[i].IsDefaultWeapon){continue;}
             ItemSelection itemInstance = Instantiate(itemSelectionPrefab, content);
-            itemInstance.SetTitleButton(weapons[i].gameObject.name,weapons[i].GunIcon,OwnedPlayer);
+            itemInstance.SetTitleButton(weapons[i].gameObject.name,weapons[i].ItemAttribute.Icon,OwnedPlayer);
         }
     }
 }

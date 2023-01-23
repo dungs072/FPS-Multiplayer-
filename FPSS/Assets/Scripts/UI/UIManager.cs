@@ -44,6 +44,9 @@ public class UIManager : MonoBehaviour
     [Header("Pickup infor")]
     [SerializeField] private Image itemDisplay;
     [SerializeField] private TMP_Text nameItemDisplay;
+    [Header("Kill Display")]
+    [SerializeField] private Transform displayBox;
+    [SerializeField] private KillBox killBoxPrefab;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -241,6 +244,11 @@ public class UIManager : MonoBehaviour
     {
         itemDisplay.sprite = icon;
         nameItemDisplay.text = name;
+    }
+    public void CreateDisplayKillBox(string nameKiller, string namePatient)
+    {
+        KillBox killBoxInstance = Instantiate(killBoxPrefab,displayBox);
+        killBoxInstance.SetKillTitle(nameKiller,namePatient);
     }
 }
 

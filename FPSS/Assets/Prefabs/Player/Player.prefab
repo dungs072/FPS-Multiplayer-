@@ -5462,6 +5462,7 @@ Transform:
   - {fileID: 7277045628783938251}
   - {fileID: 6217052666369781792}
   - {fileID: 4368650941111344936}
+  - {fileID: 5988822521378527695}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -6285,6 +6286,7 @@ MonoBehaviour:
   weaponManager: {fileID: 5095099722562261286}
   weaponTPPManager: {fileID: 4844320798039907785}
   healthManager: {fileID: 8655904785302520343}
+  posDrop: {fileID: 5988822521378527695}
 --- !u!114 &1966596516154673018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6334,7 +6336,7 @@ MonoBehaviour:
   timeToHeal: 12
   increaseHealthAmount: 1
   fpsCamera: {fileID: 8114319186919794860}
-  timeToImmune: 5
+  timeToImmune: 20
 --- !u!114 &2259313565899129454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6694,6 +6696,37 @@ Transform:
   - {fileID: 5331908010502057006}
   m_Father: {fileID: 8114319186918192812}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8870364610581562995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5988822521378527695}
+  m_Layer: 6
+  m_Name: DropPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5988822521378527695
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8870364610581562995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.18, z: 0.31}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8114319186918192812}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9003931872920080550
 GameObject:
