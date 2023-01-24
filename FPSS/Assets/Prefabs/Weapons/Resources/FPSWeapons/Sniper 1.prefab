@@ -11507,7 +11507,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   <Animator>k__BackingField: {fileID: 4629011229746835845}
   <ShootType>k__BackingField: 0
-  <WeaponType>k__BackingField: 4
   <ItemAttribute>k__BackingField: {fileID: 11400000, guid: a89bf8ba295f94e4096548899a7e8884, type: 2}
   <IsDefaultWeapon>k__BackingField: 0
   fireTime: 1
@@ -11544,7 +11543,6 @@ MonoBehaviour:
   boomManager: {fileID: 0}
   boomPack: {fileID: 0}
   booms: []
-  gunIcon: {fileID: 21300030, guid: dccc05b8d01dde54f88f9910329187c2, type: 3}
   bulletIcon: {fileID: 21300012, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
   tppController: {fileID: 0}
   openReloadAnimationTime: 1

@@ -241,14 +241,29 @@ public class WeaponBase : MonoBehaviour
     private void DoAimIn()
     {
         AimInAnimation();
+        if(TryGetComponent<Scope>(out Scope scope))
+        {
+            scope.ScopeUp();
+        }
     }
     public void DoAimOut()
     {
         AimOutAnimation();
+        if(TryGetComponent<Scope>(out Scope scope))
+        {
+            scope.ScopeDown();
+        }
     }
     public void CheckReload()
     {
         if (!canReload) { return; }
+        if(ItemAttribute.Type!=ItemType.Sniper)
+        {
+            if(TryGetComponent<Scope>(out Scope scope))
+            {
+                scope.ScopeDown();
+            }
+        }
         playerController.PlayerSound.PlayReloading();
         Reload();
     }

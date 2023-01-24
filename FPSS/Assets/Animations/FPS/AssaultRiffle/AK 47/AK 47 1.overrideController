@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AssaultRiffle1
+  m_Name: AK 47 1
   m_Controller: {fileID: 9100000, guid: 7df7f7b32d29f024d9a9db291d20ca0c, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400020, guid: 182b7f11db452bc458d35a6c9eced06f, type: 3}
