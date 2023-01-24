@@ -28,7 +28,7 @@ public class WeaponSelection : MonoBehaviour
         if (index >= scopePack.Length) { return; }
         scope.OnSelect += scopePack[index].SetActive;
         scope.OnDeactive += DeactiveAllScopePack;
-        scope.OnToggleScope+=weaponAdjustment.ToggleScope;
+        //scope.OnToggleScope+=weaponAdjustment.ToggleScope;
         scope.Index = index;
     }
     private void DeactiveAllScopePack()

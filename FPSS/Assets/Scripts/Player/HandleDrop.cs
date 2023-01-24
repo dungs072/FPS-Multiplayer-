@@ -45,7 +45,6 @@ public class HandleDrop : NetworkBehaviour
         string nameWeapon = weaponManager.CurrentWeapon.ItemAttribute.Name;
         weaponManager.ThrowFPSWeapon(nameWeapon);
         CmdThrowItem(nameWeapon,canSpawn);
-        
     }
     public void AddItemCanDrop(ICanDrop item)
     {

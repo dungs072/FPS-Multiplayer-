@@ -10387,6 +10387,7 @@ GameObject:
   - component: {fileID: 3088723475991492090}
   - component: {fileID: 6411545395933704573}
   - component: {fileID: -1415883880772231268}
+  - component: {fileID: 6874656360504980054}
   m_Layer: 7
   m_Name: SMG
   m_TagString: Untagged
@@ -10446,7 +10447,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   <Animator>k__BackingField: {fileID: 3088723475991492090}
   <ShootType>k__BackingField: 1
-  <WeaponType>k__BackingField: 2
   <ItemAttribute>k__BackingField: {fileID: 11400000, guid: 24047b4087d4b60439fa53dd3a498d6e, type: 2}
   <IsDefaultWeapon>k__BackingField: 0
   fireTime: 0.11
@@ -10483,7 +10483,6 @@ MonoBehaviour:
   boomManager: {fileID: 0}
   boomPack: {fileID: 0}
   booms: []
-  gunIcon: {fileID: 21300020, guid: dccc05b8d01dde54f88f9910329187c2, type: 3}
   bulletIcon: {fileID: 21300006, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
 --- !u!82 &-1415883880772231268
 AudioSource:
@@ -10581,6 +10580,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6874656360504980054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088723475984057910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af915c36046d004ebaf6e9be53dde12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scopes:
+  - {fileID: 3055986720707589009}
+  - {fileID: 1265050909044935851}
+  - {fileID: 738140426387281571}
+  - {fileID: 8551974547275866144}
 --- !u!1 &3088723475984057912
 GameObject:
   m_ObjectHideFlags: 0
@@ -10779,6 +10795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3088723475984488996}
   - component: {fileID: 3088723475987172146}
+  - component: {fileID: 1265050909044935851}
   m_Layer: 7
   m_Name: scope_02
   m_TagString: Untagged
@@ -10887,6 +10904,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.11856443, y: 0.21098599, z: 0.4267453}
     m_Extent: {x: 0.056564957, y: 0.06263903, z: 0.056575388}
   m_DirtyAABB: 0
+--- !u!114 &1265050909044935851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088723475984057924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: f1ca60fd3b8bbac44ae6ad511521c61f, type: 2}
+  scopeInGun: {fileID: 3088723475984057924}
 --- !u!1 &3088723475984057926
 GameObject:
   m_ObjectHideFlags: 0
@@ -10897,6 +10928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3088723475984488998}
   - component: {fileID: 3088723475987172156}
+  - component: {fileID: 3055986720707589009}
   m_Layer: 7
   m_Name: scope_01
   m_TagString: Untagged
@@ -11005,6 +11037,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.11093238, y: 0.20151517, z: 0.41987395}
     m_Extent: {x: 0.06169459, y: 0.06576254, z: 0.059632063}
   m_DirtyAABB: 0
+--- !u!114 &3055986720707589009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088723475984057926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: b2602970256987749affab31b180f2f6, type: 2}
+  scopeInGun: {fileID: 3088723475984057926}
 --- !u!1 &3088723475984057928
 GameObject:
   m_ObjectHideFlags: 0
@@ -11950,6 +11996,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3088723475984489048}
   - component: {fileID: 3088723475987172150}
+  - component: {fileID: 8551974547275866144}
   m_Layer: 7
   m_Name: scope_04
   m_TagString: Untagged
@@ -12058,6 +12105,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.10742943, y: 0.2006655, z: 0.41626197}
     m_Extent: {x: 0.052842036, y: 0.057688117, z: 0.051710725}
   m_DirtyAABB: 0
+--- !u!114 &8551974547275866144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088723475984057976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: 34e6e4b637a9cef47891d41a61c36850, type: 2}
+  scopeInGun: {fileID: 3088723475984057976}
 --- !u!1 &3088723475984057978
 GameObject:
   m_ObjectHideFlags: 0
@@ -12068,6 +12129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3088723475984489050}
   - component: {fileID: 3088723475987172144}
+  - component: {fileID: 738140426387281571}
   m_Layer: 7
   m_Name: scope_03
   m_TagString: Untagged
@@ -12176,6 +12238,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.11707401, y: 0.21133459, z: 0.42507252}
     m_Extent: {x: 0.058257762, y: 0.06561733, z: 0.06042418}
   m_DirtyAABB: 0
+--- !u!114 &738140426387281571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088723475984057978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: a67f6aee4cf1b514db2ef089213bcd42, type: 2}
+  scopeInGun: {fileID: 3088723475984057978}
 --- !u!1 &3088723475984057980
 GameObject:
   m_ObjectHideFlags: 0

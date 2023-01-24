@@ -432,4 +432,21 @@ public class WeaponBase : MonoBehaviour
         maxBullet = bulletLeft;
         OnChangeBulletLeft?.Invoke(currentBulletInMag,bulletLeft);
     }
+    public void ChangeCurrentAnimatorIntoNewAnimator(AnimatorOverrideController animatorOverrideController)
+    {
+        if (animatorOverrideController == null)
+        {
+            var overrideAnimator = Animator.runtimeAnimatorController
+                                   as AnimatorOverrideController;
+            if (overrideAnimator != null)
+            {
+                Animator.runtimeAnimatorController = overrideAnimator.runtimeAnimatorController;
+            }
+        }
+        else
+        {
+            Animator.runtimeAnimatorController = animatorOverrideController;
+        }
+        //Animator.Update(Time.deltaTime);
+    }
 }

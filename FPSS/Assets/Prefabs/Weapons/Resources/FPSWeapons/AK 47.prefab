@@ -10550,7 +10550,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   <Animator>k__BackingField: {fileID: 2720861901957746011}
   <ShootType>k__BackingField: 1
-  <WeaponType>k__BackingField: 1
   <ItemAttribute>k__BackingField: {fileID: 11400000, guid: d139898e67173d14297ccbd9cf48cdc2, type: 2}
   <IsDefaultWeapon>k__BackingField: 0
   fireTime: 0.11
@@ -10587,7 +10586,6 @@ MonoBehaviour:
   boomManager: {fileID: 0}
   boomPack: {fileID: 0}
   booms: []
-  gunIcon: {fileID: 21300000, guid: dccc05b8d01dde54f88f9910329187c2, type: 3}
   bulletIcon: {fileID: 21300010, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
 --- !u!82 &-7766190833323748034
 AudioSource:
@@ -10698,10 +10696,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scopes:
-  - {fileID: 2720861901965016793}
-  - {fileID: 2720861901965016799}
-  - {fileID: 2720861901965016797}
-  - {fileID: 2720861901965016787}
+  - {fileID: 6582299929866977968}
+  - {fileID: 1233880660370154647}
+  - {fileID: 6559958603371433108}
+  - {fileID: 1888641435002773613}
 --- !u!1 &2720861901965016729
 GameObject:
   m_ObjectHideFlags: 0
@@ -11147,6 +11145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2720861901964911347}
   - component: {fileID: 2720861901961835401}
+  - component: {fileID: 1888641435002773613}
   m_Layer: 7
   m_Name: scope_04
   m_TagString: Untagged
@@ -11255,6 +11254,21 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.11133814, y: 0.12479596, z: 0.4132672}
     m_Extent: {x: 0.054376543, y: 0.058262307, z: 0.050344437}
   m_DirtyAABB: 0
+--- !u!114 &1888641435002773613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720861901965016787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: 34e6e4b637a9cef47891d41a61c36850, type: 2}
+  <AnimatorOverride>k__BackingField: {fileID: 22100000, guid: c08e142243c4b594fb6d1aa3cbe5f3c3, type: 2}
+  scopeInGun: {fileID: 2720861901965016787}
 --- !u!1 &2720861901965016789
 GameObject:
   m_ObjectHideFlags: 0
@@ -11328,6 +11342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2720861901964911353}
   - component: {fileID: 2720861901961835415}
+  - component: {fileID: 6582299929866977968}
   m_Layer: 7
   m_Name: scope_01
   m_TagString: Untagged
@@ -11436,6 +11451,21 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.114528924, y: 0.1257438, z: 0.4161353}
     m_Extent: {x: 0.063346416, y: 0.066530585, z: 0.058148563}
   m_DirtyAABB: 0
+--- !u!114 &6582299929866977968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720861901965016793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: b2602970256987749affab31b180f2f6, type: 2}
+  <AnimatorOverride>k__BackingField: {fileID: 22100000, guid: 71f2832ed3e8da84290fed1a4eb3a8de, type: 2}
+  scopeInGun: {fileID: 2720861901965016793}
 --- !u!1 &2720861901965016795
 GameObject:
   m_ObjectHideFlags: 0
@@ -11564,6 +11594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2720861901964911357}
   - component: {fileID: 2720861901961835403}
+  - component: {fileID: 6559958603371433108}
   m_Layer: 7
   m_Name: scope_03
   m_TagString: Untagged
@@ -11672,6 +11703,21 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.11297817, y: 0.12773778, z: 0.41393346}
     m_Extent: {x: 0.06021408, y: 0.06602365, z: 0.05872038}
   m_DirtyAABB: 0
+--- !u!114 &6559958603371433108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720861901965016797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: a67f6aee4cf1b514db2ef089213bcd42, type: 2}
+  <AnimatorOverride>k__BackingField: {fileID: 22100000, guid: 26507d143677aec44873583ad31234c0, type: 2}
+  scopeInGun: {fileID: 2720861901965016797}
 --- !u!1 &2720861901965016799
 GameObject:
   m_ObjectHideFlags: 0
@@ -11682,6 +11728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2720861901964911359}
   - component: {fileID: 2720861901961835413}
+  - component: {fileID: 1233880660370154647}
   m_Layer: 7
   m_Name: scope_02
   m_TagString: Untagged
@@ -11790,6 +11837,21 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.103534006, y: 0.118715584, z: 0.40575972}
     m_Extent: {x: 0.058314063, y: 0.063165665, z: 0.055032402}
   m_DirtyAABB: 0
+--- !u!114 &1233880660370154647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720861901965016799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: f1ca60fd3b8bbac44ae6ad511521c61f, type: 2}
+  <AnimatorOverride>k__BackingField: {fileID: 22100000, guid: fc38e624926d21644aa31bec1feccf1d, type: 2}
+  scopeInGun: {fileID: 2720861901965016799}
 --- !u!1 &2720861901965016801
 GameObject:
   m_ObjectHideFlags: 0

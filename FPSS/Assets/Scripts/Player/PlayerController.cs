@@ -257,14 +257,14 @@ public class PlayerController : NetworkBehaviour
     }
     private void HandleThrowGrenade()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            referManager.WeaponManager.CurrentWeapon.CheckReadyThrowGrenade();
-        }
-        if (Input.GetKeyUp(KeyCode.G))
-        {
-            referManager.WeaponManager.CurrentWeapon.CheckThrowGrenade();
-        }
+        // if (Input.GetKeyDown(KeyCode.G))
+        // {
+        //     referManager.WeaponManager.CurrentWeapon.CheckReadyThrowGrenade();
+        // }
+        // if (Input.GetKeyUp(KeyCode.G))
+        // {
+        //     referManager.WeaponManager.CurrentWeapon.CheckThrowGrenade();
+        // }
     }
     private void HandleFPSMovement()
     {

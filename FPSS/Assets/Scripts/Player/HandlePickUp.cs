@@ -62,7 +62,7 @@ public class HandlePickUp : NetworkBehaviour
             if (refer.WeaponManager.Weapons.Count == maxGun)
             {
                 if (refer.WeaponManager.CurrentWeapon.IsDefaultWeapon) { return; }
-                handleDrop.ThrowItem(true);
+                handleDrop.ThrowItem(!isSelect);
                 StartCoroutine(DoPickUpItemDelay(nameWeapon, isSelect));
             }
             else
@@ -70,8 +70,6 @@ public class HandlePickUp : NetworkBehaviour
                 DoPickUpItem(nameWeapon, isSelect);
             }
         }
-
-
     }
     private IEnumerator DoPickUpItemDelay(string nameWeapon = "", bool isSelect = false)
     {
@@ -95,6 +93,13 @@ public class HandlePickUp : NetworkBehaviour
         PickUp pickUp = pickUps[0];
         RemovePickUpItem(pickUps[0]);
         NetworkServer.Destroy(pickUp.gameObject);
+    }
+    public void PickUpAttachment(string nameItem,bool isNotNone)
+    {
+        WeaponAdjustment adjust =  refer.WeaponManager.CurrentWeapon.GetComponent<WeaponAdjustment>();
+        if(adjust==null){return;}
+        ScopeAttachment scope = adjust.ToggleScope(nameItem,isNotNone);
+        refer.WeaponManager.CurrentWeapon.ChangeCurrentAnimatorIntoNewAnimator(scope?.AnimatorOverride);
     }
 
     public void AddPickUpItem(PickUp pickUp)

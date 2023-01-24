@@ -103,6 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7763920374940661727}
   - component: {fileID: 7763920374940660837}
+  - component: {fileID: 8109993675889283863}
   m_Layer: 7
   m_Name: scope_03
   m_TagString: Untagged
@@ -211,6 +212,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.052138466, y: 0.34067702, z: 0.36796746}
     m_Extent: {x: 0.044919837, y: 0.058987796, z: 0.05291292}
   m_DirtyAABB: 0
+--- !u!114 &8109993675889283863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763920374940661377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: a67f6aee4cf1b514db2ef089213bcd42, type: 2}
+  scopeInGun: {fileID: 7763920374940661377}
 --- !u!1 &7763920374940661378
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7763920374940661712}
   - component: {fileID: 7763920374940660834}
+  - component: {fileID: 3213900973470295146}
   m_Layer: 7
   m_Name: scope_02
   m_TagString: Untagged
@@ -329,6 +345,20 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.047182217, y: 0.33764145, z: 0.36007634}
     m_Extent: {x: 0.037923127, y: 0.046630263, z: 0.0432401}
   m_DirtyAABB: 0
+--- !u!114 &3213900973470295146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763920374940661378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8cbc7704d06ee42b25d447d3d46f65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ScopeInfor>k__BackingField: {fileID: 11400000, guid: f1ca60fd3b8bbac44ae6ad511521c61f, type: 2}
+  scopeInGun: {fileID: 7763920374940661378}
 --- !u!1 &7763920374940661379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1890,6 +1920,7 @@ GameObject:
   - component: {fileID: 7763920374940661663}
   - component: {fileID: 7763920374940660850}
   - component: {fileID: 4905878768163075285}
+  - component: {fileID: 4621614679350148928}
   m_Layer: 7
   m_Name: Hand gun 1
   m_TagString: Untagged
@@ -1950,7 +1981,6 @@ MonoBehaviour:
   playerController: {fileID: 0}
   <Animator>k__BackingField: {fileID: 7763920374940661663}
   <ShootType>k__BackingField: 1
-  <WeaponType>k__BackingField: 0
   <ItemAttribute>k__BackingField: {fileID: 11400000, guid: 792ae140e1c555d4996698b792691c93, type: 2}
   <IsDefaultWeapon>k__BackingField: 1
   fireTime: 0.2
@@ -1987,7 +2017,6 @@ MonoBehaviour:
   boomManager: {fileID: 0}
   boomPack: {fileID: 4303027578546382854}
   booms: []
-  gunIcon: {fileID: 21300008, guid: dccc05b8d01dde54f88f9910329187c2, type: 3}
   bulletIcon: {fileID: 21300000, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
 --- !u!82 &4905878768163075285
 AudioSource:
@@ -2085,6 +2114,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4621614679350148928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7763920374940661432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af915c36046d004ebaf6e9be53dde12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scopes:
+  - {fileID: 3213900973470295146}
+  - {fileID: 8109993675889283863}
 --- !u!1 &7763920374940661433
 GameObject:
   m_ObjectHideFlags: 0

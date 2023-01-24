@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class WeaponAdjustment : MonoBehaviour
 {
-    [SerializeField] private GameObject[] scopes;
+    [SerializeField] private ScopeAttachment[] scopes;
 
-    public void ToggleScope(int index, bool state)
+    public ScopeAttachment ToggleScope(string nameScope, bool state)
     {
         for (int i = 0; i < scopes.Length; i++)
         {
-            scopes[i].SetActive(false);
+            scopes[i].gameObject.SetActive(false);
+            if(scopes[i].ScopeInfor.Name==nameScope)
+            {
+                scopes[i].gameObject.SetActive(state);
+                return scopes[i];
+            }
         }
-        if (state)
-        {
-            if(index>=scopes.Length){return;}
-            scopes[index].SetActive(true);
-        }
+        return null;
+    }
+    public ScopeAttachment[] GetAllScope()
+    {
+       return scopes;
     }
 
 }
