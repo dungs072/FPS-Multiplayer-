@@ -367,7 +367,6 @@ public class PlayerController : NetworkBehaviour
     }
     private void DoAimOut(bool state)
     {
-        ResetMovementState();
         referManager.WeaponManager.CurrentWeapon.DoAimOut();
     }
     private void DoReload()

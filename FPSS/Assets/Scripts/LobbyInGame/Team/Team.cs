@@ -16,7 +16,7 @@ public class Team : NetworkBehaviour
     [field: SerializeField] public TeamName TeamName { get; private set; } = TeamName.None;
     [SerializeField] private ReferenceManager referManager;
     [SerializeField] private Transform xRotatetionObject;
-
+    [SerializeField] private GameObject headItemSwat;
     public Vector3 LobbyPosition { get; set; }
 
     private Quaternion defaultRotation;
@@ -31,9 +31,23 @@ public class Team : NetworkBehaviour
     public void SetTeamName(TeamName teamName)
     {
         TeamName = teamName;
+        if (teamName == TeamName.Swat)
+        {
+            headItemSwat.SetActive(true);
+        }
+        // i have to run twice CmdSetTeamName function. Because
+        // the first for set position for player
+        // the second for set TeamName for player
         CmdSetTeamName(teamName);
+        StartCoroutine(DelaySetTeamName(teamName));
         //OnSetTeam?.Invoke(this,lobbyIndex);
     }
+    private IEnumerator DelaySetTeamName(TeamName teamName)
+    {
+        yield return new WaitForSeconds(1f);
+        CmdSetTeamName(teamName);
+    }
+
     public void ToggleLobbyCameras(bool state)
     {
         OnToggleLobbyCameras?.Invoke(state);
@@ -55,7 +69,7 @@ public class Team : NetworkBehaviour
         referManager.TPPController.LocomotionValue = 0f;
         xRotatetionObject.rotation = defaultXRotation;
         ResetCursorMode();
-        
+
     }
     private void ResetCursorMode()
     {
@@ -77,6 +91,10 @@ public class Team : NetworkBehaviour
     {
         if(isOwned){return;}
         TeamName = teamName;
+        if (teamName == TeamName.Swat)
+        {
+            headItemSwat.SetActive(true);
+        }
     }
     [ClientRpc]
     public void RpcSetLobbyPosition(Vector3 position)

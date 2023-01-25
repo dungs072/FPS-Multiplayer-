@@ -10374,7 +10374,7 @@ MonoBehaviour:
   <ShootType>k__BackingField: 1
   <ItemAttribute>k__BackingField: {fileID: 11400000, guid: 24047b4087d4b60439fa53dd3a498d6e, type: 2}
   <IsDefaultWeapon>k__BackingField: 0
-  fireTime: 0.11
+  fireTime: 0.102
   inspectTimeBegin: 5
   maxBulletInMag: 35
   maxBullet: 150
@@ -10392,8 +10392,8 @@ MonoBehaviour:
   takeOutSound: {fileID: 8300000, guid: 8c4ede782a70c6e4b9e515d40d6e6e69, type: 3}
   isOwnedByPlayer: 0
   recoilAmountX: 0.5
-  recoilAmountY: -3
-  aimRecoilSensitivity: 0.3
+  recoilAmountY: -2
+  aimRecoilSensitivity: 0.2
   fps: {fileID: 0}
   projectile: {fileID: 8641402405120545256, guid: ca880b22a0bfdf24288b5d049665b9ed, type: 3}
   attackPoint: {fileID: 2968442814956499626}
@@ -12467,7 +12467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4006707965795986908, guid: dfc794f8954fed044b7f021ff9d21f09, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0754
+      value: 0.0752
       objectReference: {fileID: 0}
     - target: {fileID: 4006707965795986908, guid: dfc794f8954fed044b7f021ff9d21f09, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -12475,7 +12475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4006707965795986908, guid: dfc794f8954fed044b7f021ff9d21f09, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.1875
+      value: 0.1878
       objectReference: {fileID: 0}
     - target: {fileID: 4099856830944613303, guid: dfc794f8954fed044b7f021ff9d21f09, type: 3}
       propertyPath: m_IsActive

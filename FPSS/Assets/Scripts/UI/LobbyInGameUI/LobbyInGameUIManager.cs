@@ -40,8 +40,6 @@ public class LobbyInGameUIManager : MonoBehaviour
     private void HandleOutLobbyInGame()
     {
         weaponSelectionUI.OwnedPlayer.OnOutLobbyInGame();
-        
-       
     }
     public void StartTimerToJoinMatch()
     {
@@ -62,6 +60,7 @@ public class LobbyInGameUIManager : MonoBehaviour
     public void JoinMatch()
     {
         if(joinMatchCoroutine!=null){StopCoroutine(joinMatchCoroutine);}
+        weaponSelectionUI.TurnOnWeaponponSelection();
         Team team = weaponSelectionUI.OwnedPlayer.GetComponent<Team>();
         if (team.TeamName == TeamName.Swat)
         {

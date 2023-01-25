@@ -17,7 +17,7 @@ public class TeamManager : NetworkBehaviour
     }
     public void AddAllMemberIntoEveryTeam()
     {
-        System.Random rand = new System.Random();
+        //System.Random rand = new System.Random();
         List<PlayerController> players = ((MyNetworkManager)NetworkManager.singleton).Players;
         for(int i =0;i<players.Count;i++)
         {

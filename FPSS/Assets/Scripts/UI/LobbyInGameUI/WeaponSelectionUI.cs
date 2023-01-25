@@ -62,7 +62,11 @@ public class WeaponSelectionUI : MonoBehaviour
         attachmentSelection.SetActive(true);
         ClearInforAttachmentDisplay();
         Invoke(nameof(DelayTimeDisplayAttachmentUI),0.5f);
-        
+    }
+    public void TurnOnWeaponponSelection()
+    {
+        attachmentSelection.SetActive(false);
+        weaponSelection.SetActive(true);
     }
     private void DelayTimeDisplayAttachmentUI()
     {
