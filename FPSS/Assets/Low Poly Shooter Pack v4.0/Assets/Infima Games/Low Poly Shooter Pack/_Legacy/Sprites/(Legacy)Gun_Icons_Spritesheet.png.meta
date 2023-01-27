@@ -257,10 +257,10 @@ TextureImporter:
       name: handgun_01_icon
       rect:
         serializedVersion: 2
-        x: 3515
-        y: 3547
-        width: 342
-        height: 230
+        x: 3253
+        y: 3485
+        width: 839
+        height: 367
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -278,10 +278,10 @@ TextureImporter:
       name: handgun_02_icon
       rect:
         serializedVersion: 2
-        x: 223
-        y: 2325
-        width: 405
-        height: 1033
+        x: 12
+        y: 2639
+        width: 831
+        height: 375
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -299,10 +299,10 @@ TextureImporter:
       name: handgun_03_icon
       rect:
         serializedVersion: 2
-        x: 1049
-        y: 2713
-        width: 400
-        height: 258
+        x: 843
+        y: 2639
+        width: 838
+        height: 375
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -320,10 +320,10 @@ TextureImporter:
       name: handgun_04_icon
       rect:
         serializedVersion: 2
-        x: 1879
-        y: 2711
-        width: 370
-        height: 260
+        x: 1681
+        y: 2647
+        width: 719
+        height: 374
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -404,10 +404,10 @@ TextureImporter:
       name: smg_02_icon
       rect:
         serializedVersion: 2
-        x: 1000
-        y: 1877
-        width: 477
-        height: 282
+        x: 853
+        y: 1845
+        width: 756
+        height: 345
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

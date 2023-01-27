@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static event Action OnExitMatch;
     public static UIManager Instance { get; private set; }
     [SerializeField] private GameObject crossHairScope;
     [SerializeField] private GameObject dynamicCrossHair;
@@ -37,7 +38,10 @@ public class UIManager : MonoBehaviour
     [Header("Parent")]
     [SerializeField] private GameObject parentUI;
     [Header("Pause")]
+    [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject[] pauseElements;
+    [SerializeField] private Slider slider;
     [Header("Score")]
     [SerializeField] private TMP_Text swatScoreText;
     [SerializeField] private TMP_Text terroristScoreText;
@@ -228,7 +232,17 @@ public class UIManager : MonoBehaviour
     }
     public void TogglePauseMenu(bool state)
     {
-        pauseMenu.SetActive(state);
+        pausePanel.SetActive(state);
+        ReturnToNormalPauseMenu();
+        
+    }
+    private void ReturnToNormalPauseMenu()
+    {
+        pauseMenu.SetActive(true);
+        foreach(var ele in pauseElements)
+        {
+            ele.SetActive(false);
+        }
     }
 
     public void SetSwatScoreDisplay(int score)
@@ -250,5 +264,15 @@ public class UIManager : MonoBehaviour
         KillBox killBoxInstance = Instantiate(killBoxPrefab,displayBox);
         killBoxInstance.SetKillTitle(nameKiller,namePatient);
     }
+    public void SetVolume()
+    {
+        AudioListener.volume = slider.value;
+    }
+    public void ExitMatch()
+    {
+        ReturnToNormalPauseMenu();
+        OnExitMatch?.Invoke();
+    }
+
 }
 

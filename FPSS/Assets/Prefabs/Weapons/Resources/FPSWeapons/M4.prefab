@@ -10082,7 +10082,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801540012342472204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.09, z: 0.02}
+  m_LocalPosition: {x: 0, y: -0.0855, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10146,8 +10146,8 @@ MonoBehaviour:
   takeOutSound: {fileID: 8300000, guid: 8c4ede782a70c6e4b9e515d40d6e6e69, type: 3}
   isOwnedByPlayer: 0
   recoilAmountX: 1
-  recoilAmountY: -3
-  aimRecoilSensitivity: 0.3
+  recoilAmountY: -4
+  aimRecoilSensitivity: 0.32
   fps: {fileID: 0}
   projectile: {fileID: 8641402405120545256, guid: ca880b22a0bfdf24288b5d049665b9ed, type: 3}
   attackPoint: {fileID: 681058346128613532}
@@ -12413,7 +12413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 268868535470775082, guid: dfc794f8954fed044b7f021ff9d21f09, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.1428
+      value: 0.1416
       objectReference: {fileID: 0}
     - target: {fileID: 398071408688273604, guid: dfc794f8954fed044b7f021ff9d21f09, type: 3}
       propertyPath: m_LocalScale.x

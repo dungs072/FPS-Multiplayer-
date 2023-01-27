@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour
         landingPagePanel.SetActive(false);
         if(useSteam)
         {
-            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly,4);
+            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly,8);
             return;
         }
         NetworkManager.singleton.StartHost();

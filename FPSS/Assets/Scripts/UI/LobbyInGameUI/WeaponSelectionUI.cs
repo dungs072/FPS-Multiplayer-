@@ -6,12 +6,15 @@ using System;
 public class WeaponSelectionUI : MonoBehaviour
 {
     public event Action OnGetPlayer;
-    [SerializeField] private Transform content;
+    [SerializeField] private Transform weaponContent;
+    [SerializeField] private Transform defaultWeaponContent;
     [SerializeField] private Transform attachmentContent;
     [SerializeField] private Transform defaultAttachmentSelection;
     [SerializeField] private ItemSelection weaponSelectionPrefab;
+    [SerializeField] private ItemSelection defaultWeaponSeletionPrefab;
     [SerializeField] private ItemSelection attachmentSelectionPrefab;
     [SerializeField] private GameObject weaponSelection;
+    [SerializeField] private GameObject defaultWeaponSelection;
     [SerializeField] private GameObject attachmentSelection;
     public PlayerController OwnedPlayer { get; private set; }
     private void Start()
@@ -39,29 +42,37 @@ public class WeaponSelectionUI : MonoBehaviour
 
         for (int i = 0; i < weapons.Length; i++)
         {
-            if (weapons[i].IsDefaultWeapon) { continue; }
-            ItemSelection itemInstance = Instantiate(weaponSelectionPrefab, content);
-            itemInstance.SetTitleButton(weapons[i].gameObject.name, weapons[i].ItemAttribute.Icon, OwnedPlayer);
+            if (weapons[i].IsDefaultWeapon)
+            {
+                ItemSelection itemInstance = Instantiate(defaultWeaponSeletionPrefab, defaultWeaponContent);
+                itemInstance.SetTitleButton(weapons[i].gameObject.name, weapons[i].ItemAttribute.Icon, OwnedPlayer);
+            }
+            else
+            {
+                ItemSelection itemInstance = Instantiate(weaponSelectionPrefab, weaponContent);
+                itemInstance.SetTitleButton(weapons[i].gameObject.name, weapons[i].ItemAttribute.Icon, OwnedPlayer);
+            }
         }
     }
     private void LoadAllAttachment(WeaponBase weaponBase)
     {
-        
+
         if (weaponBase.TryGetComponent<WeaponAdjustment>(out WeaponAdjustment adjustment))
         {
             foreach (var scope in adjustment.GetAllScope())
             {
                 ItemSelection itemInstance = Instantiate(attachmentSelectionPrefab, attachmentContent);
-                itemInstance.SetTitleButton(scope.ScopeInfor.Name,scope.ScopeInfor.Icon, OwnedPlayer);
+                itemInstance.SetTitleButton(scope.ScopeInfor.Name, scope.ScopeInfor.Icon, OwnedPlayer);
             }
         }
     }
     private void TurnOnAttachmentSelection()
     {
         weaponSelection.SetActive(false);
+        defaultWeaponSelection.SetActive(false);
         attachmentSelection.SetActive(true);
         ClearInforAttachmentDisplay();
-        Invoke(nameof(DelayTimeDisplayAttachmentUI),0.5f);
+        Invoke(nameof(DelayTimeDisplayAttachmentUI), 0.5f);
     }
     public void TurnOnWeaponponSelection()
     {
@@ -74,9 +85,9 @@ public class WeaponSelectionUI : MonoBehaviour
     }
     public void ClearInforAttachmentDisplay()
     {
-        foreach(Transform child in attachmentContent)
+        foreach (Transform child in attachmentContent)
         {
-            if(child==defaultAttachmentSelection){continue;}
+            if (child == defaultAttachmentSelection) { continue; }
             Destroy(child.gameObject);
         }
     }

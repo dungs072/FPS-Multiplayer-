@@ -61,6 +61,7 @@ public class LobbyInGameUIManager : MonoBehaviour
     {
         if(joinMatchCoroutine!=null){StopCoroutine(joinMatchCoroutine);}
         weaponSelectionUI.TurnOnWeaponponSelection();
+        weaponSelectionUI.OwnedPlayer.GetComponent<NetworkPlayerInfor>().TogglePlayerNameCanvas(false);
         Team team = weaponSelectionUI.OwnedPlayer.GetComponent<Team>();
         if (team.TeamName == TeamName.Swat)
         {

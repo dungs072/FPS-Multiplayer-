@@ -51,6 +51,7 @@ public class RespawnManager : NetworkBehaviour
             ui.UpdateRespawnUI(time);
         }
         OnRespawn?.Invoke();
+        GetComponent<NetworkPlayerInfor>().TogglePlayerNameCanvas(true);
         if(isOwned){CmdRespawn();}   
         ui.ToggleRespawnUI(false);
     }

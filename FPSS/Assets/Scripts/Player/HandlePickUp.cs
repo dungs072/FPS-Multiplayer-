@@ -50,7 +50,7 @@ public class HandlePickUp : NetworkBehaviour
         }
         
     }
-    public void PickUpItem(string nameWeapon = "", bool isSelect = false)
+    public void PickUpItem(string nameItem = "", bool isSelect = false)
     {
         refer.AudioSource.PlayOneShot(pickupSound);
         if (pickUps.Count>0&&pickUps[0].ItemAttribute.Type == ItemType.Bullet)
@@ -61,15 +61,25 @@ public class HandlePickUp : NetworkBehaviour
         {
             if (refer.WeaponManager.Weapons.Count == maxGun)
             {
+                if(isSelect)
+                {
+                    refer.WeaponManager.ChangeWeaponIndex(1);
+                }
                 if (refer.WeaponManager.CurrentWeapon.IsDefaultWeapon) { return; }
                 handleDrop.ThrowItem(!isSelect);
-                StartCoroutine(DoPickUpItemDelay(nameWeapon, isSelect));
+                StartCoroutine(DoPickUpItemDelay(nameItem, isSelect));
             }
             else
             {
-                DoPickUpItem(nameWeapon, isSelect);
+                DoPickUpItem(nameItem, isSelect);
             }
         }
+    }
+    public void PickupDefaultItem(string nameItem)
+    {
+        // refer.AudioSource.PlayOneShot(pickupSound);
+        // refer.WeaponManager.ThrowDefaultWeapon();
+        // refer.WeaponManager.EquipFpsWeapon(nameItem);
     }
     private IEnumerator DoPickUpItemDelay(string nameWeapon = "", bool isSelect = false)
     {

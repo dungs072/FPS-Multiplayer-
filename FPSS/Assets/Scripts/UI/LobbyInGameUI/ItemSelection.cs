@@ -9,6 +9,7 @@ public class ItemSelection : MonoBehaviour
     [SerializeField] private Image iconButton;
     [SerializeField] private bool isNotNone; 
     [SerializeField] private TMP_Text nameItem;
+    [SerializeField] private bool isDefaultItem;
     private PlayerController ownedPlayer;
     public string NameItem{get;private set;}
     private void Start() {
@@ -23,6 +24,12 @@ public class ItemSelection : MonoBehaviour
     }
     public void OnChooseItem(bool isAttach)
     {
+        if(isDefaultItem)
+        {
+            ownedPlayer.GetComponent<WeaponManager>().ChangeWeaponIndex(0);
+            OnClickButton?.Invoke();
+            return;
+        }
         if(isAttach)
         {
             ownedPlayer.GetComponent<HandlePickUp>().PickUpAttachment(NameItem,isNotNone);

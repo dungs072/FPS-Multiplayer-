@@ -22,6 +22,8 @@ public class HealthManager : NetworkBehaviour
     [SerializeField] private Camera fpsCamera;
     [Header("Revise")]
     [SerializeField] private float timeToImmune = 5f;
+    [Header("Team")]
+    [SerializeField] private Team team;
     private bool canTakeDamage = true;
     [SyncVar(hook = nameof(OnChangeCurrentHealth))]
     private int currentHealth;
@@ -83,6 +85,10 @@ public class HealthManager : NetworkBehaviour
     public void TakeDamage(int amount, bool isHead, Transform attackingOwner, Transform attacker)
     {
         if (!canTakeDamage) { return; }
+        if(attacker.TryGetComponent<Team>(out Team t))
+        {
+            if(team.TeamName==t.TeamName){return;}
+        }
         if (isOwned)
         {
             if (attacker != null&&!isDie)

@@ -11,12 +11,14 @@ public enum TeamName
 }
 public class Team : NetworkBehaviour
 {
+    public static event Func<TeamName,Camera> OnGetLobbyCamera;
     public static event Action<bool> OnSetLobbyPosition;
     public static event Action<bool> OnToggleLobbyCameras;
     [field: SerializeField] public TeamName TeamName { get; private set; } = TeamName.None;
     [SerializeField] private ReferenceManager referManager;
     [SerializeField] private Transform xRotatetionObject;
     [SerializeField] private GameObject headItemSwat;
+    [SerializeField] private RotateUI rotateUI;
     public Vector3 LobbyPosition { get; set; }
 
     private Quaternion defaultRotation;
@@ -65,6 +67,7 @@ public class Team : NetworkBehaviour
             OnSetLobbyPosition?.Invoke(false);
         }
         GetComponent<PlayerController>().SetInGameProgress(false);
+        GetComponent<NetworkPlayerInfor>().TogglePlayerNameCanvas(true);
         referManager.WeaponTPPManager.DisplayWeapons(true);
         referManager.TPPController.LocomotionValue = 0f;
         xRotatetionObject.rotation = defaultXRotation;
@@ -99,6 +102,7 @@ public class Team : NetworkBehaviour
     [ClientRpc]
     public void RpcSetLobbyPosition(Vector3 position)
     {
+        rotateUI.SetUpLobbyCamera(OnGetLobbyCamera?.Invoke(TeamName));
         if (!isOwned) { return; }
         transform.position = position;
         LobbyPosition = position;

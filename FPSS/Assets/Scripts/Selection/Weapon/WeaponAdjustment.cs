@@ -10,20 +10,21 @@ public class WeaponAdjustment : MonoBehaviour
 
     public ScopeAttachment ToggleScope(string nameScope, bool state)
     {
+        ScopeAttachment scope = null;
+        ToggleIronSight(true);
         for (int i = 0; i < scopes.Length; i++)
         {
             scopes[i].gameObject.SetActive(false);
             scopes[i].ToggleDistanceScope(false);
-            ToggleIronSight(true);
             if(scopes[i].ScopeInfor.Name==nameScope)
             {
                 scopes[i].gameObject.SetActive(state);
                 scopes[i].ToggleDistanceScope(true);
                 ToggleIronSight(false);
-                return scopes[i];
+                scope = scopes[i];
             }
         }
-        return null;
+        return scope;
     }
     private void ToggleIronSight(bool state)
     {

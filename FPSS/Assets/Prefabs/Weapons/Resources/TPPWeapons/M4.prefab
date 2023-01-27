@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1257091388718670034}
   - component: {fileID: 1230726075224608236}
   - component: {fileID: 1238826658165745658}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Assault_Rifle_02_Iron_Sights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1255625177476220610}
   - component: {fileID: 1230891249459463594}
   - component: {fileID: 1238509161321932566}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Assault_Rifle_02_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 1230953516931100286}
   - component: {fileID: 1238906315333338316}
   - component: {fileID: 1687559998234372438}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: M4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 1255476281249153262}
   - component: {fileID: 1230665807570423258}
   - component: {fileID: 1240335260369744800}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Assault_Rifle_02_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 1257244483429277078}
   - component: {fileID: 1231051370654952704}
   - component: {fileID: 1238998542792844278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Assault_Rifle_02_Grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,9 +451,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1257188847502406670}
     m_Modifications:
+    - target: {fileID: 2437206236088604354, guid: 38a43f5ff72da804ea9099458840a3db, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2437458943336999784, guid: 38a43f5ff72da804ea9099458840a3db, type: 3}
       propertyPath: m_Name
       value: MuzzleFlash01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437458943336999784, guid: 38a43f5ff72da804ea9099458840a3db, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2439509763839092402, guid: 38a43f5ff72da804ea9099458840a3db, type: 3}
       propertyPath: m_RootOrder

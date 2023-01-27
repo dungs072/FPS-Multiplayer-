@@ -68,6 +68,7 @@ public class WeaponBase : MonoBehaviour
     [SerializeField] private int damage = 10;
     [SerializeField] private float spread = 0f;
     [SerializeField] private float timeToDeactivateProjectile = 5f;
+    [SerializeField] private float rangeShoot = float.MaxValue;
     [Header("Boom")]
     [SerializeField] private BoomManager boomManager;
     [SerializeField] private GameObject boomPack;
@@ -335,7 +336,7 @@ public class WeaponBase : MonoBehaviour
     private Vector3 CalculateDirectionWithSpread(Vector3 startPoint,Vector3 spreadV,int index)
     {
         Ray ray = fps.FirstPersonCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)+spreadV);
-        if (Physics.Raycast(ray, out hits[index],float.MaxValue, layers))
+        if (Physics.Raycast(ray, out hits[index],rangeShoot, layers))
         {
             targetPoint = hits[index].point;
         }

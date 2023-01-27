@@ -17,12 +17,14 @@ public class GameLobby : NetworkBehaviour
     {
         Team.OnSetLobbyPosition+=ToggleSwatCamera;
         Team.OnToggleLobbyCameras+=ToggleBothCamera;
+        Team.OnGetLobbyCamera+=GetLobbyCamera;
         if(!isServer){return;}
         Invoke(nameof(SetAllPlayerLobbyPosition), 1f);
     }
     private void OnDestroy() {
         Team.OnSetLobbyPosition-=ToggleSwatCamera;
         Team.OnToggleLobbyCameras-=ToggleBothCamera;
+        Team.OnGetLobbyCamera-=GetLobbyCamera;
     }
     [Server]
     private void SetAllPlayerLobbyPosition()
@@ -41,25 +43,7 @@ public class GameLobby : NetworkBehaviour
             }
         }
     }
-    public void SetPlayerLobbyPosition(Team team, int index)
-    {
-        if (team.TeamName == TeamName.Swat)
-        {
-            team.transform.position = lobbyPointsS[index].position;
-            if (team.isOwned)
-            {
-                ToggleSwatCamera(true);
-            }
-        }
-        else if (team.TeamName == TeamName.Terrorist)
-        {
-            team.transform.position = lobbyPointsT[index].position;
-            if (team.isOwned)
-            {
-                ToggleSwatCamera(false);
-            }
-        }
-    }
+
     private void ToggleSwatCamera(bool state)
     {
         terrorCameraLobby.SetActive(!state);
@@ -70,6 +54,18 @@ public class GameLobby : NetworkBehaviour
         terrorCameraLobby.SetActive(state);
         swatCameraLobby.SetActive(state);
     }
+    private Camera GetLobbyCamera(TeamName teamName)
+    {
+        if(teamName==TeamName.Swat)
+        {
+            return swatCameraLobby.GetComponent<Camera>();
+        }
+        else if(teamName==TeamName.Terrorist)
+        {
+            return terrorCameraLobby.GetComponent<Camera>();
+        }
+        else return null;
 
+    }
 
 }
