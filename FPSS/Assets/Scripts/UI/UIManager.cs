@@ -51,6 +51,8 @@ public class UIManager : MonoBehaviour
     [Header("Kill Display")]
     [SerializeField] private Transform displayBox;
     [SerializeField] private KillBox killBoxPrefab;
+    [Header("Result")]
+    [SerializeField] private GameObject resultPanel;
 
     public PackWeaponUI[] Packs { get { return packs; } }
     private Coroutine hitCrossHairCoroutine;
@@ -243,6 +245,13 @@ public class UIManager : MonoBehaviour
         {
             ele.SetActive(false);
         }
+    }
+    public void ReturnDefaultStateUI()
+    {
+        FButtonUI.SetActive(false);
+        respawnUI.SetActive(false);
+        pausePanel.SetActive(false);
+        resultPanel.SetActive(false);
     }
 
     public void SetSwatScoreDisplay(int score)

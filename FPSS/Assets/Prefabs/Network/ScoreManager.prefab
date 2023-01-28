@@ -65,4 +65,4 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  maxWinScore: 5
+  maxWinScore: 2

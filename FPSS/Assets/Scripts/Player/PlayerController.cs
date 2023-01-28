@@ -190,8 +190,8 @@ public class PlayerController : NetworkBehaviour
     public void PauseGame(bool state)
     {
         UIManager.Instance.TogglePauseMenu(state);
-        referManager.FPSController.SetCursorLock(!state);
         referManager.FPSController.enabled = !state;
+        referManager.FPSController.SetCursorLock(!state);
     }
 
     private void HandleFPSControl()
@@ -450,7 +450,12 @@ public class PlayerController : NetworkBehaviour
     public void HandleResultInMatch()
     {
         referManager.FPSController.SetCursorLock(false);
+        referManager.FPSController.enabled = false;
         IsInLobby = true;
+    }
+    public void SetCursorLock(bool state)
+    {
+        referManager.FPSController.SetCursorLock(state);
     }
     public override void OnStopClient()
     {

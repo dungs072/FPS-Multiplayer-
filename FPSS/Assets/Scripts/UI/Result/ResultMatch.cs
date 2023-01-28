@@ -23,13 +23,18 @@ public class ResultMatch : MonoBehaviour
     }
     private void DisplayResultMatch(TeamName teamName)
     {
+        PlayerController ownedPlayer = NetworkClient.connection.identity.GetComponent<PlayerController>();
+        ownedPlayer.GetComponent<RespawnManager>().StopRespawnCoroutine();
+        ownedPlayer.HandleResultInMatch();
+        StartCoroutine(DisplayResultUI(teamName,ownedPlayer));
+    }
+    private IEnumerator DisplayResultUI(TeamName teamName, PlayerController ownedPlayer)
+    {
+        yield return new WaitForSeconds(4f);
         resultPanel.SetActive(true);
         int swatIndex = 0;
         int terrorIndex = 0;
         List<PlayerController> players = ((MyNetworkManager)NetworkManager.singleton).Players;
-        PlayerController ownedPlayer = NetworkClient.connection.identity.GetComponent<PlayerController>();
-        ownedPlayer.GetComponent<RespawnManager>().StopRespawnCoroutine();
-        ownedPlayer.HandleResultInMatch();
         if(ownedPlayer.GetComponent<Team>().TeamName==teamName)
         {
             titleResult.text = "Victory";
@@ -53,7 +58,9 @@ public class ResultMatch : MonoBehaviour
     }
     public static void DisplayResultInMatch(TeamName teamName)
     {
+       
         OnTeamWin?.Invoke(teamName);
+        
     }
 
 }

@@ -60,6 +60,7 @@ public class LobbyInGameUIManager : MonoBehaviour
     public void JoinMatch()
     {
         if(joinMatchCoroutine!=null){StopCoroutine(joinMatchCoroutine);}
+        weaponSelectionUI.OwnedPlayer.SetCursorLock(true);
         weaponSelectionUI.TurnOnWeaponponSelection();
         weaponSelectionUI.OwnedPlayer.GetComponent<NetworkPlayerInfor>().TogglePlayerNameCanvas(false);
         Team team = weaponSelectionUI.OwnedPlayer.GetComponent<Team>();
@@ -89,14 +90,19 @@ public class LobbyInGameUIManager : MonoBehaviour
     private void SetWhichTeamText(TeamName teamName)
     {
         string text = "";
+        Color color = Color.white;
         if (teamName == TeamName.Swat)
         {
             text = "You Are In Swat Team !";
+            color = Color.blue;
         }
         else if (teamName == TeamName.Terrorist)
         {
             text = "You Are In Terrorist Team !";
+            color = Color.red;
         }
+
         whichTeamText.text = text;
+        whichTeamText.color = color;
     }
 }

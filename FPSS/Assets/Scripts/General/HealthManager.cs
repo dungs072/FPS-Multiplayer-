@@ -32,6 +32,7 @@ public class HealthManager : NetworkBehaviour
     private bool isDie = false;
     public bool IsDie { get { return isDie; } }
 
+    private bool isDieTriggerOneTime = false;
     private Coroutine healCoroutine;
 
     private void Start()
@@ -101,13 +102,14 @@ public class HealthManager : NetworkBehaviour
         {
             if (identity.isOwned)
             {
-                if (currentHealth - amount <= 0 && !isDie)
+                if (currentHealth - amount <= 0 && !isDie&&!isDieTriggerOneTime)
                 {
                     UIManager.Instance.TriggerScoreRewardUI(isHead);
                     if(attackingOwner.TryGetComponent<NetworkPlayerInfor>(out NetworkPlayerInfor infor))
                     {
                         infor.CmdAddKillNumber(1);
                     }
+                    isDieTriggerOneTime = true;
                 }
                 currentHealth = Mathf.Max(currentHealth - amount, 0);
                 CmdTakeDamage(amount, nameKiller);
@@ -196,7 +198,10 @@ public class HealthManager : NetworkBehaviour
             {
                 OnIncreasingScore?.Invoke(GetComponent<Team>().TeamName, 1);
             }
-            
+        }
+        else
+        {
+            isDieTriggerOneTime = false;
         }
     }
     private IEnumerator CountDownImmune()

@@ -16,7 +16,6 @@ public class ScoreManager : NetworkBehaviour
     private bool gameWin = false;
     private void Start()
     {
-
         if (!isServer) { return; }
         HealthManager.OnIncreasingScore += OnAddScore;
     }

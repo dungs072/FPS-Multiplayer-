@@ -756,6 +756,7 @@ MonoBehaviour:
   nameItemDisplay: {fileID: 3095755775296094108}
   displayBox: {fileID: 670394225566345599}
   killBoxPrefab: {fileID: -1252118430082954424, guid: 78d8bed3d987f3748b14a6be04cde188, type: 3}
+  resultPanel: {fileID: 3960770061127071678}
 --- !u!114 &598351110047756963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5442,7 +5443,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 598351110047756972}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ReturnToNormalPauseMenu
+        m_MethodName: ReturnDefaultStateUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6388,6 +6389,18 @@ MonoBehaviour:
       - m_Target: {fileID: 598351110047756972}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ExitMatch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 598351110047756972}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: ReturnDefaultStateUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

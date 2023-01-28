@@ -5719,7 +5719,6 @@ MonoBehaviour:
     smooth: 0
     smoothTime: 5
     lockCursor: 1
-    canClick: 0
   m_UseFovKick: 1
   m_FovKick:
     Camera: {fileID: 0}
