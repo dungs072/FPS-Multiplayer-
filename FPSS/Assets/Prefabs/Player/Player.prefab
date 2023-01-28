@@ -4228,7 +4228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5331908010502057006}
   m_Layer: 16
-  m_Name: Icon
+  m_Name: MapIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4241,14 +4241,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3308157824253066896}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7887988046822595202}
-  m_Father: {fileID: 4368650941111344936}
-  m_RootOrder: 1
+  m_Father: {fileID: 8114319186918192812}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3444773756121907328
 GameObject:
@@ -5666,6 +5666,7 @@ Transform:
   - {fileID: 4368650941111344936}
   - {fileID: 5988822521378527695}
   - {fileID: 1087987924047489403}
+  - {fileID: 5331908010502057006}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -6701,6 +6702,7 @@ MonoBehaviour:
   xRotatetionObject: {fileID: 8114319186918192814}
   headItemSwat: {fileID: 7636831174134992815}
   rotateUI: {fileID: 4871370380948549144}
+  mapIcon: {fileID: 3308157824253066896}
 --- !u!1 &8114319186918025870
 GameObject:
   m_ObjectHideFlags: 0
@@ -6901,7 +6903,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 920645346717871413}
-  - {fileID: 5331908010502057006}
   m_Father: {fileID: 8114319186918192812}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

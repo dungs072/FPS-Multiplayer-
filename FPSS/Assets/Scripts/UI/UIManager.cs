@@ -236,7 +236,7 @@ public class UIManager : MonoBehaviour
         ReturnToNormalPauseMenu();
         
     }
-    private void ReturnToNormalPauseMenu()
+    public void ReturnToNormalPauseMenu()
     {
         pauseMenu.SetActive(true);
         foreach(var ele in pauseElements)

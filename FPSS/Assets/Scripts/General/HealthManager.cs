@@ -104,6 +104,10 @@ public class HealthManager : NetworkBehaviour
                 if (currentHealth - amount <= 0 && !isDie)
                 {
                     UIManager.Instance.TriggerScoreRewardUI(isHead);
+                    if(attackingOwner.TryGetComponent<NetworkPlayerInfor>(out NetworkPlayerInfor infor))
+                    {
+                        infor.CmdAddKillNumber(1);
+                    }
                 }
                 currentHealth = Mathf.Max(currentHealth - amount, 0);
                 CmdTakeDamage(amount, nameKiller);

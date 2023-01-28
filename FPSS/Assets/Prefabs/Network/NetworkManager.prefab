@@ -94,7 +94,7 @@ MonoBehaviour:
   - {fileID: 3533776414427106983, guid: 1750628f0ca6aa74e8a796bc74f66c07, type: 3}
   timeInterpolationGui: 0
   teamManager: {fileID: 4796613275677404362, guid: 31611b87f542bd44eaf7bf52feaf242d, type: 3}
-  scoreManager: {fileID: 0}
+  scoreManager: {fileID: 5317658153725273925, guid: 7cb9317d491ba5147b8bcbc04e820348, type: 3}
 --- !u!114 &1515866320
 MonoBehaviour:
   m_ObjectHideFlags: 0

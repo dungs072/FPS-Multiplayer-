@@ -13,6 +13,11 @@ public class NetworkPlayerInfor : NetworkBehaviour
     [SyncVar(hook =nameof(OnUpdatePlayerName))]
     private string playerName;
 
+    public int KillNumber{get{return killNumber;}}
+
+    [SyncVar]
+    private int killNumber = 0;
+
     public string PlayerName{get{return playerName;}}
     public override void OnStartAuthority()
     {
@@ -34,6 +39,11 @@ public class NetworkPlayerInfor : NetworkBehaviour
     private void CmdTogglePlayerNameCanvas(bool state)
     {
         RpcTogglePlayerNameCanvas(state);
+    }
+    [Command]
+    public void CmdAddKillNumber(int value)
+    {
+        killNumber+=value;
     }
     #endregion
 

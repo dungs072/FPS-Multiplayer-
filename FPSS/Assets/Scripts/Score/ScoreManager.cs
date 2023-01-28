@@ -2,29 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-using TMPro;
+using System;
 public class ScoreManager : NetworkBehaviour
 {
-    [SyncVar(hook =nameof(OnChangeTerroristScore))]
+    
+    [SerializeField] private int maxWinScore = 50;
+    [SyncVar(hook = nameof(OnChangeTerroristScore))]
     private int terroristScore;
     [SyncVar(hook = nameof(OnChangeSwatScore))]
     private int swatScore;
-    private void Start() {
-        if(!isServer){return;}
-        HealthManager.OnIncreasingScore+=OnAddScore;
+
+    [SyncVar]
+    private bool gameWin = false;
+    private void Start()
+    {
+
+        if (!isServer) { return; }
+        HealthManager.OnIncreasingScore += OnAddScore;
     }
-    private void OnDestroy() {
-        if(!isServer){return;}
-        HealthManager.OnIncreasingScore-=OnAddScore;
+    private void OnDestroy()
+    {
+        if (!isServer) { return; }
+        HealthManager.OnIncreasingScore -= OnAddScore;
     }
+    #region Server
     [Server]
     private void OnAddScore(TeamName teamName, int value)
     {
-        if(teamName == TeamName.Terrorist)
+        if(gameWin){return;}
+        if (teamName == TeamName.Terrorist)
         {
             AddSwatScore(value);
         }
-        else if(teamName==TeamName.Swat)
+        else if (teamName == TeamName.Swat)
         {
             AddTerroristScore(value);
         }
@@ -32,25 +42,30 @@ public class ScoreManager : NetworkBehaviour
     [Server]
     private void AddSwatScore(int value)
     {
-        swatScore+=value;
+        swatScore += value;
+        HandleNewScore(swatScore,TeamName.Swat);
     }
     [Server]
     private void AddTerroristScore(int value)
     {
-        terroristScore+=value;
+        terroristScore += value;
+        HandleNewScore(terroristScore,TeamName.Terrorist);
     }
-    // #region Server
-    // [Command]
-    // private void CmdSetTerroristScore(int value)
-    // {
-    //     terroristScore = value;
-    // }
-    // [Command]
-    // private void CmdSetSwatScore(int value)
-    // {
-    //     swatScore = value;
-    // }
-    //#endregion
+    [Server]
+    private void HandleNewScore(int score, TeamName teamName)
+    {
+        if (score >= maxWinScore)
+        {
+            gameWin = true;
+            CmdHandleGameWin(teamName);
+        }
+    }
+    [Command(requiresAuthority = false)]
+    private void CmdHandleGameWin(TeamName teamName)
+    {
+        RpcHandleGameWin(teamName);
+    }
+    #endregion
     #region Client
     private void OnChangeTerroristScore(int oldValue, int newValue)
     {
@@ -59,6 +74,11 @@ public class ScoreManager : NetworkBehaviour
     private void OnChangeSwatScore(int oldValue, int newValue)
     {
         UIManager.Instance.SetSwatScoreDisplay(newValue);
+    }
+    [ClientRpc]
+    private void RpcHandleGameWin(TeamName teamName)
+    {
+        ResultMatch.DisplayResultInMatch(teamName);
     }
     #endregion
 

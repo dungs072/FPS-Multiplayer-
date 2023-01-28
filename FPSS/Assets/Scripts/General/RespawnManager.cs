@@ -15,47 +15,51 @@ public class RespawnManager : NetworkBehaviour
     private Coroutine countDownCoroutine;
     public override void OnStartAuthority()
     {
-        healthManager.OnDie+=HandleRespawn;
-        OnRespawn+=healthManager.Respawn;
-        OnRespawn+=deathManager.TriggerRespawnProcess;
+        healthManager.OnDie += HandleRespawn;
+        OnRespawn += healthManager.Respawn;
+        OnRespawn += deathManager.TriggerRespawnProcess;
     }
-    private void Start() {
+    private void Start()
+    {
         // OnRespawn+=playerController.OnRespawn;
-        OnRespawn+=ragdollManager.TurnOffRagdoll;
-        OnRespawn+=rigManager.TurnOnRigWeight;
+        OnRespawn += ragdollManager.TurnOffRagdoll;
+        OnRespawn += rigManager.TurnOnRigWeight;
     }
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         // OnRespawn-=playerController.OnRespawn;
-        OnRespawn-=ragdollManager.TurnOffRagdoll;
-        OnRespawn-=rigManager.TurnOnRigWeight;
-        if(!isOwned){return;}
-        healthManager.OnDie-=HandleRespawn;
-        OnRespawn-=healthManager.Respawn;
-        OnRespawn-=deathManager.TriggerRespawnProcess;
-       
+        OnRespawn -= ragdollManager.TurnOffRagdoll;
+        OnRespawn -= rigManager.TurnOnRigWeight;
+        if (!isOwned) { return; }
+        healthManager.OnDie -= HandleRespawn;
+        OnRespawn -= healthManager.Respawn;
+        OnRespawn -= deathManager.TriggerRespawnProcess;
+
     }
     public void HandleRespawn()
     {
-        if(countDownCoroutine!=null){StopCoroutine(countDownCoroutine);}
-        countDownCoroutine =  StartCoroutine(CountDownTime());
+        if (countDownCoroutine != null) { StopCoroutine(countDownCoroutine); }
+        countDownCoroutine = StartCoroutine(CountDownTime());
     }
     private IEnumerator CountDownTime()
     {
         float time = timeToRespawn;
         UIManager ui = UIManager.Instance;
         ui.ToggleRespawnUI(true);
-        while(time>0f)
+        while (time > 0f)
         {
             time -= Time.deltaTime;
             yield return null;
             ui.UpdateRespawnUI(time);
         }
         OnRespawn?.Invoke();
-        GetComponent<NetworkPlayerInfor>().TogglePlayerNameCanvas(true);
-        if(isOwned){CmdRespawn();}   
+        if (isOwned) { CmdRespawn(); }
         ui.ToggleRespawnUI(false);
     }
-
+    public void StopRespawnCoroutine()
+    {
+        if (countDownCoroutine != null) { StopCoroutine(countDownCoroutine); }
+    }
     [Command]
     private void CmdRespawn()
     {
@@ -64,7 +68,7 @@ public class RespawnManager : NetworkBehaviour
     [ClientRpc]
     private void RpcRespawn()
     {
-        if(isOwned){return;}
+        if (isOwned) { return; }
         OnRespawn?.Invoke();
     }
 

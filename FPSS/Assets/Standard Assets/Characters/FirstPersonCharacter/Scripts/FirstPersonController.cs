@@ -373,7 +373,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
         public void SetCursorLock(bool state)
         {
-            m_MouseLook.SetCursorLock2(state);
+            m_MouseLook.SetCursorLock(state);
         }
         public void HandleCrouch(bool isCrouch)
         {

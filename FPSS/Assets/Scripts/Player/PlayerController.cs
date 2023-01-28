@@ -28,9 +28,9 @@ public class PlayerController : NetworkBehaviour
     private bool canInspect = false;
     private bool isCrouch = false;
     private bool isPause = false;
-    
 
-    public bool GetReadyInLobby(){return isReadyInLoby;}
+
+    public bool GetReadyInLobby() { return isReadyInLoby; }
     public bool GetIsPartyOwner() { return isPartyOwner; }
     public bool IsInLobby { get; set; } = false;
     public bool IsWalking
@@ -133,7 +133,9 @@ public class PlayerController : NetworkBehaviour
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
         myNetworkManager.AddPlayers(this);
         OnHitTarget += UIManager.Instance.ToggleHitCrossHair;
+
     }
+
     private void Start()
     {
         referManager.HealthManager.OnDie += OnDie;
@@ -172,20 +174,24 @@ public class PlayerController : NetworkBehaviour
         if (!isOwned) { return; }
         if (IsInLobby) { return; }
         HandleUI();
-        if(isPause){return;}
+        if (isPause) { return; }
         HandleFPSControl();
         HandleTPPMovement();
-        
+
     }
     private void HandleUI()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPause = !isPause;
-            UIManager.Instance.TogglePauseMenu(isPause);
-            referManager.FPSController.SetCursorLock(!isPause);
-            referManager.FPSController.enabled = !isPause;
+            PauseGame(isPause);
         }
+    }
+    public void PauseGame(bool state)
+    {
+        UIManager.Instance.TogglePauseMenu(state);
+        referManager.FPSController.SetCursorLock(!state);
+        referManager.FPSController.enabled = !state;
     }
 
     private void HandleFPSControl()
@@ -440,6 +446,11 @@ public class PlayerController : NetworkBehaviour
         IsInLobby = !state;
         UIManager.Instance.ToggleParentUI(state);
         //audioListener.enabled = state;
+    }
+    public void HandleResultInMatch()
+    {
+        referManager.FPSController.SetCursorLock(false);
+        IsInLobby = true;
     }
     public override void OnStopClient()
     {

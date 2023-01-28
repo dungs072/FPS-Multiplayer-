@@ -67,7 +67,7 @@ public class MyNetworkManager : NetworkManager
     public void AddPlayers(PlayerController playerController)
     {
         PlayersAuthority.Add(playerController);
-        OnAddPlayers.Invoke();
+        OnAddPlayers?.Invoke();
     }
     #endregion
 

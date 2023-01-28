@@ -19,8 +19,8 @@ public class Team : NetworkBehaviour
     [SerializeField] private Transform xRotatetionObject;
     [SerializeField] private GameObject headItemSwat;
     [SerializeField] private RotateUI rotateUI;
+    [SerializeField] private GameObject mapIcon;
     public Vector3 LobbyPosition { get; set; }
-
     private Quaternion defaultRotation;
     private Quaternion defaultXRotation;
 
@@ -79,6 +79,21 @@ public class Team : NetworkBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
+    private void SetStateMapIcon()
+    {
+        if(NetworkClient.connection.identity.GetComponent<Team>().TeamName==TeamName)
+        {
+            ToggleMapIcon(true);
+        }
+        else
+        {
+            ToggleMapIcon(false);
+        }
+    }
+    private void ToggleMapIcon(bool state)
+    {
+        mapIcon.SetActive(state);
+    }
     #region Server
 
     [Command]
@@ -103,6 +118,7 @@ public class Team : NetworkBehaviour
     public void RpcSetLobbyPosition(Vector3 position)
     {
         rotateUI.SetUpLobbyCamera(OnGetLobbyCamera?.Invoke(TeamName));
+        SetStateMapIcon();
         if (!isOwned) { return; }
         transform.position = position;
         LobbyPosition = position;
@@ -114,6 +130,8 @@ public class Team : NetworkBehaviour
         {
             OnSetLobbyPosition?.Invoke(false);
         }
+
+
     }
     #endregion
 }
