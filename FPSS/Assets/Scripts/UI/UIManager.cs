@@ -252,6 +252,8 @@ public class UIManager : MonoBehaviour
         respawnUI.SetActive(false);
         pausePanel.SetActive(false);
         resultPanel.SetActive(false);
+        swatScoreText.text = "0";
+        terroristScoreText.text = "0";
     }
 
     public void SetSwatScoreDisplay(int score)

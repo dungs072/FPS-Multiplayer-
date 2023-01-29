@@ -6,8 +6,9 @@ public enum SurfaceMaterial
     BLOOD,
     METAL
 }
-public class Projectile : MonoBehaviour,IProjectilePool
+public class Projectile : MonoBehaviour, IProjectilePool
 {
+    [SerializeField] private GameObject stoneEffect;
     [SerializeField] private GameObject metalEffect;
     [SerializeField] private GameObject bloodEffect;
     [SerializeField] private TypeObjectPoolManager Type;
@@ -17,13 +18,15 @@ public class Projectile : MonoBehaviour,IProjectilePool
     protected PlayerController owner;
     protected int damage = 10;
     protected RaycastHit hit;
-    protected 
-    private void Awake() {
+    protected
+    private void Awake()
+    {
         ObjectPoolManager poolManager = ParentPoolManagers.Instance.GetObjPoolManager(Type);
         poolManager.AddObjPool(this);
         transform.SetParent(poolManager.transform);
     }
-    public virtual void ShootProjectile() {
+    public virtual void ShootProjectile()
+    {
         trail.AddPosition(transform.position);
         HandleCollideWithHealthObject();
         transform.position = hit.point;
@@ -36,7 +39,7 @@ public class Projectile : MonoBehaviour,IProjectilePool
     }
     protected virtual void DoBoom()
     {
-       gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
     public void SetRaycastHit(RaycastHit hit)
     {
@@ -52,24 +55,34 @@ public class Projectile : MonoBehaviour,IProjectilePool
     }
     protected virtual void HandleCollideWithHealthObject()
     {
-        if(hit.transform==null){return;}
-        if(!hit.transform.TryGetComponent<Health>(out Health health)){HandleCollision();return;}
-        GameObject bloodInstance = Instantiate(bloodEffect,hit.point,Quaternion.LookRotation(hit.normal));
+        if (hit.transform == null) { return; }
+        if (!hit.transform.TryGetComponent<Health>(out Health health)) { HandleCollision(); return; }
+        GameObject bloodInstance = Instantiate(bloodEffect, hit.point, Quaternion.LookRotation(hit.normal));
         bloodInstance.transform.SetParent(hit.transform);
-        
-        if(owner!=null)
+
+        if (owner != null)
         {
             owner.TriggerHitCrossHair();
-            if(owner==health.Owner){return;}
+            if (owner == health.Owner) { return; }
         }
-        health.TakeDamage(damage,owner?.transform);
+        health.TakeDamage(damage, owner?.transform);
     }
 
     protected virtual void HandleCollision()
     {
-        GameObject metalEffectInstance = Instantiate(metalEffect,hit.point,
+        if (hit.transform.CompareTag("Concrete"))
+        {
+            GameObject stoneEffectInstance = Instantiate(stoneEffect, hit.point,
                                             Quaternion.LookRotation(hit.normal));
-        metalEffectInstance.transform.SetParent(hit.transform);
+            stoneEffectInstance.transform.SetParent(hit.transform);
+        }
+        else
+        {
+            GameObject metalEffectInstance = Instantiate(metalEffect, hit.point,
+                                            Quaternion.LookRotation(hit.normal));
+            metalEffectInstance.transform.SetParent(hit.transform);
+        }
+
     }
     public bool IsReadyForTakeOut()
     {
@@ -80,7 +93,7 @@ public class Projectile : MonoBehaviour,IProjectilePool
     {
         transform.position = position;
         transform.rotation = Quaternion.LookRotation(rotation);
-        if(trail==null){return;}
+        if (trail == null) { return; }
         trail.Clear();
     }
 
@@ -90,7 +103,7 @@ public class Projectile : MonoBehaviour,IProjectilePool
         ShootProjectile();
     }
 
-    public void SetBeforeShoot(PlayerController owner, int damage,RaycastHit hit)
+    public void SetBeforeShoot(PlayerController owner, int damage, RaycastHit hit)
     {
         this.owner = owner;
         this.damage = damage;

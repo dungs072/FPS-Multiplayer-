@@ -130,6 +130,7 @@ public class PlayerController : NetworkBehaviour
         referManager.HealthManager.OnNormal += referManager.FPSController.HandleNormal;
         DISystem.Instance.SetMainCamera(referManager.FPSController.FirstPersonCamera);
         DISystem.Instance.SetPlayerTransform(transform);
+        CrossHair.FindPlayer(this);
         MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
         myNetworkManager.AddPlayers(this);
         OnHitTarget += UIManager.Instance.ToggleHitCrossHair;

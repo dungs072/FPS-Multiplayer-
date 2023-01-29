@@ -20,22 +20,19 @@ public class CrossHair : MonoBehaviour
 
     private float currentSize = 50f;
     private bool canExpandCrossHair = true;
-    private PlayerController playerController;
+    private static PlayerController playerController;
     private void Start()
     {
         currentCrossHair = crossHair;
-        MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
-        myNetworkManager.OnAddPlayers += FindPlayer;
+
     }
-    private void OnDestroy()
-    {
-        MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
-        if (myNetworkManager == null) { return; }
-        myNetworkManager.OnAddPlayers -= FindPlayer;
-    }
+    // private void OnEnable()
+    // {
+    //     FindPlayer();
+    // }
     public void ChangeCrossHair(ItemType type)
     {
-        if(type==ItemType.ShotGun)
+        if (type == ItemType.ShotGun)
         {
             shortCrossHair.gameObject.SetActive(true);
             crossHair.gameObject.SetActive(false);
@@ -48,18 +45,9 @@ public class CrossHair : MonoBehaviour
             currentCrossHair = crossHair;
         }
     }
-    public void FindPlayer()
+    public static void FindPlayer(PlayerController player)
     {
-        if (playerController != null) { return; }
-        MyNetworkManager myNetworkManager = (MyNetworkManager)NetworkManager.singleton;
-        foreach (var player in myNetworkManager.PlayersAuthority)
-        {
-            if (player.isOwned)
-            {
-                playerController = player;
-                break;
-            }
-        }
+        playerController = player;
     }
     private void Update()
     {
@@ -68,7 +56,7 @@ public class CrossHair : MonoBehaviour
         {
             currentSize = Mathf.Lerp(currentSize, aimSize, Time.deltaTime * speed);
         }
-        else if (playerController.IsAttacking&&canExpandCrossHair)
+        else if (playerController.IsAttacking && canExpandCrossHair)
         {
             float spd = 0;
             if (playerController.CurrentWeaponIsSingleFire())
@@ -87,14 +75,14 @@ public class CrossHair : MonoBehaviour
 
             currentSize = Mathf.Lerp(currentSize, maxShootSize, Time.deltaTime * spd);
         }
-        else if(!canExpandCrossHair)
+        else if (!canExpandCrossHair)
         {
-            currentSize = Mathf.Lerp(currentSize, idleSize, Time.deltaTime * (shootSpeed+5f));
-            if(currentSize<idleSize+10f&&!playerController.IsAttacking)
+            currentSize = Mathf.Lerp(currentSize, idleSize, Time.deltaTime * (shootSpeed + 5f));
+            if (currentSize < idleSize + 10f && !playerController.IsAttacking)
             {
                 canExpandCrossHair = true;
             }
-        }   
+        }
         else if (playerController.IsWalking)
         {
             currentSize = Mathf.Lerp(currentSize, walkSize, Time.deltaTime * speed);
@@ -108,7 +96,7 @@ public class CrossHair : MonoBehaviour
             currentSize = Mathf.Lerp(currentSize, idleSize, Time.deltaTime * speed);
         }
         currentCrossHair.sizeDelta = new Vector2(currentSize, currentSize);
-        
+
     }
 }
 
