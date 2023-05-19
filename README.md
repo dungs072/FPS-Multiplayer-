@@ -1,4 +1,6 @@
+
 # FPS-Multiplayer-
+- Game được viết bằng Unity, sử dụng Mirror để làm multiplayer
 - Để chơi được game: bạn cài folder tên là Build3 về và ấn chọn file FPSS.exe để chơi
 ## Để kết nối được với người chơi khác
 - Mời người chơi đó tải về tương tự như trên và hai người phải có hai tài khoản steam đã kết bạn với nhau
