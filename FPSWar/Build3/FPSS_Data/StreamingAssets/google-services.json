@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "551590858512",
+    "firebase_url": "https://fpswar-1290b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fpswar-1290b",
+    "storage_bucket": "fpswar-1290b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551590858512:android:95435147fc8a10a3e5df95",
+        "android_client_info": {
+          "package_name": "com.dungs72"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpcJ_IIkhjECw8jdfsRXuljNE7MzYGUPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

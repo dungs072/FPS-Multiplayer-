@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fbc76339131b447a8a57a58a00fa30, type: 3}
+  m_Name: Input Attribute
+  m_EditorClassIdentifier: 
+  reloadingKeyDefault: 114
+  crouchKeyDefault: 99
+  pickUpKeyDefault: 102
+  leaningLeftKeyDefault: 113
+  leaningRightKeyDefault: 101
+  runningKeyDefault: 304
+  reloadingKey: 114
+  crouchKey: 99
+  pickUpKey: 102
+  leaningLeftKey: 113
+  leaningRightKey: 101
+  runningKey: 304
